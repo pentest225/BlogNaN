@@ -7,13 +7,16 @@ from django.contrib import admin
 from . import models
 
 
-class UtilisateurAdmin(admin.ModelAdmin):
+class MyUserAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
-        'nom',
+        'first_name',
+        'last_name',
+        'username',
+        'email',
         'image',
-        'message',
+        'description',
         'specialite',
         'status',
         'date_add',
@@ -25,7 +28,8 @@ class UtilisateurAdmin(admin.ModelAdmin):
         'date_upd',
      
     )
-    raw_id_fields = ('social',)
+    # raw_id_fields = ('social',)
+    filter_horizontal = ('groups','user_permissions','social')
 
 
 class SpecialiteAdmin(admin.ModelAdmin):
@@ -43,5 +47,5 @@ def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
-_register(models.Utilisateur, UtilisateurAdmin)
+_register(models.MyUser, MyUserAdmin)
 _register(models.Specialite, SpecialiteAdmin)
