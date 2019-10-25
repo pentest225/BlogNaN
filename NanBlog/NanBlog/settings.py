@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blogApp.apps.BlogappConfig',
     'Contacts.apps.ContactsConfig',
+    'Utilisateurs.apps.UtilisateursConfig',
+    'Statistique.apps.StatistiqueConfig',
+    'allConfig.apps.AllconfigConfig',
+    'django_admin_generator',
     'social_django',
 ]
 
