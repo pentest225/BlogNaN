@@ -41,18 +41,13 @@
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
                         <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
-                        <li><a href="{%url 'category' %}">Category</a></li>
+                        <li class="menu-has-children"><a href="">Category</a>
+                            <ul>
+                                <li><a href="{% url 'category' %}">Developement</a></li>
+                                <li><a href="{% url 'category' %}">Reseau</a></li>
+                            </ul>
+                        </li>
                         <li><a href="{% url 'archive' %}">Archive</a></li>
-                        <li class="menu-has-children"><a href="">Pages</a>
-                            <ul>
-                                <li><a href="{% url 'single_blog' %}">Elements</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-has-children"><a href="">Blog</a>
-                            <ul>
-                                <li><a href="{% url 'single_blog' %}">Blog Details</a></li>
-                            </ul>
-                        </li>
                         <li><a href="{% url 'contact' %}">Contact</a></li>
                     </ul>
                 </nav>
