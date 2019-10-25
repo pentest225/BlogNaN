@@ -49,7 +49,7 @@ class Article(models.Model):
     """Model definition for Article."""
     categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE, related_name='article_categorie')
     auteur = models.ForeignKey(Membre, on_delete=models.CASCADE, related_name='article_auteur')
-    tag = models.ManyToManyField(Tag)
+    tag = models.ManyToManyField(Tag, related_name='article_tag')
     titre = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to='blog/')
@@ -74,8 +74,7 @@ class Article(models.Model):
 
 class Commentaire(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_commentaire')
-    membre_id = models.ForeignKey(Membre, on_delete=models.CASCADE, related_name='membre_comment')
-    visiteur_id = models.ForeignKey(Visiteur, on_delete=models.CASCADE, related_name='visiteur_comment')
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='user_comment')
     nom = models.CharField(max_length=100)
     email = models.EmailField()
     message = models.TextField()
@@ -86,8 +85,8 @@ class Commentaire(models.Model):
 
 
 class ResponseCommentaire(models.Model):
-    membre_id = models.ForeignKey(Membre, on_delete=models.CASCADE, related_name='membre_comment')
-    visiteur_id = models.ForeignKey(Visiteur, on_delete=models.CASCADE, related_name='visiteur_comment')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='response')
+    user_id = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='user_comment_response')
     message = models.TextField()
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
@@ -100,6 +99,7 @@ class Archive(models.Model):
     date_upd = models.DateTimeField(auto_now=True)
 
 class Like(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_like')
     like = models.IntegerField()
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
@@ -205,23 +205,40 @@ from config.models import Social
 class Membre(models.Model):
     poste_id = models.ForeignKey('Poste', on_delete=models.CASCADE, related_name='membre_poste')
     nom = models.CharField(max_length=250)
-    image = models.ImageField(upload_to='membre/')
+    image = models.ImageField(upload_to='utilisateur/')
     message = models.TextField()
+    specialite = models.CharField()
     social = models.ManyToManyField('Social', related_name='social_config')
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
 
-class Poste(models.Model):
-    titre = models.CharField(max_length=250)
+class Specialite(models.Model):
+    specialiste = models.CharField(max_length=250)
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
 
-class Visiteur(models.Model):
-    nom = models.CharField(max_length=250)
-    image = models.ImageField(upload_to='visiteur/')
-    status = models.BooleanField(default=True)
-    date_add = models.DateTimeField(auto_now_add=True)
-    date_upd = models.DateTimeField(auto_now=True)
-```
+  ```
+# Application Statisque
+```python
+class Client(models.Model):
+    ip = models.GenericIPAddressField()
+    continent = models.CharField(max_length=160)
+    pays = models.CharField(max_length=160)
+    ville = models.CharField(max_length=160)
+    reseau =  models.CharField(max_length=160)
+    longitude = models.FloatField()
+    latitude = models.FloatField()
+    page = models.CharField(max_length=160)
+    date_visite =models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.adresse_ip
+
+    class Meta:
+        verbose_name = 'Client'
+        verbose_name_plural = 'Clients'
+
+
+
+ ```
