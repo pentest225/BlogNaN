@@ -20,10 +20,6 @@ def archive(request):
     
     return render(request,'pages/archive.html')
 
-def contact(request):
-    
-    return render(request,'pages/contact.html')
-
 def login(request):
     
     return render(request,'pages/login.html')
