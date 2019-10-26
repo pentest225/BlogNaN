@@ -80,7 +80,7 @@ class LocationMapAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'map',
-        'laltitude',
+        'latitude',
         'longitude',
         'status',
         'date_add',

@@ -9,7 +9,7 @@ class MyUser(AbstractUser):
     groups = models.ManyToManyField(Group,related_name="utilisateur_groups")
     user_permissions = models.ManyToManyField(Permission,related_name="utilisateur_permissions")
     description = models.TextField()
-    specialite = models.CharField(max_length=250)
+    specialite = models.ManyToManyField('Specialite',related_name='user_specialite')
     social = models.ManyToManyField(Social, related_name='social_user')
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)

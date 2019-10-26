@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
     'blogApp.apps.BlogappConfig',
     'Contacts.apps.ContactsConfig',
     'Utilisateurs.apps.UtilisateursConfig',
@@ -121,6 +122,17 @@ AUTHENTICATION_BACKENDS = (
 
     'django.contrib.auth.backends.ModelBackend',
 )
+
+#############################################################################
+#                                                                           #
+#                         GRAPHENE CONFIGURATION                            #
+#                                                                           #
+#############################################################################
+
+
+GRAPHENE = {
+    'SCHEMA': 'NanBlog.schema.schema'
+}
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 360,

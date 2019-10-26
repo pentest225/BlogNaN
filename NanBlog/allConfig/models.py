@@ -53,7 +53,7 @@ class Social(models.Model):
 
 class LocationMap(models.Model):
     map = models.URLField()
-    laltitude=models.DecimalField(max_length=10,decimal_places=4,max_digits=10)
+    latitude=models.DecimalField(max_length=10,decimal_places=4,max_digits=10)
     longitude=models.DecimalField(max_length=10,decimal_places=4,max_digits=10)
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
