@@ -1,6 +1,8 @@
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
+from django.conf.urls import url, include
+
 
 from . import views
 
@@ -11,7 +13,7 @@ urlpatterns = [
     path('archive',views.archive,name='archive'),
     path('login',views.login,name='login'),
     path('register',views.register,name='register'),
-    path('oauth/', include('social_django.urls', namespace='social')),
+    re_path(r'^accounts/', include('allauth.urls')),
     ]
 
 # LOGIN_URL = 'login'
