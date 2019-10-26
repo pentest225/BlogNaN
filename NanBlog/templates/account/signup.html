@@ -81,7 +81,9 @@
 							</label>
 						</div>
 						<div class="form-row-last">
-							<input type="submit" name="register" class="register" value="S'inscrire">
+              <input type="submit" name="register" class="register" value="S'inscrire">
+              <p>{% blocktrans %}If you have not created an account yet, then please
+              <a href="{{ login_url }}" style="color:orange;">sign up</a> first.{% endblocktrans %}</p>
 						</div>
 					</div>
 				</form>
@@ -129,7 +131,9 @@
                 </label>
               </div>
 						<div class="form-row-last">
-							<input type="submit" name="register" class="register" value="S'inscrire">
+              <input type="submit" name="register" class="register" value="S'inscrire">
+              <p>{% blocktrans %}If you have not created an account yet, then please
+                  <a href="{{ login_url }}" style="color:orange;">sign up</a> first.{% endblocktrans %}</p>
 						</div>
 					</div>
 				</form>

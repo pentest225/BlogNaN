@@ -1,11 +1,25 @@
-{% extends "account/base.html" %}
-
+{% extends 'bases/otherBase.html' %}
 {% load i18n %}
 
 {% block head_title %}{% trans "Sign Up Closed" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Sign Up Closed" %}</h1>
+<div class="wrapper">
 
-<p>{% trans "We are sorry, but the sign up is currently closed." %}</p>
+  
+        <div class="profile-card js-profile-card">
+          <div style="margin-top: 100px">
+          </div>
+      
+          <div class="profile-card__cnt js-profile-cnt">
+            <div class="profile-card__txt"> <h2 class="text-dark title">{% trans "Sign Up Closed" %}</h2><hr>
+                <p>{% trans "We are sorry, but the sign up is currently closed." %}</p>
+            </div>    
+            
+          </div>
+            
+        </div>
+      
+      </div>
+
 {% endblock %}
