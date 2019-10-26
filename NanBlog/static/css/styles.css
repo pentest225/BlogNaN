@@ -209,7 +209,7 @@ body {
 }
 
 .main-bg {
-    background: url(../img/bg2.jpg) no-repeat center;
+    background: url(/static/img/bg2.jpg) no-repeat center;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
