@@ -47,6 +47,7 @@ class Article(models.Model):
     image = models.ImageField(upload_to='blog/')
     contenu = HTMLField('Content', default="null")
     image_single = models.ImageField(upload_to='blog/single')
+    is_archive=models.BooleanField(default=False)
     status = models.BooleanField(default=False)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
@@ -83,12 +84,12 @@ class ResponseCommentaire(models.Model):
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
 
-class Archive(models.Model):
+# class Archive(models.Model):
     
-    article_id = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='archive_article')
-    status = models.BooleanField(default=False)
-    date_add = models.DateTimeField(auto_now_add=True)
-    date_upd = models.DateTimeField(auto_now=True)
+#     article_id = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='archive_article')
+#     status = models.BooleanField(default=False)
+#     date_add = models.DateTimeField(auto_now_add=True)
+#     date_upd = models.DateTimeField(auto_now=True)
 
 class Like(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_like')
