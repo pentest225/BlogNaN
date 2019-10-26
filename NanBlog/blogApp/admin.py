@@ -14,11 +14,6 @@ class CategorieAdmin(admin.ModelAdmin):
         'status',
         'date_add',
         'date_upd',
-        'id',
-        'nom',
-        'status',
-        'date_add',
-        'date_upd',
     )
 
 
@@ -30,18 +25,6 @@ class TagAdmin(admin.ModelAdmin):
         'date_add',
         'date_upd',
         'id',
-        'nom',
-        'status',
-        'date_add',
-        'date_upd',
-    )
-
-
-class ArticleAdmin(admin.ModelAdmin):
-
-    list_display = (
-        'id',
-        'categorie',
         'auteur',
         'titre',
         'description',
@@ -55,17 +38,6 @@ class ArticleAdmin(admin.ModelAdmin):
     list_filter = (
         'categorie',
         'auteur',
-        'status',
-        'date_add',
-        'date_upd',
-        'id',
-        'categorie',
-        'auteur',
-        'titre',
-        'description',
-        'image',
-        'contenu',
-        'image_single',
         'status',
         'date_add',
         'date_upd',
@@ -79,8 +51,6 @@ class CommentaireAdmin(admin.ModelAdmin):
         'id',
         'article',
         'user',
-        'nom',
-        'email',
         'message',
         'sujet',
         'status',
@@ -92,44 +62,16 @@ class CommentaireAdmin(admin.ModelAdmin):
         'user',
         'status',
         'date_add',
-        'date_upd',
-        'id',
-        'article',
-        'user',
-        'nom',
-        'email',
-        'message',
-        'sujet',
-        'status',
         'date_add',
         'date_upd',
-    )
-
-
-class ResponseCommentaireAdmin(admin.ModelAdmin):
-
-    list_display = (
-        'id',
-        'comment',
-        'user',
-        'message',
-        'status',
-        'date_add',
-        'date_upd',
-    )
     list_filter = (
         'comment',
         'user',
         'status',
         'date_add',
         'date_upd',
-        'id',
-        'comment',
-        'user',
-        'message',
-        'status',
-        'date_add',
-        'date_upd',
+      
+     
     )
 
 
@@ -141,11 +83,7 @@ class ArchiveAdmin(admin.ModelAdmin):
         'status',
         'date_add',
         'date_upd',
-        'id',
-        'article_id',
-        'status',
-        'date_add',
-        'date_upd',
+    
     )
 
 
@@ -166,13 +104,7 @@ class LikeAdmin(admin.ModelAdmin):
         'status',
         'date_add',
         'date_upd',
-        'id',
-        'article',
-        'user',
-        'like',
-        'status',
-        'date_add',
-        'date_upd',
+  
     )
 
 

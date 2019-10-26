@@ -11,51 +11,24 @@ class MyUserAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
-        'password',
-        'last_login',
-        'is_superuser',
-        'username',
         'first_name',
         'last_name',
+        'username',
         'email',
-        'is_staff',
-        'is_active',
-        'date_joined',
         'image',
         'description',
-        'specialite',
         'status',
         'date_add',
         'date_upd',
     )
     list_filter = (
-        'last_login',
-        'is_superuser',
-        'is_staff',
-        'is_active',
-        'date_joined',
         'status',
         'date_add',
         'date_upd',
-        'id',
-        'password',
-        'last_login',
-        'is_superuser',
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-        'is_staff',
-        'is_active',
-        'date_joined',
-        'image',
-        'description',
-        'specialite',
-        'status',
-        'date_add',
-        'date_upd',
+     
     )
-    raw_id_fields = ('groups', 'social')
+    # raw_id_fields = ('social',)
+    filter_horizontal = ('groups','user_permissions','social','specialite')
 
 
 class SpecialiteAdmin(admin.ModelAdmin):
@@ -65,11 +38,7 @@ class SpecialiteAdmin(admin.ModelAdmin):
         'status',
         'date_add',
         'date_upd',
-        'id',
-        'specialiste',
-        'status',
-        'date_add',
-        'date_upd',
+     
     )
 
 

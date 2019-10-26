@@ -50,6 +50,8 @@ class Article(models.Model):
     status = models.BooleanField(default=False)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    
+    
 
     class Meta:
         """Meta definition for Article."""
@@ -64,8 +66,6 @@ class Article(models.Model):
 class Commentaire(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_commentaire')
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_comment')
-    nom = models.CharField(max_length=100)
-    email = models.EmailField()
     message = HTMLField('message', default="null")
     sujet = models.CharField(max_length=250)
     status = models.BooleanField(default=False)
@@ -95,3 +95,4 @@ class Like(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    

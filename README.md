@@ -2,11 +2,13 @@
  Projet de goupe creation de Blog 
 
 # Application Blog
+### importation
 ```python
 from tinymce import HTMLField
 from django.contrib.auth.models import User
 from utilisateur.models import Membre, Visiteur
-
+```
+```python
 class Categorie(models.Model):
     """Model definition for Categorie."""
     nom = models.CharField(max_length=100)
@@ -102,9 +104,7 @@ class Like(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
-    
 ```
-
 # Application Message
 ```python
 class Newsletter(models.Model):
@@ -193,16 +193,17 @@ class Instagram(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
-
 ```
 
 # Application Utilisateur
 
+### importation
 ```python
 from config.models import Social
-
-class Utilisateur(models.Model):
-    specialite = models.ManyToManyField('Specialite', related_name='user_specialiste')
+```
+```python
+class Membre(models.Model):
+    poste_id = models.ForeignKey('Poste', on_delete=models.CASCADE, related_name='membre_poste')
     nom = models.CharField(max_length=250)
     image = models.ImageField(upload_to='utilisateur/')
     message = models.TextField()
@@ -219,3 +220,25 @@ class Specialite(models.Model):
     date_upd = models.DateTimeField(auto_now=True)
 
   ```
+# Application Statisque
+```python
+class Client(models.Model):
+    ip = models.GenericIPAddressField()
+    continent = models.CharField(max_length=160)
+    pays = models.CharField(max_length=160)
+    ville = models.CharField(max_length=160)
+    reseau =  models.CharField(max_length=160)
+    longitude = models.FloatField()
+    latitude = models.FloatField()
+    page = models.CharField(max_length=160)
+    date_visite =models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.adresse_ip
+
+    class Meta:
+        verbose_name = 'Client'
+        verbose_name_plural = 'Clients'
+
+
+
+ ```

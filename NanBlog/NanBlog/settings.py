@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_seed',
     'rest_framework.authtoken',
     'django.contrib.staticfiles',
+    'graphene_django',
     'blogApp.apps.BlogappConfig',
     'Contacts.apps.ContactsConfig',
     'Utilisateurs.apps.UtilisateursConfig',
@@ -51,6 +52,8 @@ INSTALLED_APPS = [
     'allConfig.apps.AllconfigConfig',
     'django_admin_generator',
     'social_django',
+    'tinymce',
+    'filebrowser',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +129,48 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+#############################################################################
+#                                                                           #
+#                         GRAPHENE CONFIGURATION                            #
+#                                                                           #
+#############################################################################
+
+
+GRAPHENE = {
+    'SCHEMA': 'NanBlog.schema.schema'
+}
+
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 360,
+    'width': 900,
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 20,
+    'selector': 'textarea',
+    'theme': 'modern',
+    'plugins': '''
+            textcolor save link image media preview codesample contextmenu
+            table code lists fullscreen  insertdatetime  nonbreaking
+            contextmenu directionality searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap print  hr
+            anchor pagebreak
+            ''',
+    'toolbar1': '''
+            fullscreen preview bold italic underline | fontselect,
+            fontsizeselect  | forecolor backcolor | alignleft alignright |
+            aligncenter alignjustify | indent outdent | bullist numlist table |
+            | link image media | codesample |
+            ''',
+    'toolbar2': '''
+            visualblocks visualchars |
+            charmap hr pagebreak nonbreaking anchor |  code |
+            ''',
+    'contextmenu': 'formats | link image',
+    'menubar': True,
+    'statusbar': True,
+}
+
+FILEBROWSER_DIRECTORY='../media_cdn'
+FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

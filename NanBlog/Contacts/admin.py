@@ -14,11 +14,7 @@ class NewsletterAdmin(admin.ModelAdmin):
         'status',
         'date_add',
         'date_upd',
-        'id',
-        'email',
-        'status',
-        'date_add',
-        'date_upd',
+       
     )
 
 
@@ -38,14 +34,8 @@ class ContactAdmin(admin.ModelAdmin):
         'status',
         'date_add',
         'date_upd',
-        'id',
         'nom',
-        'email',
-        'message',
-        'sujet',
-        'status',
-        'date_add',
-        'date_upd',
+       
     )
 
 
