@@ -81,7 +81,6 @@ TEMPLATES = [
                 'social_django.context_processors.backends', 
                 'social_django.context_processors.login_redirect',
                 'Statistique.context_processors.visitor_ip_address',
-                'configuration.context_processors.get_config',
             ],
         },
     },
