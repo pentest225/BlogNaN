@@ -17,7 +17,7 @@ router.register(r'like', LikeViewset, basename='like')
 from . import views
 
 urlpatterns = [
-    path('index',views.index,name='index'),
+    path('',views.index,name='index'),
     path('category',views.category,name='category'),
     path('single_blog',views.single_blog,name='single_blog'),
     path('archive',views.archive,name='archive'),

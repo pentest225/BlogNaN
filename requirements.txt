@@ -29,3 +29,6 @@ sqlparse==0.3.0
 urllib3==1.25.6
 django-filter==2.2.0
 graphene-django==2.6.0
+drf-dynamic-fields==0.3.1
+django-seed==0.1.9
+djangorestframework==3.10.3
