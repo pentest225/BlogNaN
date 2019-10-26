@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from rest_framework import viewsets
 from .serializer import InfoSerializer, FooterSerializer, HeaderSerializer, SocialSerializer, InstagramSerializer, CopyrightSerializer, LocationMapSerializer
-from rest_framework_api_key.permissions import HasAPIKey
+# from rest_framework_api_key.permissions import HasAPIKey
 from django.http import	JsonResponse
 import json
 from rest_framework import filters

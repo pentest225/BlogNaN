@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Categorie, Article, Archive, Tag, Commentaire, ResponseCommentaire, Like
 from rest_framework import viewsets
 from .serializer import CategorieSerializer, ArticleSerializer, ArchiveSerializer, TagSerializer, CommentaireSerializer, ResponseCommentaireSerializer, LikeSerializer
-from rest_framework_api_key.permissions import HasAPIKey
+# from rest_framework_api_key.permissions import HasAPIKey
 from django.http import	JsonResponse
 import json
 from rest_framework import filters

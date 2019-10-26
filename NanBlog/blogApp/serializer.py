@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from drf_dynamic_fields import DynamicFieldsMixin
 from .models import Categorie, Article, Archive, Tag, Commentaire, ResponseCommentaire, Like
-from Utilisateurs.models import Users
+from Utilisateurs.models import MyUser
 
 class LikeSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
     class Meta:
@@ -47,11 +47,13 @@ class UserSerializer(serializers.ModelSerializer):
     user_response_comment = ResponseCommentaireSerializer(many=True, required=False)
     user_like = LikeSerializer(many=True, required=False)
     class Meta:
-        model = Users
+        model = MyUser
         fields = ('username', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True}}
+        depth = 1
+        
     def create(self, validated_data):
-        user = Users(
+        user = MyUser(
             email=validated_data['email'],
             username=validated_data['username']
         )
