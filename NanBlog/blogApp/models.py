@@ -1,7 +1,7 @@
 from django.db import models
 from tinymce import HTMLField
 from django.contrib.auth.models import User
-from Utilisateurs.models import MyUser
+from Utilisateurs.models import Utilisateur
 
 class Categorie(models.Model):
     """Model definition for Categorie."""
@@ -40,14 +40,13 @@ class Tag(models.Model):
 class Article(models.Model):
     """Model definition for Article."""
     categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE, related_name='article_categorie')
-    auteur = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='article_auteur')
+    auteur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='article_auteur')
     tag = models.ManyToManyField(Tag, related_name='article_tag')
     titre = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to='blog/')
     contenu = HTMLField('Content', default="null")
     image_single = models.ImageField(upload_to='blog/single')
-    is_archive=models.BooleanField(default=False)
     status = models.BooleanField(default=False)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
@@ -66,7 +65,7 @@ class Article(models.Model):
 
 class Commentaire(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_commentaire')
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_comment')
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='user_comment')
     nom = models.CharField(max_length=100)
     email = models.EmailField()
     message = HTMLField('message', default="null")
@@ -78,22 +77,22 @@ class Commentaire(models.Model):
 
 class ResponseCommentaire(models.Model):
     comment = models.ForeignKey(Commentaire, on_delete=models.CASCADE, related_name='response')
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_response_comment')
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='user_response_comment')
     message = HTMLField('message', default="null")
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
 
-# class Archive(models.Model):
+class Archive(models.Model):
     
-#     article_id = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='archive_article')
-#     status = models.BooleanField(default=False)
-#     date_add = models.DateTimeField(auto_now_add=True)
-#     date_upd = models.DateTimeField(auto_now=True)
+    article_id = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='archive_article')
+    status = models.BooleanField(default=False)
+    date_add = models.DateTimeField(auto_now_add=True)
+    date_upd = models.DateTimeField(auto_now=True)
 
 class Like(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_like')
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_like')
+    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='user_like')
     like = models.IntegerField()
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
