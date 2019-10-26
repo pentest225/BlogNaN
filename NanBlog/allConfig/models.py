@@ -7,7 +7,7 @@ class AllInfo(models.Model):
     ville=models.CharField(max_length=255,null=True)
     commune=models.CharField(max_length=255,null=True)
     email=models.EmailField(max_length=254,null=True)
-    description = models.TextField()
+    description = models.TextField(null=True)
     contactText=models.TextField(null=True)
     icon = models.CharField(max_length=250)
     status = models.BooleanField(default=True)
@@ -74,7 +74,7 @@ class Social(models.Model):
 
 class LocationMap(models.Model):
     map = models.URLField()
-    laltitude=models.DecimalField(max_length=10,decimal_places=4,max_digits=10)
+    latitude=models.DecimalField(max_length=10,decimal_places=4,max_digits=10)
     longitude=models.DecimalField(max_length=10,decimal_places=4,max_digits=10)
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)

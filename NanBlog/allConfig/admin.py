@@ -41,6 +41,7 @@ class workingHoursAdmin(admin.ModelAdmin):
         'date_add',
         'date_upd',
     )
+    list_filter = (
         'day',
         'openHours',
         'closeHours',
@@ -139,10 +140,13 @@ class CopyrightAdmin(admin.ModelAdmin):
 class InstagramAdmin(admin.ModelAdmin):
 
     list_display = ('id', 'image', 'status', 'date_add', 'date_upd')
-    list_filter = (
+    list_filter = ('date_add', 'date_upd')
+    
+def _register(model, admin_class):
+    admin.site.register(model, admin_class)
 
 _register(models.AllInfo, AllInfoAdmin)
-_register(models.HeaderFront, HeaderFrontAdmin)
+# _register(models.HeaderFront, HeaderFrontAdmin)
 _register(models.FooterFront, FooterFrontAdmin)
 _register(models.Social, SocialAdmin)
 _register(models.LocationMap, LocationMapAdmin)

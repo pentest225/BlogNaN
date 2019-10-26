@@ -52,8 +52,6 @@ INSTALLED_APPS = [
     'allConfig.apps.AllconfigConfig',
     'django_admin_generator',
     'social_django',
-    'tinymce',
-    'filebrowser',
 ]
 
 MIDDLEWARE = [
