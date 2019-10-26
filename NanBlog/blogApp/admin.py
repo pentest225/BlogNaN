@@ -39,6 +39,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'image',
         'contenu',
         'image_single',
+        'is_archive',
         'status',
         'date_add',
         'date_upd',
@@ -100,16 +101,16 @@ class ResponseCommentaireAdmin(admin.ModelAdmin):
     )
 
 
-class ArchiveAdmin(admin.ModelAdmin):
+# class ArchiveAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'article_id', 'status', 'date_add', 'date_upd')
-    list_filter = (
-        'article_id',
-        'status',
-        'date_add',
-        'date_upd',
+#     list_display = ('id', 'article_id', 'status', 'date_add', 'date_upd')
+#     list_filter = (
+#         'article_id',
+#         'status',
+#         'date_add',
+#         'date_upd',
     
-    )
+#     )
 
 
 class LikeAdmin(admin.ModelAdmin):
@@ -142,5 +143,5 @@ _register(models.Tag, TagAdmin)
 _register(models.Article, ArticleAdmin)
 _register(models.Commentaire, CommentaireAdmin)
 _register(models.ResponseCommentaire, ResponseCommentaireAdmin)
-_register(models.Archive, ArchiveAdmin)
+# _register(models.Archive, ArchiveAdmin)
 _register(models.Like, LikeAdmin)
