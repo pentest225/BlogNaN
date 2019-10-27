@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allConfig.apps.AllconfigConfig',
     'django_admin_generator',
     'social_django',
+    'rest_framework_api_key',
 ]
 
 MIDDLEWARE = [
@@ -101,6 +102,11 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK  =  { 
+    "DEFAULT_PERMISSION_CLASSES" :  [ 
+        "rest_framework_api_key.permissions.HasAPIKey",
+    ] 
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
