@@ -80,6 +80,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends', 
                 'social_django.context_processors.login_redirect',
+                'allConfig.context_processors.get_config',
                 'Statistique.context_processors.visitor_ip_address',
             ],
         },
