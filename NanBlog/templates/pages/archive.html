@@ -10,8 +10,8 @@
                 <h1>
                     {{ header.about_title}}
                 </h1>
-                <p class="text-white link-nav"><a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="archive.html">
-                        Archive</a></p>
+                <p class="text-white link-nav"><a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="{% url 'archive' %}">
+                        {{ header.about_title}}</a></p>
             </div>
         </div>
     </div>

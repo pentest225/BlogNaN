@@ -30,7 +30,6 @@ class ContactViewset(viewsets.ModelViewSet):
 
 
 def contact(request):
-   
     return render(request,'pages/contact.html')
 
 def postform(request):
