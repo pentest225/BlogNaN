@@ -212,3 +212,5 @@ _register(models.Social, SocialAdmin)
 _register(models.LocationMap, LocationMapAdmin)
 _register(models.Copyright, CopyrightAdmin)
 _register(models.Instagram, InstagramAdmin)
+
+
