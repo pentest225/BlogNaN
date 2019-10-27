@@ -12,6 +12,8 @@ router.register(r'contacts', ContactViewset, basename='contact')
 from . import views
 
 urlpatterns = [
-    path('contact', views.contact,name='contact')
+    path('contact', views.contact,name='contact'),
+    path('message', views.postmessage),
+    path('souscription', views.souscription),
 ]
 urlpatterns += router.urls

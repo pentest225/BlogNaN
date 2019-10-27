@@ -32,24 +32,40 @@ class ContactViewset(viewsets.ModelViewSet):
 def contact(request):
     return render(request,'pages/contact.html')
 
-def postform(request):
+def postmessage(request):
     nom = request.POST.get('nom')
     sujet = request.POST.get('sujet')
     email = request.POST.get('email')
     message = request.POST.get('message')
-    print(nom,sujet,contact,email,message)
-    
+    print(nom,sujet,email,message)
     issucces = False
-    
-    # if nom !='' and not nom.isspace() and sujet != '' and not sujet.isspace() and message != '' and not message.isspace() and email != '' and not email.isspace() and phone != '' and not phone.isspace():
-    #     issucces = True
-    #     h = Contact(nom_complet=nom,sujet=sujet,message=message,email=email)
-    #     h.save()
-    #     print(nom,sujet,contact,email,message)
-    # else:
-    #     issucces = False
+    if nom !='' and not nom.isspace() and sujet != '' and not sujet.isspace() and message != '' and not message.isspace()  and email != '' and not email.isspace():
+        issucces = True
+        h = Contact(nom=nom,sujet=sujet,message=message,email=email)
+        h.save()
+    else:
+        issucces = False
     datas = {
         'succes': issucces,
         'name': nom,
+    }
+    return JsonResponse(datas, safe=False)
+
+
+def souscription(request):
+    suscribe = request.POST.get('suscribe')
+
+    issucces = False
+    
+    if suscribe != '' and not suscribe.isspace() :
+        issucces = True
+        h = Newsletter(email=suscribe)
+        h.save()
+        print(suscribe)
+    else:
+        issucces = False
+    datas = {
+        'succes': issucces,
+        'suscribe': suscribe,
     }
     return JsonResponse(datas, safe=False)
