@@ -15,6 +15,7 @@ class UtilisateurAdmin(admin.ModelAdmin):
         'image',
         'message',
         'specialite',
+        'description',
         'status',
         'date_add',
         'date_upd',
@@ -26,6 +27,8 @@ class UtilisateurAdmin(admin.ModelAdmin):
      
     )
     raw_id_fields = ('social',)
+    # raw_id_fields = ('social',)
+    filter_horizontal = ('groups','user_permissions','social','specialite')
 
 
 class SpecialiteAdmin(admin.ModelAdmin):

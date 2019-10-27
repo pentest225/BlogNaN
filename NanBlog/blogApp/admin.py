@@ -60,8 +60,7 @@ class CommentaireAdmin(admin.ModelAdmin):
         'id',
         'article',
         'user',
-        'nom',
-        'email',
+
         'message',
         'sujet',
         'status',
