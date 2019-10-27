@@ -68,7 +68,6 @@ class Commentaire(models.Model):
     user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='user_comment')
     nom = models.CharField(max_length=100)
     email = models.EmailField()
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_comment')
     message = HTMLField('message')
     sujet = models.CharField(max_length=250)
     status = models.BooleanField(default=False)

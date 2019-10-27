@@ -11,7 +11,7 @@ class Specialite(models.Model):
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
     
-class MyUser(AbstractUser):
+class Utilisateur(AbstractUser):
     image = models.ImageField(upload_to='utilisateur/')
     groups = models.ManyToManyField(Group,related_name="utilisateur_groups")
     user_permissions = models.ManyToManyField(Permission,related_name="utilisateur_permissions")
