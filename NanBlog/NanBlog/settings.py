@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'admin_interface',
     'colorfield',
+    'tinymce',
+    'filebrowser',
     'django.contrib.admin',
     'allauth',
     'allauth.account',
@@ -49,6 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'rest_framework',
+    'django_seed',
+    'rest_framework.authtoken',
     'django.contrib.staticfiles',
     'graphene_django',
     'blogApp.apps.BlogappConfig',
@@ -58,8 +63,6 @@ INSTALLED_APPS = [
     'allConfig.apps.AllconfigConfig',
     'django_admin_generator',
     'social_django',
-    'tinymce',
-    'filebrowser',
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL ="https"
@@ -108,8 +111,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends', 
-                'social_django.context_processors.login_redirect', 
-                'django.template.context_processors.request',
             ],
         },
     },

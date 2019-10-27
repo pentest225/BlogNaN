@@ -1,15 +1,12 @@
-from django.contrib import admin
-
-# Register your models here.
 # vim: set fileencoding=utf-8 :
 from django.contrib import admin
-
+from django.utils.safestring import mark_safe
 from . import models
 
 
 class CategorieAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'nom', 'status', 'date_add', 'date_upd')
+    list_display = ('nom', 'status', 'date_add', 'date_upd')
     list_filter = (
         'status',
         'date_add',
@@ -19,26 +16,22 @@ class CategorieAdmin(admin.ModelAdmin):
 
 class TagAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'nom', 'status', 'date_add', 'date_upd')
+    list_display = ('nom', 'status', 'date_add', 'date_upd')
     list_filter = (
         'status',
         'date_add',
         'date_upd',
-      
     )
 
 
 class ArticleAdmin(admin.ModelAdmin):
 
     list_display = (
-        'id',
         'categorie',
         'auteur',
         'titre',
-        'description',
-        'image',
-        'contenu',
-        'image_single',
+        'afficheImage',
+        'affiche',
         'status',
         'date_add',
         'date_upd',
@@ -49,18 +42,20 @@ class ArticleAdmin(admin.ModelAdmin):
         'status',
         'date_add',
         'date_upd',
-
     )
-    raw_id_fields = ('tag',)
-
+    filter_horizontal = ('tag',)
+    search_fields =('titre',)
+    def afficheImage(self, obj):
+        return mark_safe('<img src = " {url} " width = " 100px " heigth = " 50px " />'.format(url=obj.image.url))
+    
+    def affiche(self, obj):
+        return mark_safe('<img src = " {url} " width = " 100px " heigth = " 50px " />'.format(url=obj.image_single.url))
 
 class CommentaireAdmin(admin.ModelAdmin):
 
     list_display = (
-        'id',
         'article',
         'user',
-
         'message',
         'sujet',
         'status',
@@ -68,19 +63,16 @@ class CommentaireAdmin(admin.ModelAdmin):
         'date_upd',
     )
     list_filter = (
-        'article',
         'user',
         'status',
         'date_add',
-        'article',
-   
+        'date_upd',
     )
 
 
 class ResponseCommentaireAdmin(admin.ModelAdmin):
 
     list_display = (
-        'id',
         'comment',
         'user',
         'message',
@@ -94,27 +86,23 @@ class ResponseCommentaireAdmin(admin.ModelAdmin):
         'status',
         'date_add',
         'date_upd',
-      
-     
     )
 
 
 class ArchiveAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'article_id', 'status', 'date_add', 'date_upd')
+    list_display = ('article_id', 'status', 'date_add', 'date_upd')
     list_filter = (
         'article_id',
         'status',
         'date_add',
         'date_upd',
-    
     )
 
 
 class LikeAdmin(admin.ModelAdmin):
 
     list_display = (
-        'id',
         'article',
         'user',
         'like',
@@ -128,7 +116,6 @@ class LikeAdmin(admin.ModelAdmin):
         'status',
         'date_add',
         'date_upd',
-  
     )
 
 

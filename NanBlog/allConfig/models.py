@@ -7,8 +7,8 @@ class AllInfo(models.Model):
     ville=models.CharField(max_length=255,null=True)
     commune=models.CharField(max_length=255,null=True)
     email=models.EmailField(max_length=254,null=True)
-    description = models.TextField()
-    contactText=models.TextField(null=True)
+    description = models.TextField(null=True)
+    contactText=models.TextField()
     icon = models.CharField(max_length=250)
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
@@ -30,7 +30,7 @@ class HeaderFront(models.Model):
     cat_title=models.CharField(max_length=255,null=True)
     blog_title=models.CharField(max_length=255,null=True)
     contct_title=models.CharField(max_length=255,null=True)
-    titre = models.CharField(max_length=100)
+    titre = models.CharField(max_length=100, blank=True, null=True)
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
@@ -57,13 +57,13 @@ class Social(models.Model):
     def font(self):
         print(self.name)
         if self.name == 'FB':
-            font = 'icon-facebook'
+            font = 'fa fa-facebook'
         elif self.name == 'TW':
-            font ='icon-twitter'
+            font ='fa fa-twitter'
         elif self.name == 'INS':
-            font ='icon-instagram'
+            font ='fa fa-instagram'
         elif self.name == 'GOO':
-            font ='icon-google-plus'
+            font ='fa fa-google-plus'
         return font
     class Meta:
         verbose_name = "Social"

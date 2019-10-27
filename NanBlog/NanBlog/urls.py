@@ -24,10 +24,11 @@ from .schema import schema
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('tinymce/', include('tinymce.urls')),
+    path('admin/filebrowser/', site.urls),
     path('',include('blogApp.urls')),
     path('contacts/',include('Contacts.urls')),
     path('tinymce/', include('tinymce.urls')),
-    path('admin/filebrowser/', site.urls),
     path("graphql", GraphQLView.as_view(graphiql=True,schema=schema)),
 
 ]
