@@ -26,9 +26,7 @@ class ContactViewset(viewsets.ModelViewSet):
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
 
+
 def contact(request):
-    theme = AllInfo.objects.filter(status=True)[:1].get()
-    data={
-        'theme':theme,
-    }
-    return render(request,'pages/contact.html',data)
+   
+    return render(request,'pages/contact.html')

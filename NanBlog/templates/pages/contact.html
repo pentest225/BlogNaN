@@ -8,13 +8,9 @@
     <div class="container">
         <div class="row d-flex align-items-center justify-content-center">
             <div class="about-content col-lg-12">
-                <h1 class="text-white">
-                   {{theme.contactText}}
-                 {% for h in header %}
                 <h1>
                     {{ header.contct_title}}
                 </h1>
-
                 <p class="text-white link-nav"><a href="{% url 'index' %}">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="contact.html">
                         Contact Us</a></p>
             </div>
@@ -34,8 +30,8 @@
                         <span class="lnr lnr-home"></span>
                     </div>
                     <div class="contact-details">
-                        <h5>{{theme.ville}}</h5>
-                        <p>{{theme.commune}}</p>
+                        <h5>{{configuration.ville}}</h5>
+                        <p>{{configuration.commune}}</p>
                     </div>
                 </div>
                 <div class="single-contact-address d-flex flex-row">
@@ -43,8 +39,8 @@
                         <span class="lnr lnr-phone-handset"></span>
                     </div>
                     <div class="contact-details">
-                        <h5>{{theme.phone}}</h5>
-                        <p>{{theme.description}}</p>
+                        <h5>{{configuration.phone}}</h5>
+                        <p>{{configuration.description}}</p>
                     </div>
                 </div>
                 <div class="single-contact-address d-flex flex-row">
@@ -52,8 +48,8 @@
                         <span class="lnr lnr-envelope"></span>
                     </div>
                     <div class="contact-details">
-                        <h5>{{theme.email}}</h5>
-                        <p>{{theme.icon}}</p>
+                        <h5>{{configuration.email}}</h5>
+                        <p>{{configuration.icon}}</p>
                     </div>
                 </div>
             </div>
