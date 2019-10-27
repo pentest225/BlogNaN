@@ -8,12 +8,11 @@
     <div class="container">
         <div class="row d-flex align-items-center justify-content-center">
             <div class="about-content col-lg-12">
-                 {% for h in header %}
                 <h1>
-                    {{ h.contct_title}}
+                    {{ header.contct_title}}
                 </h1>
-                {% endfor %}
-                <p class="text-white link-nav"><a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="contact.html">
+
+                <p class="text-white link-nav"><a href="{% url 'index' %}">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="contact.html">
                         Contact Us</a></p>
             </div>
         </div>

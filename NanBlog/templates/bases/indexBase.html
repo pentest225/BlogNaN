@@ -37,7 +37,7 @@
         <div class="container box_1170 main-menu">
             <div class="row align-items-center justify-content-between d-flex">
                 <div id="logo">
-                    <a href="{% url 'index' %}"><img src="/static/img/logo.png" alt="" title="" /></a>
+                    <a href="{% url 'index' %}"><img src="{{ header.logo.url }}" alt="" title="" /></a>
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
@@ -73,10 +73,8 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="single-footer-widget">
-                        {% for f in foot %}
-                        <h6 class="footer_title">{{ f.titre }}</h6>
-                        <p>{{ f.about_text }}</p>
-                        {% endfor %}
+                        <h6 class="footer_title">{{ foot.titre }}</h6>
+                        <p>{{ foot.about_text }}</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
@@ -108,10 +106,8 @@
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-6">
                     <div class="single-footer-widget f_social_wd">
-                        {% for f in foot %}
-                        <h6 class="footer_title">{{ f.folow_text }}</h6>
-                        <p>{{ f.description }}</p>
-                        {% endfor %}
+                        <h6 class="footer_title">{{ foot.folow_text }}</h6>
+                        <p>{{ foot.description }}</p>
                         <div class="f_social">
                             {% for s in social %}
 							<a href="{{ s.lien }}"><i class="{{ s.font }}"></i></a>
