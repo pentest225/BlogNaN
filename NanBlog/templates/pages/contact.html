@@ -10,7 +10,11 @@
             <div class="about-content col-lg-12">
                 <h1 class="text-white">
                    {{theme.contactText}}
+                 {% for h in header %}
+                <h1>
+                    {{ h.contct_title}}
                 </h1>
+                {% endfor %}
                 <p class="text-white link-nav"><a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="contact.html">
                     {{theme.contactText}}</a></p>
             </div>
