@@ -45,9 +45,9 @@ class Article(models.Model):
     titre = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to='blog/')
-    contenu = HTMLField('Content', default="null")
+    contenu = HTMLField('contenu')
     image_single = models.ImageField(upload_to='blog/single')
-    status = models.BooleanField(default=False)
+    status = models.BooleanField(default=False,null=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
     
@@ -66,7 +66,7 @@ class Article(models.Model):
 class Commentaire(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_commentaire')
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_comment')
-    message = HTMLField('message', default="null")
+    message = HTMLField('message')
     sujet = models.CharField(max_length=250)
     status = models.BooleanField(default=False)
     date_add = models.DateTimeField(auto_now_add=True)

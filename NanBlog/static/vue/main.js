@@ -10,6 +10,7 @@ var app = new Vue({
         sujet: '',
         email: '',
         message: '',
+        suscribe:'',
     },
     delimiters:["${","}"],
     mounted(){
@@ -233,18 +234,44 @@ var app = new Vue({
             formData.append('sujet', '' + this.sujet);
             formData.append('email', '' + this.email);
             formData.append('message', '' + this.message);
-            axios.post('http://127.0.0.1:8000/contacts/contacts/',formData,
+            axios.post('http://127.0.0.1:8000/contacts/message',formData,
             {
             } ).then(response => {
                     console.log(response)
                     if (response.data.succes == true) {
-                        swal("Merci Votre message à été envoyer avec Succés", "", "success");
+                        new Toast({
+							message: 'Votre Message a été envoyé avec Success',
+							type: 'success'
+						});
                         this.nom = ''
                         this.message = ''
                         this.email = ''
                         this.sujet = ''
                     }else{
                         swal("Tous les champs Sont requis", "", "error");
+                    }
+                    
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        },
+        suscription: function () {
+            axios.defaults.xsrfCookieName = 'csrftoken'
+            axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+            let formData = new FormData();
+            formData.append('suscribe', '' + this.suscribe);
+            axios.post('http://127.0.0.1:8000/contacts/souscription',formData,
+            {
+            } ).then(response => {
+                    
+                    console.log(response)
+                    if (response.data.succes == true) {
+                        swal("Merci d'avoir Souscrire au Service Newlestter", "", "success");
+                        this.email = ''
+
+                    }else{
+                        swal("Entrer Votre adresse Mail pour Souscrire Au service Newlestter de nan blog", "", "error");
                     }
                     
                 })
