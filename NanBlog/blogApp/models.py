@@ -40,7 +40,7 @@ class Tag(models.Model):
 class Article(models.Model):
     """Model definition for Article."""
     categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE, related_name='article_categorie')
-    auteur = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='article_auteur')
+    auteur = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='article_auteur')
     tag = models.ManyToManyField(Tag, related_name='article_tag')
     titre = models.CharField(max_length=100)
     description = models.TextField()

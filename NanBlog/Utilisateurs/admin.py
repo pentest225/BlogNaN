@@ -7,7 +7,7 @@ from django.contrib import admin
 from . import models
 
 
-class UtilisateurAdmin(admin.ModelAdmin):
+class MyUserAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
@@ -46,5 +46,5 @@ def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
-_register(models.Utilisateur, UtilisateurAdmin)
+_register(models.MyUser, MyUserAdmin)
 _register(models.Specialite, SpecialiteAdmin)
