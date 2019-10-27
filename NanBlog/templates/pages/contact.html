@@ -11,8 +11,8 @@
                 <h1>
                     {{ header.contct_title}}
                 </h1>
-                <p class="text-white link-nav"><a href="{% url 'index' %}">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="contact.html">
-                        Contact Us</a></p>
+                <p class="text-white link-nav"><a href="{% url 'index' %}">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="{% url 'contact' %}">
+                        {{ header.contct_title}}</a></p>
             </div>
         </div>
     </div>
