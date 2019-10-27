@@ -131,7 +131,7 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
-LOGIN_REDIRECT_URL = 'Home' 
+LOGIN_REDIRECT_URL = 'index' 
 # redirects to /accounts/profile by default
 
 WSGI_APPLICATION = 'NanBlog.wsgi.application'
