@@ -9,10 +9,10 @@
         <div class="row d-flex align-items-center justify-content-center">
             <div class="about-content col-lg-12">
                 <h1 class="text-white">
-                    Contact Us
+                   {{theme.contactText}}
                 </h1>
                 <p class="text-white link-nav"><a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="contact.html">
-                        Contact Us</a></p>
+                    {{theme.contactText}}</a></p>
             </div>
         </div>
     </div>
@@ -30,8 +30,8 @@
                         <span class="lnr lnr-home"></span>
                     </div>
                     <div class="contact-details">
-                        <h5>Dhaka, Bangladesh</h5>
-                        <p>56/8, West Panthapath</p>
+                        <h5>{{theme.ville}}</h5>
+                        <p>{{theme.commune}}</p>
                     </div>
                 </div>
                 <div class="single-contact-address d-flex flex-row">
@@ -39,8 +39,8 @@
                         <span class="lnr lnr-phone-handset"></span>
                     </div>
                     <div class="contact-details">
-                        <h5>00 (880) 9865 562</h5>
-                        <p>Mon to Fri 9am to 6 pm</p>
+                        <h5>{{theme.phone}}</h5>
+                        <p>{{theme.description}}</p>
                     </div>
                 </div>
                 <div class="single-contact-address d-flex flex-row">
@@ -48,8 +48,8 @@
                         <span class="lnr lnr-envelope"></span>
                     </div>
                     <div class="contact-details">
-                        <h5>support@codethemes.com</h5>
-                        <p>Send us your query anytime!</p>
+                        <h5>{{theme.email}}</h5>
+                        <p>{{theme.icon}}</p>
                     </div>
                 </div>
             </div>

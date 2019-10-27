@@ -7,6 +7,7 @@ from django.http import	JsonResponse
 import json
 from rest_framework import filters
 from rest_framework.response import Response
+from allConfig.models import *
 # Create your views here.
 
 class DynamicSearchFilter(filters.SearchFilter):
@@ -26,5 +27,8 @@ class ContactViewset(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
 
 def contact(request):
-    
-    return render(request,'pages/contact.html')
+    theme = AllInfo.objects.filter(status=True)[:1].get()
+    data={
+        'theme':theme,
+    }
+    return render(request,'pages/contact.html',data)

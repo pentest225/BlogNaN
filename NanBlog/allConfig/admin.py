@@ -22,7 +22,6 @@ class AllInfoAdmin(admin.ModelAdmin):
     )
     list_filter = (
         'status',
-       
         'titre',
         'phone',
         'ville',
@@ -49,7 +48,7 @@ class workingHoursAdmin(admin.ModelAdmin):
 
     )
 
-
+class HeaderFrontAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
@@ -146,9 +145,11 @@ def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 _register(models.AllInfo, AllInfoAdmin)
-# _register(models.HeaderFront, HeaderFrontAdmin)
+_register(models.HeaderFront, HeaderFrontAdmin)
 _register(models.FooterFront, FooterFrontAdmin)
 _register(models.Social, SocialAdmin)
 _register(models.LocationMap, LocationMapAdmin)
 _register(models.Copyright, CopyrightAdmin)
 _register(models.Instagram, InstagramAdmin)
+
+
