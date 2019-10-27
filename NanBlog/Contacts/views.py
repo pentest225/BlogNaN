@@ -8,6 +8,8 @@ import json
 from rest_framework import filters
 from rest_framework.response import Response
 from allConfig.models import *
+from django.http import JsonResponse
+import json
 # Create your views here.
 
 class DynamicSearchFilter(filters.SearchFilter):
@@ -29,3 +31,25 @@ class ContactViewset(viewsets.ModelViewSet):
 
 def contact(request):
     return render(request,'pages/contact.html')
+
+def postform(request):
+    nom = request.POST.get('nom')
+    sujet = request.POST.get('sujet')
+    email = request.POST.get('email')
+    message = request.POST.get('message')
+    print(nom,sujet,contact,email,message)
+    
+    issucces = False
+    
+    # if nom !='' and not nom.isspace() and sujet != '' and not sujet.isspace() and message != '' and not message.isspace() and email != '' and not email.isspace() and phone != '' and not phone.isspace():
+    #     issucces = True
+    #     h = Contact(nom_complet=nom,sujet=sujet,message=message,email=email)
+    #     h.save()
+    #     print(nom,sujet,contact,email,message)
+    # else:
+    #     issucces = False
+    datas = {
+        'succes': issucces,
+        'name': nom,
+    }
+    return JsonResponse(datas, safe=False)

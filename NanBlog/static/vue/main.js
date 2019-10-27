@@ -6,18 +6,16 @@ var app = new Vue({
         datAllIngredientesByCategoriy:[],
         datSingleCategory:[],
         categoryId:'',
+        nom: '',
+        sujet: '',
+        email: '',
+        message: '',
     },
     delimiters:["${","}"],
     mounted(){
         this.getdata()
     },
     methods: {
-        reverseMessage: function () {
-        this.message = this.message.split('').reverse().join('')
-        },
-        hello:function(){
-            console.log('hello world\r\n')
-        },
         getdata: function(){
             this.base_url = '127.0.0.1:8000'
             console.log('data getting')
@@ -226,6 +224,33 @@ var app = new Vue({
             .catch((err) => {
                 console.log(err);
             })
+        },
+        sendmessage: function () {
+            axios.defaults.xsrfCookieName = 'csrftoken'
+            axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+            let formData = new FormData();
+            formData.append('nom', '' + this.nom);
+            formData.append('sujet', '' + this.sujet);
+            formData.append('email', '' + this.email);
+            formData.append('message', '' + this.message);
+            axios.post('http://127.0.0.1:8000/contacts/contacts/',formData,
+            {
+            } ).then(response => {
+                    console.log(response)
+                    if (response.data.succes == true) {
+                        swal("Merci Votre message à été envoyer avec Succés", "", "success");
+                        this.nom = ''
+                        this.message = ''
+                        this.email = ''
+                        this.sujet = ''
+                    }else{
+                        swal("Tous les champs Sont requis", "", "error");
+                    }
+                    
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         },
     },
 
