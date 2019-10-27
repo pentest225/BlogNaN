@@ -7,7 +7,7 @@ from .models import *
 
 class MyUserNode(DjangoObjectType):
     class Meta:
-        model = MyUser
+        model = Utilisateur
         filter_fields = {
             'username':['exact','icontains','istartswith'],
             'first_name':['exact','icontains','istartswith'],

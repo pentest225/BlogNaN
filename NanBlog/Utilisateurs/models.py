@@ -30,10 +30,4 @@ class Utilisateur(AbstractUser):
         """Unicode representation of utilisateur."""
         return '{}'.format(self.username) # TODO
 
-class Specialite(models.Model):
-    specialiste = models.CharField(max_length=250)
-    status = models.BooleanField(default=True)
-    date_add = models.DateTimeField(auto_now_add=True)
-    date_upd = models.DateTimeField(auto_now=True)
-    
     
