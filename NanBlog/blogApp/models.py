@@ -1,7 +1,7 @@
 from django.db import models
 from tinymce import HTMLField
 from django.contrib.auth.models import User
-from Utilisateurs.models import Utilisateur
+from Utilisateurs.models import MyUser
 
 class Categorie(models.Model):
     """Model definition for Categorie."""
@@ -65,7 +65,7 @@ class Article(models.Model):
 
 class Commentaire(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_commentaire')
-    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='user_comment')
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_comment')
     nom = models.CharField(max_length=100)
     email = models.EmailField()
     message = HTMLField('message')
@@ -77,7 +77,7 @@ class Commentaire(models.Model):
 
 class ResponseCommentaire(models.Model):
     comment = models.ForeignKey(Commentaire, on_delete=models.CASCADE, related_name='response')
-    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='user_response_comment')
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_response_comment')
     message = HTMLField('message', default="null")
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
@@ -92,7 +92,7 @@ class Archive(models.Model):
 
 class Like(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_like')
-    user = models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name='user_like')
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_like')
     like = models.IntegerField()
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
