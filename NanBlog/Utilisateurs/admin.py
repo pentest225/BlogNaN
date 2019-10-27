@@ -11,7 +11,6 @@ class MyUserAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
-        'nom',
         'image',
         'message',
         'specialite',
