@@ -3,8 +3,21 @@ from tinymce import HTMLField
 # Create your models here.
 class AllInfo(models.Model):
     titre = models.CharField(max_length=250)
+    phone=models.CharField(max_length=255,null=True)
+    ville=models.CharField(max_length=255,null=True)
+    commune=models.CharField(max_length=255,null=True)
+    email=models.EmailField(max_length=254,null=True)
     description = models.TextField()
+    contactText=models.TextField(null=True)
     icon = models.CharField(max_length=250)
+    status = models.BooleanField(default=True)
+    date_add = models.DateTimeField(auto_now_add=True)
+    date_upd = models.DateTimeField(auto_now=True)
+
+class workingHours(models.Model):
+    day=models.CharField(max_length=255)
+    openHours=models.TimeField()
+    closeHours=models.TimeField()
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
@@ -12,6 +25,11 @@ class AllInfo(models.Model):
 class HeaderFront(models.Model):
     logo = models.ImageField(upload_to='entreprise/')
     image = models.ImageField(upload_to='blog/')
+    index_title=models.CharField(max_length=255,null=True)
+    about_title=models.CharField(max_length=255,null=True)
+    cat_title=models.CharField(max_length=255,null=True)
+    blog_title=models.CharField(max_length=255,null=True)
+    contct_title=models.CharField(max_length=255,null=True)
     titre = models.CharField(max_length=100)
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
@@ -19,6 +37,9 @@ class HeaderFront(models.Model):
 
 class FooterFront(models.Model):
     titre = models.CharField(max_length=100)
+    about_text=models.TextField(null=True)
+    newslater_text=models.TextField(null=True)
+    folow_text=models.TextField(null=True)
     description = models.TextField(blank=True, null=True)
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
