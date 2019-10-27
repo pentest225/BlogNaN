@@ -8,7 +8,7 @@ class AllInfo(models.Model):
     commune=models.CharField(max_length=255,null=True)
     email=models.EmailField(max_length=254,null=True)
     description = models.TextField(null=True)
-    contactText=models.TextField(null=True)
+    contactText=models.TextField()
     icon = models.CharField(max_length=250)
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
