@@ -1,0 +1,147 @@
+{% extends 'bases/otherBase.html' %}
+
+{% load i18n %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+<section class="banner-area relative">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+                <h1 class="text-white">
+                    Contact Us
+                </h1>
+                <p class="text-white link-nav"><a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="contact.html">
+                        Contact Us</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End banner Area -->
+<div class="main-bg">
+    <div class="form-v8"><div class="page-content">
+		<div class="form-v8-content">
+			
+			<div class="form-right">
+				<div class="tab">
+					<div class="tab-inner">
+						<button class="tablinks" onclick="openCity(event, 'sign-up')" id="defaultOpen">Compte Visiteur</button>
+					</div>
+					<div class="tab-inner">
+						<button class="tablinks" onclick="openCity(event, 'sign-in')">Membre</button>
+					</div>
+				</div>
+				<form class="form-detail" id="signup_form" method="post" action="">
+					<div class="tabcontent" id="sign-up">
+                        <p>Détails sur le type de compte</p><br><br><br>
+                        {% csrf_token %}
+                        {% for hidden in form.hidden_fields %}
+                          {{ hidden }}
+                        {% endfor %}
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                        </div>
+                        {% endif %}    
+                        {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+						<div class="form-row">
+							<label class="form-row-inner">
+                <input id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" type="text" class="input-text {% if form.email.errors %}is-invalid{% endif %}"  required="" value="{{ form.email.value|default:'' }}" />
+								<span class="label">Email</span>
+		  						<span class="border"></span>
+							</label>
+						</div>
+						<div class="form-row">
+							<label class="form-row-inner">
+                <input id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" type="text" class="input-text {% if form.username.errors %}is-invalid{% endif %}"   required="" value="{{ form.username.value|default:'' }}" />
+								<span class="label">Nom d'utilisateur</span>
+		  						<span class="border"></span>
+							</label>
+						</div>
+						<div class="form-row">
+							<label class="form-row-inner">
+                <input id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" type="password" class="input-text {% if form.password1.errors %}is-invalid{% endif %}"  required="" value="{{ form.password1.value|default:'' }}" />
+								<span class="label">Mot de passe</span>
+								<span class="border"></span>
+							</label>
+						</div>
+						<div class="form-row">
+							<label class="form-row-inner">
+                <input id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" type="password" class="input-text {% if form.password2.errors %}is-invalid{% endif %}"   required="" value="{{ form.password2.value|default:'' }}" />
+								<span class="label">Confirmer mot de passe</span>
+								<span class="border"></span>
+							</label>
+						</div>
+						<div class="form-row-last">
+              <input type="submit" name="register" class="register" value="S'inscrire">
+              <p>{% blocktrans %}If you have not created an account yet, then please
+              <a href="{{ login_url }}" style="color:orange;">sign up</a> first.{% endblocktrans %}</p>
+						</div>
+					</div>
+				</form>
+				<form class="form-detail" id="signup_form" method="post" action="">
+
+					<div class="tabcontent" id="sign-in">
+                        <p>Détails sur le type de compte</p><br><br><br>
+                        {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+              {{ hidden }}
+            {% endfor %}
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+            </div>
+            {% endif %}    
+						<div class="form-row">
+                <label class="form-row-inner">
+                  <input id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" type="text" class="input-text {% if form.email.errors %}is-invalid{% endif %}"  required="" value="{{ form.email.value|default:'' }}" />
+                  <span class="label">Email</span>
+                    <span class="border"></span>
+                </label>
+              </div>
+              <div class="form-row">
+                <label class="form-row-inner">
+                  <input id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" type="text" class="input-text {% if form.username.errors %}is-invalid{% endif %}"   required="" value="{{ form.username.value|default:'' }}" />
+                  <span class="label">Nom d'utilisateur</span>
+                    <span class="border"></span>
+                </label>
+              </div>
+              <div class="form-row">
+                <label class="form-row-inner">
+                  <input id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" type="password" class="input-text {% if form.password1.errors %}is-invalid{% endif %}"  required="" value="{{ form.password1.value|default:'' }}" />
+                  <span class="label">Mot de passe</span>
+                  <span class="border"></span>
+                </label>
+              </div>
+              <div class="form-row">
+                <label class="form-row-inner">
+                  <input id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" type="password" class="input-text {% if form.password2.errors %}is-invalid{% endif %}"   required="" value="{{ form.password2.value|default:'' }}" />
+                  <span class="label">Confirmer mot de passe</span>
+                  <span class="border"></span>
+                </label>
+              </div>
+						<div class="form-row-last">
+              <input type="submit" name="register" class="register" value="S'inscrire">
+              <p>{% blocktrans %}If you have not created an account yet, then please
+                  <a href="{{ login_url }}" style="color:orange;">sign up</a> first.{% endblocktrans %}</p>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+    </div>
+</div>
+</div>
+    
+
+{% endblock content %}

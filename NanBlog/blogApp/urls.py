@@ -1,8 +1,10 @@
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from .views import CategorieViewset, ArticleViewset, ArchiveViewset, TagViewset, CommentaireViewset, ResponseCommentaireViewset, LikeViewset
+from django.conf.urls import url, include
+
 
 router = DefaultRouter()
 router.register(r'categorie', CategorieViewset, basename='categorie')
@@ -12,6 +14,7 @@ router.register(r'comment', CommentaireViewset, basename='comment')
 router.register(r'responsecomment', ResponseCommentaireViewset, basename='responsecomment')
 router.register(r'tag', TagViewset, basename='tag')
 router.register(r'like', LikeViewset, basename='like')
+
 
 
 from . import views
@@ -24,8 +27,10 @@ urlpatterns = [
     path('login',views.login,name='login'),
     path('register',views.register,name='register'),
     path('oauth/', include('social_django.urls', namespace='social')),
+    re_path(r'^accounts/', include('allauth.urls')),
 ]
 urlpatterns += router.urls
+
 
 # LOGIN_URL = 'login'
 # LOGOUT_URL = 'logout'

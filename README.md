@@ -1,6 +1,9 @@
 # BlogNaN
  Projet de goupe creation de Blog 
 
+# lancer le serveur avec certificat ssl
+ python manage.py runserver_plus --cert certname
+
 # Application Blog
 ### importation
 ```python

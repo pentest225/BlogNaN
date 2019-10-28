@@ -7,14 +7,11 @@ from django.contrib import admin
 from . import models
 
 
-class MyUserAdmin(admin.ModelAdmin):
+class UtilisateurAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
-        'first_name',
-        'last_name',
-        'username',
-        'email',
+        'nom',
         'image',
         'description',
         'status',
@@ -46,5 +43,5 @@ def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
-_register(models.MyUser, MyUserAdmin)
+_register(models.Utilisateur, UtilisateurAdmin)
 _register(models.Specialite, SpecialiteAdmin)

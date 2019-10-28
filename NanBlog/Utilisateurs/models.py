@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser,Group,Permission
+
 # Create your models here.
 from allConfig.models import Social
 
@@ -21,14 +21,6 @@ class MyUser(AbstractUser):
     status = models.BooleanField(default=True,null=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
-    class Meta:
-        """Meta definition for utilisateur."""
-        verbose_name = 'utilisateur'
-        verbose_name_plural = 'utilisateurs'
-
-    def __str__(self):
-        """Unicode representation of utilisateur."""
-        return '{}'.format(self.username) # TODO
 
 
     
