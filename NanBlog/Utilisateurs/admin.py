@@ -11,10 +11,6 @@ class MyUserAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
-        'first_name',
-        'last_name',
-        'username',
-        'email',
         'image',
         'description',
         'status',
@@ -27,6 +23,7 @@ class MyUserAdmin(admin.ModelAdmin):
         'date_upd',
      
     )
+    raw_id_fields = ('social',)
     # raw_id_fields = ('social',)
     filter_horizontal = ('groups','user_permissions','social','specialite')
 
