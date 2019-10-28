@@ -112,6 +112,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends', 
+                'allConfig.context_processors.get_config',
+                'Statistique.context_processors.visitor_ip_address',
             ],
         },
     },
@@ -210,6 +212,12 @@ TINYMCE_DEFAULT_CONFIG = {
 
 FILEBROWSER_DIRECTORY='../media_cdn'
 FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100
+
+REST_FRAMEWORK  =  { 
+    "DEFAULT_PERMISSION_CLASSES" :  [ 
+        "rest_framework_api_key.permissions.HasAPIKey",
+    ] 
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
