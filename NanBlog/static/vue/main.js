@@ -18,12 +18,12 @@ var app = new Vue({
     },
     methods: {
         getdata: function(){
-            this.base_url = '127.0.0.1:8000'
+            this.base_url = 'localhost:8000'
             console.log('data getting')
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             axios({
-                url: 'http://'+this.base_url + '/graphql',
+                url: 'https://'+this.base_url + '/graphql',
                 method: 'post',
                 data: {
                     query: `
@@ -213,14 +213,11 @@ var app = new Vue({
             })
             .then(response => {
                 result = response.data.data
-                console.log(response.data)
+                // console.log(response.data)
                 this.dataAllCategory=result.allCategories.edges
                 this.categoryId=this.dataAllCategory
-                //console.log(this.category)
-                this.datAllIngredientesByCategoriy=result.category.ingredients
-                //console.log(result)
                 console.log(this.dataAllCategory)
-                console.log(this.datAllIngredientesByCategoriy)
+
             })  
             .catch((err) => {
                 console.log(err);
@@ -234,7 +231,7 @@ var app = new Vue({
             formData.append('sujet', '' + this.sujet);
             formData.append('email', '' + this.email);
             formData.append('message', '' + this.message);
-            axios.post('http://127.0.0.1:8000/contacts/message',formData,
+            axios.post('https://localhost:8000/contacts/message',formData,
             {
             } ).then(response => {
                     console.log(response)
@@ -261,7 +258,7 @@ var app = new Vue({
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             let formData = new FormData();
             formData.append('suscribe', '' + this.suscribe);
-            axios.post('http://127.0.0.1:8000/contacts/souscription',formData,
+            axios.post('https://localhost:8000/contacts/souscription',formData,
             {
             } ).then(response => {
                     
