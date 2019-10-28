@@ -70,9 +70,9 @@ def single_blog(request):
     return render(request,'pages/single_blog.html')
 
 
-# def archive(request):
+def archive(request):
     
-#     return render(request,'pages/archive.html')
+    return render(request,'pages/archive.html')
 
 def login(request):
     

@@ -23,7 +23,7 @@ var app = new Vue({
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             axios({
-                url: 'https://'+this.base_url + '/graphql',
+                url: 'https://127.0.0.1:8000/graphql',
                 method: 'post',
                 data: {
                     query: `
@@ -231,7 +231,7 @@ var app = new Vue({
             formData.append('sujet', '' + this.sujet);
             formData.append('email', '' + this.email);
             formData.append('message', '' + this.message);
-            axios.post('https://localhost:8000/contacts/message',formData,
+            axios.post('https://127.0.0.1:8000/contacts/message',formData,
             {
             } ).then(response => {
                     console.log(response)
@@ -258,7 +258,7 @@ var app = new Vue({
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             let formData = new FormData();
             formData.append('suscribe', '' + this.suscribe);
-            axios.post('https://localhost:8000/contacts/souscription',formData,
+            axios.post('https://127.0.0.1:8000/contacts/souscription',formData,
             {
             } ).then(response => {
                     
