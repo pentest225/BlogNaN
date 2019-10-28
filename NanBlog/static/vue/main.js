@@ -17,13 +17,13 @@ var app = new Vue({
         this.getdata()
     },
     methods: {
-        getdata: function(){
+        getdata: function() {
             this.base_url = 'localhost:8000'
             console.log('data getting')
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             axios({
-                url: 'https://'+this.base_url + '/graphql',
+                url: 'https://' + this.base_url + '/graphql',
                 method: 'post',
                 data: {
                     query: `
@@ -213,7 +213,7 @@ var app = new Vue({
             })
             .then(response => {
                 result = response.data.data
-                // console.log(response.data)
+                console.log(response.data)
                 this.dataAllCategory=result.allCategories.edges
                 this.categoryId=this.dataAllCategory
                 console.log(this.dataAllCategory)

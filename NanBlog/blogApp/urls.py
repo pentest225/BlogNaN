@@ -21,7 +21,7 @@ urlpatterns = [
     path('',views.index,name='index'),
     path('category',views.category,name='category'),
     path('single_blog',views.single_blog,name='single_blog'),
-    # path('archive',views.archive,name='archive'),
+    path('archive',views.archive,name='archive'),
     path('login',views.login,name='login'),
     path('register',views.register,name='register'),
     re_path(r'^accounts/', include('allauth.urls')),
