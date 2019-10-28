@@ -3,6 +3,7 @@ var app = new Vue({
     data: {
         base_url:'',
         dataAllCategory:[],
+        dataAllarticle:[],
         datAllIngredientesByCategoriy:[],
         datSingleCategory:[],
         categoryId:'',
@@ -103,7 +104,7 @@ var app = new Vue({
                                         }
                                     },
                                     auteur{
-                                        username,firstName,email,isStaff,isActive,image,description,
+                                        username,firstName,email,isStaff,isActive,image,description,lastName
                                         social{
                                         edges{
                                             node{
@@ -123,7 +124,7 @@ var app = new Vue({
                                 }
                             },
                         },
-                        allArticles{
+                        allArticles(status:true){
                             edges{
                                 node{
                                     id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
@@ -213,10 +214,12 @@ var app = new Vue({
             })
             .then(response => {
                 result = response.data.data
-                console.log(response.data)
+                // console.log(response.data)
                 this.dataAllCategory=result.allCategories.edges
                 this.categoryId=this.dataAllCategory
-                console.log(this.dataAllCategory)
+                this.dataAllarticle = result.allArticles.edges
+                // console.log(this.dataAllCategory)
+                console.log(this.dataAllarticle)
 
             })  
             .catch((err) => {
