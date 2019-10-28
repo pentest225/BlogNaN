@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_seed',
     'rest_framework.authtoken',
+    'rest_framework_api_key',
     'django.contrib.staticfiles',
     'graphene_django',
     'blogApp.apps.BlogappConfig',

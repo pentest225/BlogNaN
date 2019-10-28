@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Newsletter, Contact
 from rest_framework import viewsets
 from .serializer import NewsletterSerializer, ContactSerializer
-# from rest_framework_api_key.permissions import HasAPIKey
+from rest_framework_api_key.permissions import HasAPIKey
+from rest_framework.permissions import IsAuthenticated
 from django.http import	JsonResponse
 import json
 from rest_framework import filters
@@ -18,13 +19,13 @@ class DynamicSearchFilter(filters.SearchFilter):
     
 class NewsletterViewset(viewsets.ModelViewSet):
     filter_backends = (DynamicSearchFilter,)
-    # permission_classes = [IsAuthenticated|ReadOnly]
+    permission_classes = [HasAPIKey | IsAuthenticated]
     serializer_class = NewsletterSerializer
     queryset = Newsletter.objects.all()
     
 class ContactViewset(viewsets.ModelViewSet):
     filter_backends = (DynamicSearchFilter,)
-    # permission_classes = [IsAuthenticated|ReadOnly]
+    permission_classes = [HasAPIKey | IsAuthenticated]
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
 
