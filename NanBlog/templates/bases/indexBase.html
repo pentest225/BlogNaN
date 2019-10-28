@@ -54,6 +54,14 @@
                         <li><a href="{% url 'archive' %}">Archive</a></li>
                         
                         <li><a href="{% url 'contact' %}">Contact</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="menu-has-children"><a>{{ user.id}} {{ user.first_name }}</a>
+                            <ul>
+                                <li><a href="{% url 'account_logout' %}">Reseau</a></li>
+                                <li><a href="{% url 'single_blog' %}">Programmation</a></li>
+                            </ul>
+                        </li>
+                        {% endif %} 
                     </ul>
                 </nav>
             </div>

@@ -35,8 +35,9 @@
 						<button class="tablinks" onclick="openCity(event, 'sign-in')">Membre</button>
 					</div>
 				</div>
-				<form class="form-detail" id="signup_form" method="post" action="">
 					<div class="tabcontent" id="sign-up">
+              <form class="form-detail" id="signup_form" method="post" action="">
+
                         <p>Détails sur le type de compte</p><br><br><br>
                         {% csrf_token %}
                         {% for hidden in form.hidden_fields %}
@@ -65,9 +66,10 @@
 						</div>
 					</div>
 				</form>
-				<form class="form-detail" id="signup_form" method="post" action="">
+			
 
 					<div class="tabcontent" id="sign-in">
+            	<form class="form-detail" id="signup_form" method="post" action="">
                         <p>Détails sur le type de compte</p><br><br><br>
                         {% csrf_token %}
             {% for hidden in form.hidden_fields %}
@@ -94,7 +96,7 @@
             </div><br>
             {% endfor %}  
 						<div class="form-row-last">
-              <input type="submit" name="register" class="register" value="S'inscrire">
+              <input type="submit" name="" class="register" value="S'inscrire">
               <p>{% blocktrans %}If you have not created an account yet, then please
                   <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}</p>
 						</div>
