@@ -19,7 +19,7 @@ var app = new Vue({
     methods: {
         getdata: function() {
             this.base_url = 'localhost:8000'
-            console.log('data getting')
+            // console.log('data getting')
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             axios({
@@ -126,16 +126,16 @@ var app = new Vue({
                     allArticles{
                         edges{
                             node{
-                                id,titre,image,imageSingle,description,dateAdd,dateUpd,
+                                id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive,
                                 tag{
-                                edges{
-                                    node{
-                                    id,nom
+                                    edges{
+                                        node{
+                                        id,nom
+                                        }
                                     }
-                                }
-                                            },
+                                },
                                 categorie{
-                                nom
+                                    nom
                                 },
                                 articleCommentaire{
                                 edges{
@@ -168,7 +168,7 @@ var app = new Vue({
                             }
                     },
                     article(id:"QXJ0aWNsZU5vZGU6MQ=="){
-                        id,titre,image,imageSingle,description,dateAdd,dateUpd,
+                        id,titre,image,imageSingle,description,dateAdd,dateUpd, isArchive,
                         tag{
                             edges{
                             node{
