@@ -52,35 +52,16 @@
                         {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
-						<div class="form-row">
-							<label class="form-row-inner">
-                <input id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" type="text" class="input-text {% if form.email.errors %}is-invalid{% endif %}"  required="" value="{{ form.email.value|default:'' }}" />
-								<span class="label">Email</span>
-		  						<span class="border"></span>
-							</label>
-						</div>
-						<div class="form-row">
-							<label class="form-row-inner">
-                <input id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" type="text" class="input-text {% if form.username.errors %}is-invalid{% endif %}"   required="" value="{{ form.username.value|default:'' }}" />
-								<span class="label">Nom d'utilisateur</span>
-		  						<span class="border"></span>
-							</label>
-						</div>
-						<div class="form-row">
-							<label class="form-row-inner">
-                <input id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" type="password" class="input-text {% if form.password1.errors %}is-invalid{% endif %}"  required="" value="{{ form.password1.value|default:'' }}" />
-								<span class="label">Mot de passe</span>
-								<span class="border"></span>
-							</label>
-						</div>
-						<div class="form-row">
-							<label class="form-row-inner">
-                <input id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" type="password" class="input-text {% if form.password2.errors %}is-invalid{% endif %}"   required="" value="{{ form.password2.value|default:'' }}" />
-								<span class="label">Confirmer mot de passe</span>
-								<span class="border"></span>
-							</label>
-						</div>
-						<div class="form-row-last">
+            {% for field in form.visible_fields %}
+            <div class="form-row">
+              <label class="form-row-inner">
+              {% render_field field class="input-text" placeholder=field.label %}
+              <span class="label">{{field.label}}</span>
+              <span class="border"></span>
+              </label>
+            </div>
+            {% endfor %}
+					<div class="form-row-last">
               <input type="submit" name="register" class="register" value="S'inscrire">
               <p>{% blocktrans %}If you have not created an account yet, then please
               <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}</p>
@@ -101,35 +82,17 @@
                 {{ error }}
             {% endfor %}
             </div>
-            {% endif %}    
-						<div class="form-row">
-                <label class="form-row-inner">
-                  <input id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" type="text" class="input-text {% if form.email.errors %}is-invalid{% endif %}"  required="" value="{{ form.email.value|default:'' }}" />
-                  <span class="label">Email</span>
-                    <span class="border"></span>
-                </label>
-              </div>
-              <div class="form-row">
-                <label class="form-row-inner">
-                  <input id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" type="text" class="input-text {% if form.username.errors %}is-invalid{% endif %}"   required="" value="{{ form.username.value|default:'' }}" />
-                  <span class="label">Nom d'utilisateur</span>
-                    <span class="border"></span>
-                </label>
-              </div>
-              <div class="form-row">
-                <label class="form-row-inner">
-                  <input id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" type="password" class="input-text {% if form.password1.errors %}is-invalid{% endif %}"  required="" value="{{ form.password1.value|default:'' }}" />
-                  <span class="label">Mot de passe</span>
-                  <span class="border"></span>
-                </label>
-              </div>
-              <div class="form-row">
-                <label class="form-row-inner">
-                  <input id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" type="password" class="input-text {% if form.password2.errors %}is-invalid{% endif %}"   required="" value="{{ form.password2.value|default:'' }}" />
-                  <span class="label">Confirmer mot de passe</span>
-                  <span class="border"></span>
-                </label>
-              </div>
+            {% endif %}  
+            
+            {% for field in form.visible_fields %}
+            <div class="form-row">
+              <label class="form-row-inner">
+              {% render_field field class="input-text" placeholder=field.label %}
+              <span class="label">{{field.label}}</span>
+              <span class="border"></span>
+              </label>
+            </div>
+            {% endfor %}  
 						<div class="form-row-last">
               <input type="submit" name="register" class="register" value="S'inscrire">
               <p>{% blocktrans %}If you have not created an account yet, then please
