@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from drf_dynamic_fields import DynamicFieldsMixin
-from .models import Categorie, Article, Archive, Tag, Commentaire, ResponseCommentaire, Like
+from .models import Categorie, Article, Tag, Commentaire, ResponseCommentaire, Like
 from Utilisateurs.models import MyUser
 
 class LikeSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
@@ -20,14 +20,14 @@ class CommentaireSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
         fields= '__all__'
         depth = 1
         
-class ArchiveSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
-    class Meta:
-        model = Archive
-        fields= '__all__'
+# class ArchiveSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
+#     class Meta:
+#         model = Archive
+#         fields= '__all__'
         
 class ArticleSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
     article_commentaire = CommentaireSerializer(many=True, required=False)
-    archive_article = ArchiveSerializer(many=True, required=False)
+    # archive_article = ArchiveSerializer(many=True, required=False)
     article_like = LikeSerializer(many=True, required=False)
     class Meta:
         model = Article

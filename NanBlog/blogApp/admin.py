@@ -89,23 +89,11 @@ class ResponseCommentaireAdmin(admin.ModelAdmin):
     )
 
 
-class ArchiveAdmin(admin.ModelAdmin):
-
-    list_display = ('article_id', 'status', 'date_add', 'date_upd')
-    list_filter = (
-        'article_id',
-        'status',
-        'date_add',
-        'date_upd',
-    )
-
-
 class LikeAdmin(admin.ModelAdmin):
 
     list_display = (
         'article',
         'user',
-        'like',
         'status',
         'date_add',
         'date_upd',
@@ -128,5 +116,4 @@ _register(models.Tag, TagAdmin)
 _register(models.Article, ArticleAdmin)
 _register(models.Commentaire, CommentaireAdmin)
 _register(models.ResponseCommentaire, ResponseCommentaireAdmin)
-_register(models.Archive, ArchiveAdmin)
 _register(models.Like, LikeAdmin)
