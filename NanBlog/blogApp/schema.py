@@ -50,6 +50,53 @@ class TagNode(DjangoObjectType):
         interfaces = (relay.Node,)
         
 
+class RelayCreateTag(graphene.relay.ClientIDMutation):
+    tag = graphene.Field(TagNode)
+    class Input:
+        id = graphene.ID()
+        nom = graphene.String()
+        status = graphene.Boolean()
+    def mutate_and_get_payload(root,info,**kwargs):
+        nom = kwargs.get('nom') or None
+        status = kwargs.get('status',None)
+        id = kwargs.get('id') or None
+                    
+        tag_modif = None
+        if id :
+            id= from_global_id(id)
+            id=id[1]
+        data = {
+            'nom':nom,
+            'status':status
+        }
+        if id is None:
+            if nom:
+                tag_modif = Tag(
+                    **data
+                )
+                print(tag_modif)
+                debug(tag_modif)
+                tag_modif.save()
+                return RelayCreateTag(tag=tag_modif)
+            else:
+                raise Exception('must be have all data to create Tag')
+        else :
+            tag_modif = Tag.objects.get(id=id)
+            for k , v in data.items():
+                print('befor validate\r\n')
+                print('key:',k,'=====','value:',v,'id:',id)
+                print('\r\n')
+                if v or type(v) is bool:
+                    print('after validate')
+                    print('key:',k,'=====','value:',v,'id:',id)
+                    tag_user = setattr(tag_modif,k,v)
+                    tag_modif.save()
+                    print(getattr(tag_modif,k))
+        return RelayCreateTag(tag=tag_modif)
+
+                
+    
+    
 class CategorieNode(DjangoObjectType):
     class Meta:
         model = Categorie
@@ -115,6 +162,7 @@ class RelayCreateArticle(graphene.relay.ClientIDMutation):
         description = graphene.String()
         contenu = graphene.String()
         status = graphene.Boolean()
+        is_archive = graphene.Boolean()
         
     def mutate_and_get_payload(root,info,**kwargs):
         image = info.context.FILES.get('image')
@@ -127,10 +175,10 @@ class RelayCreateArticle(graphene.relay.ClientIDMutation):
         description = kwargs.get('description') or None
         contenu = kwargs.get('contenu') or None
         status = kwargs.get('status',None)
+        is_archive = kwargs.get('is_archive',None) 
         id = kwargs.get('id') or None
         
         art = None
-        print('=============================================\r\n auteur:',auteur,'\r\ncontext\r\n',info.context,'\r\n=============root============\r\n',root)
         if id :
             id= from_global_id(id)
             id=id[1]
@@ -156,55 +204,36 @@ class RelayCreateArticle(graphene.relay.ClientIDMutation):
             'description':description,
             'contenu':contenu,
             'status':status,
+            'is_archive':is_archive,
         }
         if id is None:
             if image and image_single and categorie and auteur and tag and titre and description and contenu :
-                print('\r\n tag',tag,'\r\n categorie',categorie)
-                
-                # art = Article(
-                #     image=image,
-                #     image_single=image_single,
-                #     categorie=categorie,
-                #     auteur=auteur,
-                #     titre=titre,
-                #     description=description,
-                #     contenu=contenu,
-                #     status=status
-                #     )
-                
-                art = Article(data)
-                debug('\r\n',art,'\r\n','test debug')
+                art = Article(**data)
                 art.save()
                 for t in tag :
-                    pprint(t)
                     art.tag.add(t)
                     art.save()
-                    print('ok')
                 return RelayCreateArticle(article=art)
             else:
                 raise Exception('must be have all data to create article')
         else :
             article =Article.objects.get(id=id)
-            field={
-                # 'image':lambda v: [article.image := v],
-                # 'image_single':lambda v:article.image_single,
-                # 'categorie':lambda v:article.categorie,
-                # 'tag':lambda v:article.tag,
-                # 'titre':lambda v: article.titre = v,
-                # 'description':lambda v:article.description,
-                # 'contenu':lambda v:article.contenu,
-                # 'status':lambda v:article.status
-            }
             for k , v in data.items():
-                if v :
+                if v or type(v) is bool :
                     print('key:',k,'=====','value:',v,'id:',id)
-                    # field[k](v)
-                    art = setattr(article,k,v)
-                    # article.titre = data['titre']
-                    article.save()
+                    if k == 'tag':
+                        art = getattr(article,k)
+                        for t in v:
+                            art.add(t)
+                            article.save()
+                    else:
+                        art = setattr(article,k,v)
+                        article.save()
                     print(type(article.titre))
         return RelayCreateArticle(article=art)
-        
+
+
+
 
 class CommentaireNode(DjangoObjectType):
     class Meta:
@@ -218,6 +247,68 @@ class CommentaireNode(DjangoObjectType):
         interfaces = (relay.Node,)
         connection_class = ExtendConnection
 
+class RelayCreateComment(graphene.relay.ClientIDMutation):
+    comment = graphene.Field(CommentaireNode)
+    class Input:
+        id = graphene.ID()
+        article = graphene.ID()
+        nom = graphene.String()
+        email = graphene.String()
+        message = graphene.String()
+        sujet = graphene.String()
+        status = graphene.Boolean()
+        
+    def mutate_and_get_payload(root,info,**kwargs):
+
+        article = kwargs.get('article') or None
+        # user = info.context.user or None
+        user = MyUser.objects.get(pk=1)
+        message = kwargs.get('message') or None
+        sujet = kwargs.get('sujet') or None
+        status = kwargs.get('status',None)
+        id = kwargs.get('id') or None
+        
+        com = None
+        if id :
+            id= from_global_id(id)
+            id=id[1]
+            
+        if article:
+            article = from_global_id(article)
+            article=article[1]
+            article = Article.objects.get(id=article)
+        data = {
+            'article':article,
+            'user':user,
+            'message':message,
+            'sujet':sujet,
+            'status':status,
+        }
+        if id is None:
+            if article and message and sujet :
+                
+                com = Commentaire(
+                **data
+                )
+                
+                print(com)
+                debug(com)
+                com.save()
+                
+                return RelayCreateComment(comment=com)
+            else:
+                raise Exception('must be have all data to create comment')
+        else :
+            commentaire = Commentaire.objects.get(id=id)
+            for k , v in data.items():
+                if v or type(v) is bool :
+                    print('key:',k,'=====','value:',v,'id:',id)
+                    com = setattr(commentaire,k,v)
+                    commentaire.save()
+                    print(getattr(commentaire,k))
+        return RelayCreateComment(comment=commentaire)
+
+
 class ResponseCommentaireNode(DjangoObjectType):
     class Meta:
         model = ResponseCommentaire
@@ -228,20 +319,71 @@ class ResponseCommentaireNode(DjangoObjectType):
         }
         interfaces = (relay.Node,)
         connection_class = ExtendConnection
-class ArchiveNode(DjangoObjectType):
-    class Meta:
-        model = Archive
-        fields = "__all__"
-        filter_fields = {
+
+class RelayCreateResponseComment(graphene.relay.ClientIDMutation):
+    response = graphene.Field(ResponseCommentaireNode)
+    class Input:
+        id = graphene.ID()
+        commentaire = graphene.ID()
+        message = graphene.String()
+        status = graphene.Boolean()
             
-            'status':['exact',],
+    def mutate_and_get_payload(root,info,**kwargs):
+
+        commentaire = kwargs.get('commentaire') or None
+        # user = info.context.user or None
+        user = MyUser.objects.get(pk=1)
+        message = kwargs.get('message') or None
+        status = kwargs.get('status',None)
+        id = kwargs.get('id') or None
+            
+        com = None
+        if id :
+            id= from_global_id(id)
+            id=id[1]
+                
+        if commentaire:
+            commentaire = from_global_id(commentaire)
+            commentaire=commentaire[1]
+            commentaire = Commentaire.objects.get(id=commentaire)
+        data = {
+            'comment':commentaire,
+            'user':user,
+            'message':message,
+            'status':status,
         }
-        interfaces = (relay.Node,)
-        connection_class = ExtendConnection
-        
+        if id is None:
+            if commentaire and message :
+                    
+                res_com = ResponseCommentaire(
+                **data
+                )
+                    
+                print(res_com)
+                debug(res_com)
+                res_com.save()
+                    
+                return RelayCreateResponseComment(response=res_com)
+            else:
+                raise Exception('must be have all data to create comment')
+        else :
+            commentaire_res = ResponseCommentaire.objects.get(id=id)
+            for k , v in data.items():
+                print('befor validate\r\n')
+                print('key:',k,'=====','value:',v,'id:',id)
+                print('\r\n')
+                if v or type(v) is bool:
+                    print('after validate')
+                    print('key:',k,'=====','value:',v,'id:',id)
+                    com_res = setattr(commentaire_res,k,v)
+                    commentaire_res.save()
+                    print(getattr(commentaire_res,k))
+        return RelayCreateResponseComment(response=commentaire_res)
+
+
 class LikeNode(DjangoObjectType):
     class Meta:
-        model = Archive
+        model = Like
         fields = "__all__"
         filter_fields = {
             'status':['exact',],
@@ -249,6 +391,56 @@ class LikeNode(DjangoObjectType):
         interfaces = (relay.Node,)
         connection_class = ExtendConnection
         
+
+class RelayCreateLike(graphene.relay.ClientIDMutation):
+    like = graphene.Field(LikeNode)
+    class Input:
+        id = graphene.ID()
+        article = graphene.ID()
+        status = graphene.Boolean()
+    def mutate_and_get_payload(root,info,**kwargs):
+        status = kwargs.get('status',None)
+        id = kwargs.get('id') or None
+        article = kwargs.get('article') or None
+        # user = info.context.user or None
+        user = MyUser.objects.get(pk=1)
+        like_user=None
+        if id :
+            id= from_global_id(id)
+            id=id[1]
+        if article:
+            article = from_global_id(article)
+            article=article[1]
+            article = Article.objects.get(id=article)
+        data = {
+            'article':article,
+            'user':user,
+            'status':status,
+        }
+        if id is None:
+            if article :
+                        
+                like_user = Like(
+                **data
+                )
+                        
+                print(like_user)
+                debug(like_user)
+                like_user.save()
+                        
+                return RelayCreateLike(like=like_user)
+            else:
+                raise Exception('must be have all data to create Like')
+        else :
+            like_user = Like.objects.get(id=id)
+            for k , v in data.items():
+                if v or type(v) is bool :
+                    print('key:',k,'=====','value:',v,'id:',id)
+                    like_set = setattr(like_user,k,v)
+                    like_user.save()
+                    print(getattr(like_user,k))
+        return RelayCreateLike(like=like_user)
+
 
 class Query(graphene.ObjectType):
     article = relay.Node.Field(ArticleNode)
@@ -266,18 +458,16 @@ class Query(graphene.ObjectType):
     response = relay.Node.Field(ResponseCommentaireNode)
     all_response = DjangoFilterConnectionField(ResponseCommentaireNode)
 
-    archive = relay.Node.Field(ArchiveNode)
-    all_archive = DjangoFilterConnectionField(ArchiveNode)
-    
     like = relay.Node.Field(LikeNode)
     all_like = DjangoFilterConnectionField(LikeNode)
 
 class RelayMutation(graphene.AbstractType):
     relay_create_categorie = RelayCreateCategorie.Field()
     relay_create_article = RelayCreateArticle.Field()
-
-
-
+    relay_create_comment = RelayCreateComment.Field()
+    relay_create_response_comment = RelayCreateResponseComment.Field()
+    relay_creat_like = RelayCreateLike.Field()
+    relay_create_tag = RelayCreateTag.Field()
 ####################################################################
 ########################TEST##################################
 
