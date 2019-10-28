@@ -46,7 +46,7 @@ class Article(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='blog/')
     contenu = HTMLField('contenu')
-    is_archive=models.BooleanField(default=False,null=True)
+    is_archive=models.BooleanField(default=False, blank=True, null=True)
     image_single = models.ImageField(upload_to='blog/single')
     status = models.BooleanField(default=False,null=True)
     date_add = models.DateTimeField(auto_now_add=True)
