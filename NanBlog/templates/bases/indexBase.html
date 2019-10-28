@@ -47,8 +47,8 @@
                         <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
                         <li class="menu-has-children"><a href="">Categorie</a>
                             <ul>
-                                <li><a href="{% url 'single_blog' %}">Reseau</a></li>
-                                <li><a href="{% url 'single_blog' %}">Programmation</a></li>
+                                <li><a v-for="item in dataAllCategory" href="{% url 'single_blog' %}">${ item.node.nom }</a></li>
+                                
                             </ul>
                         </li>
                         <li><a href="{% url 'archive' %}">Archive</a></li>
