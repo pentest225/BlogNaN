@@ -13,8 +13,8 @@ class Specialite(models.Model):
     
 class MyUser(AbstractUser):
     image = models.ImageField(upload_to='utilisateur/')
-    groups = models.ManyToManyField(Group,related_name="utilisateur_groups")
-    user_permissions = models.ManyToManyField(Permission,related_name="utilisateur_permissions")
+    groups = models.ManyToManyField(Group,related_name="Type_de_compte")
+    # user_permissions = models.ManyToManyField(Permission,related_name="utilisateur_permissions")
     description = models.TextField()
     specialite = models.ManyToManyField(Specialite,related_name='user_specialite')
     social = models.ManyToManyField(Social, related_name='social_user')
