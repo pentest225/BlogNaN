@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.sites.models import Site
 from tinymce import HTMLField
 from django.contrib.auth.models import User
 from Utilisateurs.models import MyUser

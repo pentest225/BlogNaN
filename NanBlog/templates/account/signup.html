@@ -6,7 +6,7 @@
 
 {% block content %}
 
-
+<!--
 <section class="banner-area relative">
     <div class="overlay overlay-bg"></div>
     <div class="container">
@@ -21,7 +21,7 @@
         </div>
     </div>
 </section>
-<!-- End banner Area -->
+ End banner Area -->
 <div class="main-bg">
     <div class="form-v8"><div class="page-content">
 		<div class="form-v8-content">
@@ -80,11 +80,27 @@
 								<span class="border"></span>
 							</label>
 						</div>
-						<div class="form-row-last">
-              <input type="submit" name="register" class="register" value="S'inscrire">
-              <p>{% blocktrans %}If you have not created an account yet, then please
-              <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}</p>
-						</div>
+            <div class='row'>
+              <div class="form-row-last col-md-6 mt-10">
+                <input type="submit" name="register" class="register" value="S'inscrire">
+
+                <p>{% blocktrans %}If you have not created an account yet, then please
+                <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}
+                </p>
+              </div>
+              <div class="social  col-md-5">
+                  <ul>
+                      <li style="" class='label'>Ou connectez-vous avec</li><br><br>
+                      <li><a title="Facebook" href="/accounts/facebook/login/?process=login" class="facebook"><span class="fa fa-facebook"></span></a></li>
+                      <li><a title="Github" href="/accounts/github/login/?process=login" class="github"><span class="fa fa-github"></span></a></li>
+                      <li><a title="Google" href="/accounts/google/login/?process=login" class="google"><span class="fa fa-google"></span></a></li>
+                      <li><a title="Discord" href="/accounts/discord/login/?process=login" class="discord"><span class="fa fa-cc-discover"></span></a></li>
+                      <li><a title="LinkedIn" href="/accounts/linkedin_oauth2/login/?process=login" class="linkedin"><span class="fa fa-linkedin"></span></a></li>
+                  </ul>
+              </div>
+            </div>
+              
+						
 					</div>
 				</form>
 				<form class="form-detail" id="signup_form" method="post" action="">
@@ -130,11 +146,25 @@
                   <span class="border"></span>
                 </label>
               </div>
-						<div class="form-row-last">
-              <input type="submit" name="register" class="register" value="S'inscrire">
-              <p>{% blocktrans %}If you have not created an account yet, then please
-                  <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}</p>
-						</div>
+            <div class='row'>
+              <div class="form-row-last col-md-6 mt-10">
+                <input type="submit" name="register" class="register" value="S'inscrire">
+
+                <p>{% blocktrans %}If you have not created an account yet, then please
+                <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}
+                </p>
+              </div>
+              <div class="social  col-md-5">
+                  <ul>
+                      <li style="" class='label'>Ou connectez-vous avec</li><br><br>
+                      <li><a title="Facebook" href="/accounts/facebook/login/?process=login" class="facebook"><span class="fa fa-facebook"></span></a></li>
+                      <li><a title="Github" href="/accounts/github/login/?process=login" class="github"><span class="fa fa-github"></span></a></li>
+                      <li><a title="Google" href="/accounts/google/login/?process=login" class="google"><span class="fa fa-google"></span></a></li>
+                      <li><a title="Discord" href="/accounts/discord/login/?process=login" class="discord"><span class="fa fa-cc-discover"></span></a></li>
+                      <li><a title="LinkedIn" href="/accounts/linkedin_oauth2/login/?process=login" class="linkedin"><span class="fa fa-linkedin"></span></a></li>
+                  </ul>
+              </div>
+            </div>
 					</div>
 				</form>
 			</div>

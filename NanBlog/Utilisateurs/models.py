@@ -12,7 +12,7 @@ class Specialite(models.Model):
     date_upd = models.DateTimeField(auto_now=True)
     
 class MyUser(AbstractUser):
-    image = models.ImageField(upload_to='utilisateur/')
+    image = models.ImageField(upload_to='utilisateur/', default='default_avatar.png', null=True)
     groups = models.ManyToManyField(Group,related_name="utilisateur_groups")
     user_permissions = models.ManyToManyField(Permission,related_name="utilisateur_permissions")
     description = models.TextField()

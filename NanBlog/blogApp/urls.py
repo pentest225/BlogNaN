@@ -24,6 +24,11 @@ urlpatterns = [
     path('archive',views.archive,name='archive'),
     path('login',views.login,name='login'),
     path('register',views.register,name='register'),
+    path('dashboard',views.dash,name='dash'),
+    path('allCatallCat/<int:id>',views.dashCategory,name='dashCategory'),
+    path('dashProfil',views.dashProfil,name='dashProfil'),
+    path('dashSingleArticle/<int:id>',views.singleArticleDash,name='dashSingleArticle'),
+    path('editArticleDash',views.editArticleDash,name='editArticleDash'),
     re_path(r'^accounts/', include('allauth.urls')),
     ]
 urlpatterns += router.urls

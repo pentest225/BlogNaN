@@ -4,9 +4,12 @@ from rest_framework import viewsets
 from .serializer import CategorieSerializer, ArticleSerializer, ArchiveSerializer, TagSerializer, CommentaireSerializer, ResponseCommentaireSerializer, LikeSerializer
 # from rest_framework_api_key.permissions import HasAPIKey
 from django.http import	JsonResponse
+from django.contrib.auth.decorators import login_required
 import json
 from rest_framework import filters
 from rest_framework.response import Response
+from Utilisateurs.models import MyUser
+from .form import ArticleFrom
 # Create your views here.
 
 class DynamicSearchFilter(filters.SearchFilter):
@@ -56,22 +59,68 @@ class CategorieViewset(viewsets.ModelViewSet):
     queryset = Categorie.objects.all()
 
 def index(request):
-    
-    return render(request,'pages/index.html')
-
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~INFO USER-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print(request.user)
+    if request.user.is_authenticated:
+        myU=request.user
+        print("myU")
+        # print(myU.image)
+        myUser=MyUser.objects.get(pk=myU.id)
+        
+        print(myU)
+        data={
+            'isConnected':True,
+            'myUser':myU
+        }
+    data={
+        'isConnected':False
+    }
+    return render(request,'pages/index.html',data)
 
 def category(request):
+    if request.user.is_authenticated:
+        myU=request.user
+        print(myU.username)
+        print(myU.id)
+        data={
+            'isConnected':True,
+            'myUser':myU
+        }
+    data={
+        'isConnected':False
+    }
     
-    return render(request,'pages/category.html')
+    return render(request,'pages/category.html',data)
 
 def single_blog(request):
-    
-    return render(request,'pages/single_blog.html')
+    if request.user.is_authenticated:
+        myU=request.user
+        print(myU.username)
+        print(myU.id)
+        data={
+            'isConnected':True,
+            'myUser':request.user
+        }
+    data={
+        'isConnected':False
+    }
+    return render(request,'pages/single_blog.html',data)
 
 
 def archive(request):
+    if request.user.is_authenticated:
+        myU=request.user
+        print(myU.article_auteur)
+        print(myU.id)
+        data={
+            'isConnected':True,
+            'myUser':myU
+        }
+    data={
+        'isConnected':False
+    }
     
-    return render(request,'pages/archive.html')
+    return render(request,'pages/archive.html',data)
 
 def login(request):
     
@@ -80,3 +129,57 @@ def login(request):
 def register(request):
     
     return render(request,'pages/register.html')
+
+################################################
+#               Dashbord root                  #
+################################################
+# /accounts/logout/
+@login_required
+def dash(request):
+    if request.user.is_authenticated:
+        myUser=request.user
+        allCat=Categorie.objects.filter(status=True)
+        print(allCat)
+        data={
+            'allCat':allCat
+        }
+        
+        
+    return render(request,'pages/dashM_index.html',data)
+
+def dashCategory(request,id):
+    allCat=Categorie.objects.filter(status=True)  
+    print(allCat)
+    myCat=Categorie.objects.get(pk=id)
+    allArticle=Article.objects.filter(categorie=myCat,auteur=request.user,status=True)
+    data={
+        'allArticle':allArticle,
+        'cat':myCat,
+        'allCat':allCat
+    }
+    print(allArticle)
+    return render(request,'pages/dashM_category.html',data)
+@login_required
+def dashProfil(request):
+    
+    return render(request,'pages/dashM_profil.html')
+    
+def singleArticleDash(request,id):
+    allCat=Categorie.objects.filter(status=True)
+    allArticle=Article.objects.get(pk=id)
+    data={
+        'allArticle':allArticle,
+        'allCat':allCat
+    }
+    print(allArticle)
+    
+    return render(request,'pages/dashM_single_article.html',data)
+
+def editArticleDash(request):
+    allCat=Categorie.objects.filter(status=True)
+    myFrom=ArticleFrom()
+    data={
+        'allCat':allCat,
+        'myFrom':myFrom
+    }
+    return render(request,'pages/dashM_edit_article.html',data)

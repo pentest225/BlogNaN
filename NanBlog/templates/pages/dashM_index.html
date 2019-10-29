@@ -1,0 +1,271 @@
+{% extends 'bases/dashBase.html' %}
+
+{% block content %}
+<div id='app'>
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">overview ${patrick}</h2>
+                        <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
+                            <i class="zmdi zmdi-plus"></i>add Articles</a>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="row mt-4">
+            
+                <div class="col-lg-6">
+                    <div class="card">
+                                    
+                        <img class="card-img-top" src="/static/Dash/images/bg-title-01.jpg" alt="Card image cap">
+                        <div class="account-wrap">
+
+                            <div class="account-item clearfix js-item-menu">
+                                <div class="content">
+                                    <a class="js-acc-btn" href="#">more</a>
+                                </div>
+                                <div class="account-dropdown js-dropdown">
+                                                
+                                    <div class="account-dropdown__body">
+                                        <div class="account-dropdown__item">
+                                            <a href="single_article.html">
+                                            <i class="fa fa-eye"></i>read</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                                <i class="fa fa-edit"></i>Modif</a>
+                                        </div>
+                                        <div class="account-dropdown__item">
+                                            <a href="#">
+                                            <i class="fa fa-archive"></i>Delect</a>
+                                        </div>
+                                    </div>
+                                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title mb-3">Card Image Title</h4>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                                content.
+                            </p>
+                        </div>
+                                    
+                                
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="au-card chart-percent-card">
+                        <div class="au-card-inner">
+                        <div class='row'>
+                            <h3 class="col-sm title-2 tm-b-5">char by %</h3>
+                            <div class="col-sm">
+                                <div class="row">
+                                    <h3 class="title-2 tm-b-5 col-sm">Status:</h3>
+                                    <label class="switch switch-text switch-primary switch-pill col-sm">
+                                    <input type="checkbox" class="switch-input" checked="true">
+                                    <span data-on="On" data-off="Off" class="switch-label"></span>
+                                    <span class="switch-handle"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="row no-gutters">
+                                <div class="col-xl-6">
+                                    <div class="chart-note-wrap">
+                                        <div class="chart-note mr-0 d-block">
+                                            <span class="dot dot--blue"></span>
+                                            <span>Like</span>
+                                        </div>
+                                        <div class="chart-note mr-0 d-block">
+                                            <span class="dot dot--red"></span>
+                                            <span>Dislike</span>
+                                        </div>
+                                        <div class="chart-note mr-0 d-block">
+                                            <a href="#">
+                                                <i class="fa fa-eye"></i> 2333</a>
+                                                        
+                                        </div>
+                                        <div class="chart-note mr-0 d-block">
+                                            <a href="#comments">
+                                            <i class="zmdi zmdi-comment-text"></i> 457
+                                            </a>
+                                        </div>
+                                        <div class="chart-note mr-0 d-block">
+                                                        
+                                            <i class="fas fa-calendar-alt"></i> 12-avrile-2019
+                                                        
+                                        </div>
+                                                    
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="percent-chart">
+                                        <canvas id="percent-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="">
+                        <div class="au-card au-card--no-shadow au-card--no-pad m-b-40" id='comments'>
+                        <!--Header section -->
+                            <div class="au-card-title" style="background-image:url('images/bg-title-02.jpg');">
+                                <div class="bg-overlay bg-overlay--blue"></div>
+                                <h3>
+                                    <i class="zmdi zmdi-comment-text"></i>New Messages</h3>
+                                <button class="au-btn-plus au-message__item ">
+                                    <i class="zmdi zmdi-plus"></i>
+                                </button>
+                            </div>
+                        <!--End Header section -->
+                                        
+                            <div class="au-inbox-wrap js-inbox-wrap">
+                                <div class="au-message js-list-load">
+                                <!--Notif section -->
+                                    <div class="au-message__noti">
+                                        <p>You Have
+                                            <span>2</span>
+                                            new messages
+                                        </p>
+                                    </div>
+                                    <!--End Notif section -->
+                                    <!--Liste Messages section -->
+                                    <div class="au-message-list">
+                                        <div class="au-message__item unread">
+                                            <div class="au-message__item-inner">
+                                                <div class="au-message__item-text">
+                                                    <div class="avatar-wrap">
+                                                        <div class="avatar">
+                                                            <img src="/static/Dash/images/icon/avatar-02.jpg" alt="John Smith">
+                                                        </div>
+                                                    </div>
+                                                    <div class="text">
+                                                        <h5 class="name">John Smith</h5>
+                                                        <p>Have sent a photo</p>
+                                                    </div>
+                                                </div>
+                                                <div class="au-message__item-time">
+                                                    <span>12 Min ago</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="au-message__item">
+                                            <div class="au-message__item-inner">
+                                                <div class="au-message__item-text">
+                                                    <div class="avatar-wrap">
+                                                        <div class="avatar">
+                                                            <img src="/static/Dash/images/icon/avatar-05.jpg" alt="Michelle Sims">
+                                                        </div>
+                                                    </div>
+                                                    <div class="text">
+                                                        <h5 class="name">Michelle Sims</h5>
+                                                        <p>Purus feugiat finibus</p>
+                                                    </div>
+                                                </div>
+                                                <div class="au-message__item-time">
+                                                    <span>Sunday</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="au-message__item js-load-item">
+                                            <div class="au-message__item-inner">
+                                                <div class="au-message__item-text">
+                                                    <div class="avatar-wrap">
+                                                        <div class="avatar">
+                                                            <img src="/static/Dash/images/icon/avatar-05.jpg" alt="Michelle Sims">
+                                                        </div>
+                                                    </div>
+                                                    <div class="text">
+                                                        <h5 class="name">Michelle Sims</h5>
+                                                        <p>Purus feugiat finibus</p>
+                                                    </div>
+                                                </div>
+                                                <div class="au-message__item-time">
+                                                    <span>Sunday</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                                    
+                                    </div>
+                                    <!--End Liste Messages section -->
+                                    <!--Load More Btn section -->
+                                    <div class="au-message__footer">
+                                        <button class="au-btn au-btn-load js-load-btn">load more</button>
+                                    </div>
+                                    <!--End load More -->
+
+                                </div>
+                                <!--CHAT SECTION  -->
+                                <div class="au-chat">
+                                    <div class="au-chat__title">
+                                        <div class="au-message__item p-2 btn btn-success m-4">
+                                            <i class="fa fa-mail-reply-all"> go back</i>
+                                        </div>
+                                        <div class="au-chat-info">
+                                            <div class="avatar-wrap online">
+                                                <div class="avatar avatar--small">
+                                                    <img src="/static/Dash/images/icon/avatar-02.jpg" alt="John Smith">
+                                                </div>
+                                            </div>
+                                            <span class="nick">
+                                                <a href="#">John Smith</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="au-chat__content">
+                                        <div class="recei-mess-wrap">
+                                            <span class="mess-time">12 Min ago</span>
+                                            <div class="recei-mess__inner">
+                                                <div class="avatar avatar--tiny">
+                                                    <img src="/static/Dash/images/icon/avatar-02.jpg" alt="John Smith">
+                                                </div>
+                                                <div class="recei-mess-list">
+                                                    <div class="recei-mess">Lorem ipsum dolor sit amet, consectetur adipiscing elit non iaculis</div>
+                                                    <div class="recei-mess">Donec tempor, sapien ac viverra</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="send-mess-wrap">
+                                            <span class="mess-time">30 Sec ago</span>
+                                            <div class="send-mess__inner">
+                                                <div class="send-mess-list">
+                                                    <div class="send-mess">Lorem ipsum dolor sit amet, consectetur adipiscing elit non iaculis</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="au-chat-textfield">
+                                        <form class="au-form-icon">
+                                            <input class="au-input au-input--full au-input--h65" type="text" placeholder="Type a message">
+                                            <button class="au-input-icon ">
+                                                <i class="zmdi zmdi-mail-send btn btn-success"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--End CHAT SECTION -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright">
+                        <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}

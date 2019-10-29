@@ -1,47 +1,42 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 
-# Register your models here.
-# vim: set fileencoding=utf-8 :
-from django.contrib import admin
-
-from . import models
+from .models import Specialite, MyUser
 
 
+@admin.register(Specialite)
+class SpecialiteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'specialiste', 'status', 'date_add', 'date_upd')
+    list_filter = ('status', 'date_add', 'date_upd')
+
+
+@admin.register(MyUser)
 class MyUserAdmin(admin.ModelAdmin):
-
     list_display = (
         'id',
+        'username',
+        'first_name',
+        'last_name',
+        'email',
         'image',
+        'is_staff',
+        'is_active',
+        'date_joined',
         'description',
+        'last_login',
+        'is_superuser',
         'status',
         'date_add',
         'date_upd',
     )
     list_filter = (
+        'last_login',
+        'is_superuser',
+        'is_staff',
+        'is_active',
+        'date_joined',
         'status',
         'date_add',
         'date_upd',
-     
     )
-    raw_id_fields = ('social',)
-    # raw_id_fields = ('social',)
-    filter_horizontal = ('groups','user_permissions','social','specialite')
-
-
-class SpecialiteAdmin(admin.ModelAdmin):
-
-    list_display = ('id', 'specialiste', 'status', 'date_add', 'date_upd')
-    list_filter = (
-        'status',
-        'date_add',
-        'date_upd',
-     
-    )
-
-
-def _register(model, admin_class):
-    admin.site.register(model, admin_class)
-
-
-_register(models.MyUser, MyUserAdmin)
-_register(models.Specialite, SpecialiteAdmin)
+    raw_id_fields = ('groups', 'user_permissions', 'specialite', 'social')

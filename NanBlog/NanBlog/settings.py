@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.linkedin_oauth2',
     'allauth.socialaccount.providers.discord',
     'django.contrib.sites',
+    'django.contrib.flatpages',
     'widget_tweaks',
     'django_extensions',
     'django.contrib.auth',
@@ -132,6 +133,8 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 LOGIN_REDIRECT_URL = 'index' 
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
+
 # redirects to /accounts/profile by default
 
 WSGI_APPLICATION = 'NanBlog.wsgi.application'
@@ -207,6 +210,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'statusbar': True,
 }
 
+    
+
 FILEBROWSER_DIRECTORY='../media_cdn'
 FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100
 
@@ -237,7 +242,12 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
+MEDIA_URL + 'js/tiny_mce/tiny_mce.js'
+TINYMCE_JS_ROOT =MEDIA_ROOT + 'js/tiny_mce'
+TINYMCE_JS_URL =MEDIA_URL + 'js/tiny_mce/tiny_mce.js'
+
 STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
-
+# TINYMCE_JS_URL = os.path.join(MEDIA_URL, "path/to/tiny_mce/tiny_mce.js")
+# TINYMCE_JS_ROOT = os.path.join(MEDIA_ROOT, "path/to/tiny_mce")
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
