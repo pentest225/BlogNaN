@@ -61,13 +61,17 @@ def index(request):
     return render(request,'pages/index.html')
 
 
-def category(request):
-    
-    return render(request,'pages/category.html')
+def category(request,idcat):
+    data={
+        'idcat':idcat
+    }
+    return render(request,'pages/category.html',data)
 
-def single_blog(request):
-    
-    return render(request,'pages/single_blog.html')
+def single_blog(request,idart):
+    data ={
+        'idart':idart
+    }
+    return render(request,'pages/single_blog.html',data)
 
 
 def archive(request):

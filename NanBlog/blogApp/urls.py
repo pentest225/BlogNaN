@@ -19,8 +19,8 @@ from . import views
 
 urlpatterns = [
     path('',views.index,name='index'),
-    path('category',views.category,name='category'),
-    path('single_blog',views.single_blog,name='single_blog'),
+    path('category/<str:idcat>',views.category,name='category'),
+    path('single_blog/<str:idart>',views.single_blog,name='single_blog'),
     path('archive',views.archive,name='archive'),
     path('login',views.login,name='login'),
     path('register',views.register,name='register'),
