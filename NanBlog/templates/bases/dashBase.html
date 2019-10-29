@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +33,14 @@
 
     <!-- Main CSS-->
     <link href="/static/Dash/css/theme.css" rel="stylesheet" media="all"> 
+    <!--  tinyMCE  -->
+    <script type="text/javascript"  src="/static/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript"  src="/static/tinymce/js/prism.js"></script>
+    <script type="text/javascript"  src="/static/tinymce/css/prism.css"></script>
 
+    <script src="{% url 'tinymce-css' %} "></script>
+    <script src="{% url 'tinymce-spellcheck-callback' %} "></script>
+    {{ myFrom.media }}
 </head>
 
 <body class="animsition" >
@@ -310,7 +318,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/static/Dash/js/main.js"></script>
     <script src="/static/vue/patrick.js"></script>
-
 </body>
 
 </html>

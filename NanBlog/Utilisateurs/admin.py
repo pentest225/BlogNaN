@@ -39,4 +39,4 @@ class MyUserAdmin(admin.ModelAdmin):
         'date_add',
         'date_upd',
     )
-    raw_id_fields = ('groups', 'user_permissions', 'specialite', 'social')
+    filter_horizontal = ('groups', 'user_permissions', 'specialite', 'social')
