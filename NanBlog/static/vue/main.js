@@ -20,8 +20,8 @@ var app = new Vue({
     },
     delimiters:["${","}"],
     mounted(){
-        // this.idcat="{{idcat}}";
-        // this.idart="{{idart}}";
+        this.idcat="{{idcat}}";
+        this.idart="{{idart}}";
         this.getdata()
     },
     methods: {
