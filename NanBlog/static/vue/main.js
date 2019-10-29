@@ -3,32 +3,40 @@ var app = new Vue({
     data: {
         base_url:'',
         dataAllCategory:[],
+        dataAllarticle:[],
         datAllIngredientesByCategoriy:[],
         datSingleCategory:[],
+        First:[],
         categoryId:'',
+        CarouselAll:[],
+        idcat :'',
+        idart:'',
         nom: '',
         sujet: '',
         email: '',
         message: '',
         suscribe:'',
+        base_url:'',
     },
     delimiters:["${","}"],
     mounted(){
+        this.idcat = "{{ idcat }}"
+        // this.idart = "{{ idart }}"
+
         this.getdata()
     },
     methods: {
-        getdata: function(){
-            this.base_url = '127.0.0.1:8000'
+        getdata: function() {
+            this.base_url = 'https://127.0.0.1:8000'
             console.log('data getting')
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             axios({
-                url: 'http://'+this.base_url + '/graphql',
+                url: this.base_url + '/graphql',
                 method: 'post',
                 data: {
                     query: `
                     query{
-
                     allCategories{
                         edges{
                         node{
@@ -56,7 +64,7 @@ var app = new Vue({
                                     }
                                 },
                                 auteur{
-                                    username,firstName,email,isStaff,isActive,image,description,
+                                    username,firstName,email,isStaff,isActive,image,description,lastName
                                     social{
                                     edges{
                                         node{
@@ -78,7 +86,7 @@ var app = new Vue({
                         }
                         }
                     },
-                    category(id:"Q2F0ZWdvcmllTm9kZTox"){
+                    category(id:"${ this.idcat }"){
                         id,nom, 
                         articleCategorie{
                             edges{
@@ -103,7 +111,7 @@ var app = new Vue({
                                     }
                                 },
                                 auteur{
-                                    username,firstName,email,isStaff,isActive,image,description,
+                                    lastName,username,firstName,email,isStaff,isActive,image,description
                                     social{
                                     edges{
                                         node{
@@ -123,10 +131,10 @@ var app = new Vue({
                             }
                         },
                     },
-                    allArticles{
+                    allArticles(status:true){
                         edges{
                             node{
-                                id,titre,image,imageSingle,description,dateAdd,dateUpd,
+                                id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
                                 tag{
                                 edges{
                                     node{
@@ -148,7 +156,7 @@ var app = new Vue({
                                 }
                     },
                                 auteur{
-                                username,firstName,email,isStaff,isActive,image,description,
+                                username,firstName,email,isStaff,isActive,image,description,lastName
                                 social{
                                     edges{
                                     node{
@@ -167,7 +175,7 @@ var app = new Vue({
                             }	
                             }
                     },
-                    article(id:"QXJ0aWNsZU5vZGU6MQ=="){
+                    article(id:"${ this.idart }"){
                         id,titre,image,imageSingle,description,dateAdd,dateUpd,
                         tag{
                             edges{
@@ -177,7 +185,7 @@ var app = new Vue({
                             }
                         },
                         categorie{
-                            nom
+                            nom,id
                         },
                         articleCommentaire{
                             edges{
@@ -190,7 +198,7 @@ var app = new Vue({
                             }
                     },
                         auteur{
-                            username,firstName,email,isStaff,isActive,image,description,
+                            lastName,username,firstName,email,isStaff,isActive,image,description,
                             social{
                             edges{
                                 node{
@@ -207,20 +215,19 @@ var app = new Vue({
                             }
                     },contenu
                     }
-                    }
+                        }
                     `
                 }
             })
             .then(response => {
                 result = response.data.data
-                console.log(response.data)
-                this.dataAllCategory=result.allCategories.edges
-                this.categoryId=this.dataAllCategory
-                //console.log(this.category)
-                this.datAllIngredientesByCategoriy=result.category.ingredients
-                //console.log(result)
-                console.log(this.dataAllCategory)
-                console.log(this.datAllIngredientesByCategoriy)
+                // console.log(response.data)
+                this.dataAllCategory = result.allCategories.edges
+                this.categoryId=result.category
+                this.dataAllarticle = result.allArticles.edges
+                // this.categoryId =
+                console.log(this.idcat)
+
             })  
             .catch((err) => {
                 console.log(err);
@@ -234,7 +241,7 @@ var app = new Vue({
             formData.append('sujet', '' + this.sujet);
             formData.append('email', '' + this.email);
             formData.append('message', '' + this.message);
-            axios.post('http://127.0.0.1:8000/contacts/message',formData,
+            axios.post('https://127.0.0.1:8000/contacts/message',formData,
             {
             } ).then(response => {
                     console.log(response)
@@ -261,7 +268,7 @@ var app = new Vue({
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             let formData = new FormData();
             formData.append('suscribe', '' + this.suscribe);
-            axios.post('http://127.0.0.1:8000/contacts/souscription',formData,
+            axios.post('https://127.0.0.1:8000/contacts/souscription',formData,
             {
             } ).then(response => {
                     

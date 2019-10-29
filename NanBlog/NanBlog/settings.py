@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_seed',
     'rest_framework.authtoken',
+    'rest_framework_api_key',
     'django.contrib.staticfiles',
     'graphene_django',
     'blogApp.apps.BlogappConfig',
@@ -113,6 +114,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends', 
+                'allConfig.context_processors.get_config',
+                'Statistique.context_processors.visitor_ip_address',
             ],
         },
     },
@@ -218,6 +221,12 @@ TINYMCE_DEFAULT_CONFIG = {
 FILEBROWSER_DIRECTORY='../media_cdn'
 FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100
 
+REST_FRAMEWORK  =  { 
+    "DEFAULT_PERMISSION_CLASSES" :  [ 
+        "rest_framework_api_key.permissions.HasAPIKey",
+    ] 
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -237,12 +246,9 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
 STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')

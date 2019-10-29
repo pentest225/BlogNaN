@@ -47,8 +47,8 @@
                         <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
                         <li class="menu-has-children"><a href="">Categorie</a>
                             <ul>
-                                <li><a href="{% url 'single_blog' %}">Reseau</a></li>
-                                <li><a href="{% url 'single_blog' %}">Programmation</a></li>
+                                <li v-for="item in dataAllCategory"><a  :href=`${base_url}/`+`category/`+`${item.node.id}`>${ item.node.nom }</a></li>
+                                
                             </ul>
                         </li>
                         <li><a href="{% url 'archive' %}">Archive</a></li>
@@ -146,10 +146,9 @@
     <script src="/static/js/mail-script.js"></script>
     <script src="/static/js/main.js"></script>
     <!-- Vue js -->
+    <script src="/static/js/toas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/static/js/toas.js"></script>
-    <!-- <script src="vue.js"></script> -->
     <script src="/static/vue/main.js"></script>
 </body>
 
