@@ -134,7 +134,7 @@
                         
                     <div v-for="article in dataAllarticle" class="single-post-item">
                         <figure>
-                            <img class="post-img img-fluid" :src=`${base_url}/`+`media/`+`${article.node.imageSingle}` alt="">
+                            <img class="post-img img-fluid" :src=`${base_url}/`+`media/`+`${article.node.image}` alt="">
                         </figure>
                         <h3>
                             <a href="blog-details.html">${ article.node.titre }</a>
@@ -293,7 +293,7 @@
                 <div class="single-widget category-widget">
                     <h4 class="title">Post Categories</h4>
                     <ul>
-                        <li v-for="item in dataAllCategory"><a  :href=`${base_url}/`+`category/`+`${item.node.id}` class="justify-content-between align-items-center d-flex">
+                        <li v-for="item in dataAllCategory"><a  :href=``+`${base_url}`+`/category/`+`${item.node.id}`+`` class="justify-content-between align-items-center d-flex">
                                 <p>${ item.node.nom}</p> <span>${ item.node.articleCategorie.edges.length }</span>
                             </a>
                         </li>
