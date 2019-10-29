@@ -6,208 +6,218 @@ var app = new Vue({
         dataAllarticle:[],
         datAllIngredientesByCategoriy:[],
         datSingleCategory:[],
+        First:[],
         categoryId:'',
+        CarouselAll:[],
+        idcat :'{{ idcat }}',
+        idart:'',
         nom: '',
         sujet: '',
         email: '',
         message: '',
         suscribe:'',
+        base_url:'',
     },
     delimiters:["${","}"],
     mounted(){
+        // this.idcat = "{{ idcat }}"
+        // this.idart = "{{ idart }}"
+
         this.getdata()
     },
     methods: {
         getdata: function() {
-            this.base_url = 'localhost:8000'
+            this.base_url = 'https://127.0.0.1:8000'
             console.log('data getting')
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             axios({
-                url: 'https://127.0.0.1:8000/graphql',
+                url: this.base_url + '/graphql',
                 method: 'post',
                 data: {
                     query: `
                     query{
 
-                        allCategories{
-                            edges{
-                            node{
-                                id,nom,
-                                articleCategorie{
-                                edges{
-                                    node{
-                                    titre,image,imageSingle,tag {
-                                        edges {
-                                        node {
-                                            id
-                                        }
-                                        }
-                                    },
-                                    categorie{
-                                        nom
-                                    },description,contenu,dateAdd,dateUpd,
-                                    articleCommentaire{
-                                        edges{
-                                        node{
-                                            user {
-                                            id
-                                            },message,sujet,dateAdd,dateUpd
-                                        }
-                                        }
-                                    },
-                                    auteur{
-                                        username,firstName,email,isStaff,isActive,image,description,
-                                        social{
-                                        edges{
-                                            node{
-                                            id,name,lien
-                                            }
-                                        }
-                                        },
-                                        specialite{
-                                        edges{
-                                            node{
-                                            id,specialiste
-                                            }
-                                        }
-                                        }
-                                    }
-                                    }	
-                                }
-                                }
-                            }
-                            }
-                        },
-                        category(id:"Q2F0ZWdvcmllTm9kZTox"){
-                            id,nom, 
+                       
+
+                    allCategories{
+                        edges{
+                        node{
+                            id,nom,
                             articleCategorie{
-                                edges{
-                                    node{
-                                    titre,image,imageSingle,tag {
-                                        edges {
-                                        node {
-                                            id
-                                        }
-                                        }
-                                    },
-                                    categorie{
-                                        nom
-                                    },description,contenu,dateAdd,dateUpd,
-                                    articleCommentaire{
-                                        edges{
-                                        node{
-                                            user {
-                                            id
-                                            },message,sujet,dateAdd,dateUpd
-                                        }
-                                        }
-                                    },
-                                    auteur{
-                                        username,firstName,email,isStaff,isActive,image,description,lastName
-                                        social{
-                                        edges{
-                                            node{
-                                            id,name,lien
-                                            }
-                                        }
-                                        },
-                                        specialite{
-                                        edges{
-                                            node{
-                                            id,specialiste
-                                            }
-                                        }
-                                        }
-                                    }
-                                    }	
-                                }
-                            },
-                        },
-                        allArticles(status:true){
                             edges{
                                 node{
-                                    id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
-                                    tag{
-                                    edges{
-                                        node{
-                                        id,nom
-                                        }
+                                titre,image,imageSingle,tag {
+                                    edges {
+                                    node {
+                                        id
                                     }
-                                                },
-                                    categorie{
+                                    }
+                                },
+                                categorie{
                                     nom
-                                    },
-                                    articleCommentaire{
+                                },description,contenu,dateAdd,dateUpd,
+                                articleCommentaire{
+                                    edges{
+                                    node{
+                                        user {
+                                        id
+                                        },message,sujet,dateAdd,dateUpd
+                                    }
+                                    }
+                                },
+                                auteur{
+                                    username,firstName,email,isStaff,isActive,image,description,lastName
+                                    social{
                                     edges{
                                         node{
-                                        user{
-                                            id,username
-                                        }
-                                        ,message,sujet,dateAdd,dateUpd
+                                        id,name,lien
                                         }
                                     }
-                        },
-                                    auteur{
-                                    username,firstName,email,isStaff,isActive,image,description,
-                                    social{
-                                        edges{
-                                        node{
-                                            id,name,lien
-                                        }
-                                        }
                                     },
                                     specialite{
-                                        edges{
+                                    edges{
                                         node{
-                                            id,specialiste
-                                        }
+                                        id,specialiste
                                         }
                                     }
-                        },contenu
+                                    }
+                                }
                                 }	
+                            }
+                            }
+                        }
+                        }
+                    },
+                    category(id:"${ this.idcat }"){
+                        id,nom, 
+                        articleCategorie{
+                            edges{
+                                node{
+                                titre,image,imageSingle,tag {
+                                    edges {
+                                    node {
+                                        id
+                                    }
+                                    }
+                                },
+                                categorie{
+                                    nom
+                                },description,contenu,dateAdd,dateUpd,
+                                articleCommentaire{
+                                    edges{
+                                    node{
+                                        user {
+                                        id
+                                        },message,sujet,dateAdd,dateUpd
+                                    }
+                                    }
+                                },
+                                auteur{
+                                    lastName,username,firstName,email,isStaff,isActive,image,description
+                                    social{
+                                    edges{
+                                        node{
+                                        id,name,lien
+                                        }
+                                    }
+                                    },
+                                    specialite{
+                                    edges{
+                                        node{
+                                        id,specialiste
+                                        }
+                                    }
+                                    }
                                 }
+                                }	
+                            }
                         },
-                        article(id:"QXJ0aWNsZU5vZGU6MQ=="){
-                            id,titre,image,imageSingle,description,dateAdd,dateUpd,
-                            tag{
+                    },
+                    allArticles(status:true){
+                        edges{
+                            node{
+                                id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
+                                tag{
                                 edges{
-                                node{
+                                    node{
                                     id,nom
+                                    }
                                 }
-                                }
-                            },
-                            categorie{
+                                            },
+                                categorie{
                                 nom
-                            },
-                            articleCommentaire{
+                                },
+                                articleCommentaire{
                                 edges{
-                                node{
+                                    node{
                                     user{
-                                    id,username
+                                        id,username
                                     }
                                     ,message,sujet,dateAdd,dateUpd
-                                }
-                                }
-                        },
-                            auteur{
-                                username,firstName,email,isStaff,isActive,image,description,
-                                social{
-                                edges{
-                                    node{
-                                    id,name,lien
                                     }
                                 }
+                    },
+                                auteur{
+                                username,firstName,email,isStaff,isActive,image,description,lastName
+                                social{
+                                    edges{
+                                    node{
+                                        id,name,lien
+                                    }
+                                    }
                                 },
                                 specialite{
-                                edges{
+                                    edges{
                                     node{
-                                    id,specialiste
+                                        id,specialiste
+                                    }
                                     }
                                 }
+                    },contenu
+                            }	
+                            }
+                    },
+                    article(id:"${ this.idart }"){
+                        id,titre,image,imageSingle,description,dateAdd,dateUpd,
+                        tag{
+                            edges{
+                            node{
+                                id,nom
+                            }
+                            }
+                        },
+                        categorie{
+                            nom,id
+                        },
+                        articleCommentaire{
+                            edges{
+                            node{
+                                user{
+                                id,username
                                 }
-                        },contenu
-                        }
+                                ,message,sujet,dateAdd,dateUpd
+                            }
+                            }
+                    },
+                        auteur{
+                            lastName,username,firstName,email,isStaff,isActive,image,description,
+                            social{
+                            edges{
+                                node{
+                                id,name,lien
+                                }
+                            }
+                            },
+                            specialite{
+                            edges{
+                                node{
+                                id,specialiste
+                                }
+                            }
+                            }
+                    },contenu
+                    }
                         }
                     `
                 }
@@ -215,11 +225,11 @@ var app = new Vue({
             .then(response => {
                 result = response.data.data
                 // console.log(response.data)
-                this.dataAllCategory=result.allCategories.edges
-                this.categoryId=this.dataAllCategory
+                this.dataAllCategory = result.allCategories.edges
+                this.categoryId=result.category
                 this.dataAllarticle = result.allArticles.edges
-                // console.log(this.dataAllCategory)
-                console.log(this.dataAllarticle)
+                // this.categoryId =
+                console.log(this.idcat)
 
             })  
             .catch((err) => {
