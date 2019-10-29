@@ -1,8 +1,9 @@
 from django import forms
 from .models import *
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from allauth.account.forms import *
 
-class RegistrationForm(UserCreationForm):
+class RegistrationForm(SignupForm):
     
     class Meta:
         model=MyUser

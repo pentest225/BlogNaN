@@ -21,92 +21,17 @@
         </div>
     </div>
 </section>
-<!-- End banner Area -->
-<div class="main-bg">
-    <div class="form-v8"><div class="page-content">
-		<div class="form-v8-content">
-			
-			<div class="form-right">
-				<div class="tab">
-					<div class="tab-inner">
-						<button class="tablinks" onclick="openCity(event, 'sign-up')" id="defaultOpen">Compte Visiteur</button>
-					</div>
-					<div class="tab-inner">
-						<button class="tablinks" onclick="openCity(event, 'sign-in')">Membre</button>
-					</div>
-				</div>
-					<div class="tabcontent" id="sign-up">
-              <form class="form-detail" id="signup_form" method="post" action="">
-
-                        <p>Détails sur le type de compte</p><br><br><br>
-                        {% csrf_token %}
-                        {% for hidden in form.hidden_fields %}
-                          {{ hidden }}
-                        {% endfor %}
-                     
-                        {% if redirect_field_value %}
-                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                        {% endif %}
-            {% for field in form.visible_fields %}
-            <div class="form-row">
-              <label class="form-row-inner">
-              {% render_field field class="input-text" placeholder=field.label %}
-              <span class="label">{{field.label}}</span>
-              <span class="border"></span>
-              {% for error in field.errors %}
-              <div class="alert alert-danger">{{ error }}</div>
-              {% endfor %}
-              </label>
-            </div><br>
-            {% endfor %}
-						<div class="form-row-last">
-              <input type="submit" name="register" class="register" value="S'inscrire">
-              <p>{% blocktrans %}If you have not created an account yet, then please
-              <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}</p>
-						</div>
-					</div>
-				</form>
-			
-
-					<div class="tabcontent" id="sign-in">
-            	<form class="form-detail" id="signup_form" method="post" action="">
-                        <p>Détails sur le type de compte</p><br><br><br>
-                        {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-              {{ hidden }}
-            {% endfor %}
-            {% if form.non_field_errors %}
-            <div class="alert alert-danger" role="alert">
-            {% for error in form.non_field_errors %}
-                {{ error }}
-            {% endfor %}
-            </div>
-            {% endif %}  
-            
-            {% for field in form.visible_fields %}
-            <div class="form-row">
-              <label class="form-row-inner">
-              {% render_field field class="input-text" placeholder=field.label %}
-              <span class="label">{{field.label}}</span>
-              <span class="border"></span>
-              {% for error in field.errors %}
-              <div class="alert alert-danger">{{ error }}</div>
-              {% endfor %}
-              </label>
-            </div><br>
-            {% endfor %}  
-						<div class="form-row-last">
-              <input type="submit" name="" class="register" value="S'inscrire">
-              <p>{% blocktrans %}If you have not created an account yet, then please
-                  <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}</p>
-						</div>
-					</div>
-				</form>
-			</div>
+<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form validate-form"  id="signup_form" method="post" action="{% url 'account_signup' %}" >
+					{% csrf_token %}
+					{{ form.as_p }}
+					{% if redirect_field_value %}
+					<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+					{% endif %}
+					<button type="submit">{% trans "Sign Up" %} &raquo;</button>
+			</form>
 		</div>
-    </div>
-</div>
-</div>
-    
+	</div>  
 
 {% endblock content %}

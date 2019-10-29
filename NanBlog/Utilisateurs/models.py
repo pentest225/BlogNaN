@@ -21,10 +21,15 @@ class MyUser(AbstractUser):
     status = models.BooleanField(default=True,null=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+
+    REQUIRED_FIELDS = ['email', 'last_name', 'first_name']
+
     class Meta:
         """Meta definition for utilisateur."""
         verbose_name = 'utilisateur'
         verbose_name_plural = 'utilisateurs'
+        constraints = [models.UniqueConstraint(fields=['email'], name='unique email')
+    ]
 
     def __str__(self):
         """Unicode representation of utilisateur."""
