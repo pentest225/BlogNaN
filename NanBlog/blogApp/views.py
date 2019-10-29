@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Categorie, Article, Archive, Tag, Commentaire, ResponseCommentaire, Like
+from .models import Categorie, Article, Tag, Commentaire, ResponseCommentaire, Like
 from rest_framework import viewsets
-from .serializer import CategorieSerializer, ArticleSerializer, ArchiveSerializer, TagSerializer, CommentaireSerializer, ResponseCommentaireSerializer, LikeSerializer
+from .serializer import CategorieSerializer, ArticleSerializer, TagSerializer, CommentaireSerializer, ResponseCommentaireSerializer, LikeSerializer
 # from rest_framework_api_key.permissions import HasAPIKey
 from django.http import	JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -34,11 +34,11 @@ class CommentaireViewset(viewsets.ModelViewSet):
     serializer_class = CommentaireSerializer
     queryset = Commentaire.objects.all()
     
-class ArchiveViewset(viewsets.ModelViewSet):
-    filter_backends = (DynamicSearchFilter,)
-    # permission_classes = [IsAuthenticated|ReadOnly]
-    serializer_class = ArchiveSerializer
-    queryset = Archive.objects.all()
+# class ArchiveViewset(viewsets.ModelViewSet):
+#     filter_backends = (DynamicSearchFilter,)
+#     # permission_classes = [IsAuthenticated|ReadOnly]
+#     serializer_class = ArchiveSerializer
+#     queryset = Archive.objects.all()
     
 class TagViewset(viewsets.ModelViewSet):
     filter_backends = (DynamicSearchFilter,)
@@ -121,6 +121,9 @@ def archive(request):
     }
     
     return render(request,'pages/archive.html',data)
+# def archive(request):
+    
+#     return render(request,'pages/archive.html')
 
 def login(request):
     

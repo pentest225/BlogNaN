@@ -47,6 +47,7 @@ class Article(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='blog/')
     contenu = HTMLField('contenu')
+    is_archive=models.BooleanField(default=False,null=True)
     image_single = models.ImageField(upload_to='blog/single')
     status = models.BooleanField(default=False,null=True)
     date_add = models.DateTimeField(auto_now_add=True)
@@ -67,8 +68,6 @@ class Article(models.Model):
 class Commentaire(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_commentaire')
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_comment')
-    nom = models.CharField(max_length=100)
-    email = models.EmailField()
     message = HTMLField('message')
     sujet = models.CharField(max_length=250)
     status = models.BooleanField(default=False)
@@ -84,17 +83,9 @@ class ResponseCommentaire(models.Model):
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
 
-class Archive(models.Model):
-    
-    article_id = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='archive_article')
-    status = models.BooleanField(default=False)
-    date_add = models.DateTimeField(auto_now_add=True)
-    date_upd = models.DateTimeField(auto_now=True)
-
 class Like(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_like')
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_like')
-    like = models.IntegerField()
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
