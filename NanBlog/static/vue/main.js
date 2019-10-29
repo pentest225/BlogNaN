@@ -9,7 +9,7 @@ var app = new Vue({
         First:[],
         categoryId:'',
         CarouselAll:[],
-        idcat :'{{ idcat }}',
+        idcat :'',
         idart:'',
         nom: '',
         sujet: '',
@@ -20,7 +20,7 @@ var app = new Vue({
     },
     delimiters:["${","}"],
     mounted(){
-        // this.idcat = "{{ idcat }}"
+        this.idcat = "{{ idcat }}"
         // this.idart = "{{ idart }}"
 
         this.getdata()
@@ -37,9 +37,6 @@ var app = new Vue({
                 data: {
                     query: `
                     query{
-
-                       
-
                     allCategories{
                         edges{
                         node{
