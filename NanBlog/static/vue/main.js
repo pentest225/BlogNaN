@@ -7,7 +7,7 @@ var app = new Vue({
         datAllIngredientesByCategoriy:[],
         datSingleCategory:[],
         First:[],
-        categoryId:'',
+        categoryId: [],
         CarouselAll:[],
         idcat :'',
         idart:'',
@@ -21,6 +21,7 @@ var app = new Vue({
     delimiters:["${","}"],
     mounted(){
         this.idcat = "{{ idcat }}"
+        // console.log(this.idcat)
         // this.idart = "{{ idart }}"
 
         this.getdata()
@@ -31,6 +32,7 @@ var app = new Vue({
             console.log('data getting')
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+            console.log(this.idcat)
             axios({
                 url: this.base_url + '/graphql',
                 method: 'post',
@@ -222,11 +224,13 @@ var app = new Vue({
             .then(response => {
                 result = response.data.data
                 // console.log(response.data)
-                this.dataAllCategory = result.allCategories.edges
-                this.categoryId=result.category
-                this.dataAllarticle = result.allArticles.edges
-                // this.categoryId =
-                console.log(this.idcat)
+                this.dataAllCategory = result.allCategories.edges;
+                this.categoryId = result.category;
+                this.dataAllarticle = result.allArticles.edges;
+                console.log(this.categoryId)
+                console.log(this.dataAllCategory)
+                // console.log(this.idcat)
+                console.log(this.dataAllarticle)
 
             })  
             .catch((err) => {
