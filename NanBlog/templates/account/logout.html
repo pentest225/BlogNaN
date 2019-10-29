@@ -1,9 +1,12 @@
-{% extends 'bases/otherBase.html' %}
-{% load i18n %}
+{% extends 'bases/indexBase.html' %}
 
-{% block head_title %}{% trans "Sign Out" %}{% endblock %}
+
+
 
 {% block content %}
+{% load i18n %}
+
+
 <h1>{% trans "Sign Out" %}</h1>
 
 <p>{% trans 'Are you sure you want to sign out?' %}</p>
@@ -13,8 +16,9 @@
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
   {% endif %}
-  <button type="submit">{% trans 'Sign Out' %}</button>
+  <button type="submit" class="btn btn-outline-danger btn-lg" >{% trans 'Sign Out' %}</button>
 </form>
 
 
 {% endblock %}
+

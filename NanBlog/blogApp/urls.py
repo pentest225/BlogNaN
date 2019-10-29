@@ -25,10 +25,14 @@ urlpatterns = [
     path('login',views.login,name='login'),
     path('register',views.register,name='register'),
     path('dashboard',views.dash,name='dash'),
+    path('moreInfo/<int:id>',views.moreInfo,name='moreInfo'),
     path('allCatallCat/<int:id>',views.dashCategory,name='dashCategory'),
     path('dashProfil',views.dashProfil,name='dashProfil'),
     path('dashSingleArticle/<int:id>',views.singleArticleDash,name='dashSingleArticle'),
     path('editArticleDash',views.editArticleDash,name='editArticleDash'),
+    path('updateArticle',views.updateArticle,name='updateArticle'),
+    path('deleteArticle/<int:id>',views.deleteArticle,name='deleteArticle'),
+    
     re_path(r'^accounts/', include('allauth.urls')),
     ]
 urlpatterns += router.urls

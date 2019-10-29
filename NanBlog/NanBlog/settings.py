@@ -242,12 +242,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
-MEDIA_URL + 'js/tiny_mce/tiny_mce.js'
-TINYMCE_JS_ROOT =MEDIA_ROOT + 'js/tiny_mce'
-TINYMCE_JS_URL =MEDIA_URL + 'js/tiny_mce/tiny_mce.js'
 
 STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
-# TINYMCE_JS_URL = os.path.join(MEDIA_URL, "path/to/tiny_mce/tiny_mce.js")
-# TINYMCE_JS_ROOT = os.path.join(MEDIA_ROOT, "path/to/tiny_mce")
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

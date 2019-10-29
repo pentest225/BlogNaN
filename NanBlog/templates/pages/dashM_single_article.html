@@ -13,7 +13,7 @@
                     <span data-on="On" data-off="Off" class="switch-label"></span>
                     <span class="switch-handle"></span>
                     </label>
-                    <button type="button" class="btn btn-outline-danger btn-lg "><i class='fa fa-archive'></i> Delect Article </button>
+                    <a type="button" href="{% url 'deleteArticle' allArticle.id %}" class="btn btn-outline-danger btn-lg "><i class='fa fa-archive'></i> Delect Article </a>
                     <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
                     <i class="zmdi zmdi-plus"></i>add Articles</a>
                 </div>
@@ -26,7 +26,7 @@
             <img class="card-img-top" src="{{allArticle.image.url}}" alt="Card image cap">
             
             <div class="card-body">
-                <h4 class="card-title mb-3">{{allArticle.titre}} patrick</h4>
+                <h4 class="card-title mb-3">{{allArticle.titre}}</h4>
                     {{allArticle.contenu}}
                 <p class="card-text"></p>
             </div>

@@ -1,6 +1,8 @@
-console.log("bonjour le patrick ")
+console.log("bonjour le pentest ")
+let myV=document.getElementById("idArt").value
+let idUser=document.getElementById("idUser").value
 var app = new Vue({
-    el: '#patrick',
+    el: '#app',
     data: {
         base_url:'',
         dataAllCategory:[],
@@ -13,6 +15,11 @@ var app = new Vue({
         message: '',
         suscribe:'',
         patrick:'Test Patrick',
+        articleActive:true,
+        idArticle:'',
+        idUser:null,
+        actionFrom:'',
+        myCom:'bonbhhh',
 
     },
     delimiters:["${","}"],
@@ -281,6 +288,67 @@ var app = new Vue({
                     console.log(err);
                 })
         },
+        testFunction:function(){
+            this.actionFrom="modifStatus"
+            this.idArticle=myV
+            axios.defaults.xsrfCookieName = 'csrftoken'
+                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                axios.post('https://localhost:8000/updateArticle', {
+                    action: '' + this.actionFrom,
+                    id: '' + this.idArticle,
+                    }).then(response => {
+                        console.log(response) 
+                        if(response.data.success){
+                            this.isSuccess=true
+                            this.error=false
+                            this.messageRes=response.data.message
+                        }
+                        else{
+                            this.error=true
+                            this.isSuccess=false
+                            this.messageRes=response.data.message
+                        }
+                        this.isregister=false
+                        console.log("success variable"+this.isSuccess)
+                        console.log("success variable"+this.error)
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        this.isregister=false
+                    })
+            },
+        sendComment:function(){
+            this.actionFrom="addContent"
+            this.idArticle=myV
+            this.idUser=idUser
+
+            axios.defaults.xsrfCookieName = 'csrftoken'
+                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                axios.post('https://localhost:8000/updateArticle', {
+                    action: '' + this.actionFrom,
+                    idArticle: '' + this.idArticle,
+                    idUser:''+this.idUser,
+                    comment:''+this.myCom,
+                    }).then(response => {
+                        console.log(response) 
+                        if(response.data.addCommentOk){
+                            swal("Cemment add ", "", "success");
+                        }
+                        else{
+                            this.error=true
+                            this.isSuccess=false
+                            this.messageRes=response.data.message
+                        }
+                        this.isregister=false
+                        console.log("success variable"+this.isSuccess)
+                        console.log("success variable"+this.error)
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        this.isregister=false
+                    })
+            },
+
     },
 
 
