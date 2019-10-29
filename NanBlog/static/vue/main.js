@@ -30,6 +30,7 @@ var app = new Vue({
             console.log('data getting')
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+            console.log(this.idcat)
             axios({
                 url: this.base_url + '/graphql',
                 method: 'post',
