@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'crispy_forms',
     'django_extensions',
+    'django_twilio',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -136,6 +137,10 @@ LOGIN_REDIRECT_URL = 'index'
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'index'
 # redirects to /accounts/profile by default
+
+# TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
+# TWILIO_AUTH_TOKEN =  os.environ["TWILIO_AUTH_TOKEN"]
+# TWILIO_DEFAULT_CALLERID =  os.environ["TWILIO_DEFAULT_CALLERID"]
 
 WSGI_APPLICATION = 'NanBlog.wsgi.application'
 
