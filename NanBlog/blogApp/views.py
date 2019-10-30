@@ -89,34 +89,37 @@ def category(request,idcat):
 def single_blog(request,idart):
     data ={
         'idart':idart
-def category(request):
-    if request.user.is_authenticated:
-        myU=request.user
-        print(myU.username)
-        print(myU.id)
-        data={
-            'isConnected':True,
-            'myUser':myU
-        }
-    data={
-        'isConnected':False
-    }
-    
-    return render(request,'pages/category.html',data)
-
-def single_blog(request):
-    if request.user.is_authenticated:
-        myU=request.user
-        print(myU.username)
-        print(myU.id)
-        data={
-            'isConnected':True,
-            'myUser':request.user
-        }
-    data={
-        'isConnected':False
     }
     return render(request,'pages/single_blog.html',data)
+
+# def category(request):
+#     if request.user.is_authenticated:
+#         myU=request.user
+#         print(myU.username)
+#         print(myU.id)
+#         data={
+#             'isConnected':True,
+#             'myUser':myU
+#         }
+#     data={
+#         'isConnected':False
+#     }
+    
+#     return render(request,'pages/category.html',data)
+
+# def single_blog(request):
+#     if request.user.is_authenticated:
+#         myU=request.user
+#         print(myU.username)
+#         print(myU.id)
+#         data={
+#             'isConnected':True,
+#             'myUser':request.user
+#         }
+#     data={
+#         'isConnected':False
+#     }
+#     return render(request,'pages/single_blog.html',data)
 
 
 def archive(request):

@@ -47,7 +47,7 @@
                         <li class="menu-active"><a href="{% url 'index' %}">Home </a></li>
                         <li class="menu-has-children"><a href="">Categorie</a>
                             <ul>
-                                <li v-for="item in dataAllCategory"><a  :href=`${base_url}/`+`category/`+`${item.node.id}`>${ item.node.nom }</a></li>
+                              <li v-for="item in dataAllCategory"><a  :href=`${base_url}/`+`category/`+`${item.node.id}`>${ item.node.nom }</a></li> 
                                 
                             </ul>
                         </li>
