@@ -29,8 +29,7 @@ var app = new Vue({
     },
     methods: {
         getdata: function() {
-            this.base_url = 'https://127.0.0.1:8000'
-            console.log('data getting')
+            this.base_url = 'https://localhost:8000/'
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             axios({
@@ -223,10 +222,10 @@ var app = new Vue({
             })
             .then(response => {
                 result = response.data.data
-                // console.log(response.data)
-                this.dataAllCategory = result.allCategories.edges
-                this.categoryId=result.category
-                this.dataAllarticle = result.allArticles.edges
+                console.log(result)
+                // this.dataAllCategory = result.allCategories.edges
+                // this.categoryId=result.category
+                // this.dataAllarticle = result.allArticles.edges
                 // this.categoryId =
                 console.log(this.idcat)
 
@@ -243,7 +242,7 @@ var app = new Vue({
             formData.append('sujet', '' + this.sujet);
             formData.append('email', '' + this.email);
             formData.append('message', '' + this.message);
-            axios.post('https://127.0.0.1:8000/contacts/message',formData,
+            axios.post('https://localhost:8000/contacts/message',formData,
             {
             } ).then(response => {
                     console.log(response)
