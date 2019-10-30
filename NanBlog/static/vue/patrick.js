@@ -1,6 +1,6 @@
 console.log("bonjour le pentest ")
-let myV=document.getElementById("idArt").value
-let idUser=document.getElementById("idUser").value
+// let myV=document.getElementById("idArt").value
+// let idUser=document.getElementById("idUser").value
 
 Vue.component('comment_user',{
     delimiters:["${","}"],
