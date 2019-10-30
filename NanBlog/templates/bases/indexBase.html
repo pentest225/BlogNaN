@@ -489,7 +489,6 @@
                     },
                     postcomment: function() {
                         this.base_url = 'https://127.0.0.1:8000'
-                        console.log('data getting')
                         let formData = new FormData();
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -500,7 +499,7 @@
                             url: this.base_url + '/graphql',
                             method: 'post',
                             data: {
-                                mutation: `
+                                query: `
                                 mutation{
                                     relayCreateComment(input:{sujet:"testgraph",message:"${ this.commentaire }",article:"${ this.idart }",status:true}){
                                       comment{
@@ -508,19 +507,18 @@
                                       }
                                     }
                                   }
-                                 `
+                            `
                             }
                         })
                         .then(response => {
                         console.log(response)
-                                if (response.data.succes == true) {
+                                if (response.data.data.relayCreateComment != null) {
                                     new Toast({
                                         message: 'Commentaire envoyer avec success',
                                         type: 'success'
                                     });
-                                    this.commentaire = ''
                                 }else{
-                                    swal("Votre Commentaire n'a par ete posté");
+                                    swal("Entrer Votre Commentaire ");
                                 }
                         })  
                         .catch((err) => {
