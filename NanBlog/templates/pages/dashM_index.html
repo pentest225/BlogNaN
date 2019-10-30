@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="overview-wrap">
-                        <h2 class="title-1">overview ${patrick}</h2>
+                        <h2 class="title-1">overview ${myCom} ${UserName}</h2>
                         <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
                             <i class="zmdi zmdi-plus"></i>add Articles</a>
                     </div>
@@ -148,33 +148,17 @@
                                     <!--End Notif section -->
                                     <!--Liste Messages section -->
                                     <div class="au-message-list">
-                                    {% for myArt in allArticle  %}
-                                    {% for comment  in myArt.article_commentaire.all %}
-                                        <div class="au-message__item unread">
-                                            <div class="au-message__item-inner">
-                                                <div class="au-message__item-text">
-                                                    <div class="avatar-wrap">
-                                                        <div class="avatar">
-                                                            <img src="{{comment.user.image.url}}" alt="John Smith">
-                                                        </div>
-                                                    </div>
-                                                    <div class="text" >
-                                                        <h5 class="name" >{{comment.user}}</h5>
-                                                        <p id="penComment">{{comment.message}}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="au-message__item-time">
-                                                    <span>{{comment.date_add}}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                    {% endfor %}            
+                                        <comment_user
+                                        v-for="user in listeComment"
+                                        v-bind:item="user"
+                                        v-bind:key="user.id"
+                                        ></comment_user>
                                     </div>
+
                                     <!--End Liste Messages section -->
                                     <!--Load More Btn section -->
                                     <div class="au-message__footer">
-                                        <button class="au-btn au-btn-load js-load-btn">load more</button>
+                                        <button class="btn btn-outline-success au-message__item ">Add comment</button>
                                     </div>
                                     <!--End load More -->
 
@@ -192,34 +176,18 @@
                                                 </div>
                                             </div>
                                             <span class="nick">
-                                                <a href="#">John Smith</a>
+                                                <a href="#">Send yor comment</a>
                                             </span>
-                                        </div>
-                                    </div>
-                                    <!-- -->
-                                    <div class="au-chat__content">
-                                   
-                                       <div class="send-mess-wrap">
-                                            <span class="mess-time">30 Sec ago</span>
-                                            <div class="send-mess__inner">
-                                                <div class="send-mess-list">
-                                                    <div class="send-mess">${myCom}</div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="au-chat-textfield">
                                         <div class="au-form-icon">
                                             <form action="" method="post" novalidate="novalidate">
-                                                <textarea v-model="myCom" class="md-textarea form-control" >
                                                     {{myFrom.contenu}}
-                                                </textarea>
-                                               
-                                                <input type='sudmit' class="btn btn-success" value="Send connent">
-                                                <button v-on:click='sendComment' class="btn btn-success">
-                                                    send yor comment <i class="zmdi zmdi-mail-send "></i>
-                                                </button>
                                             </form>
+                                            <button v-on:click='sendComment' class="btn btn-success">
+                                                send yor comment <i class="zmdi zmdi-mail-send "></i>
+                                            </button>
                                             <!--
                                             <textarea id="story" name="story" v-model="myCom"  class="au-input au-input--full au-input--h6" rows="5" cols="33">
                                             </textarea>-->
