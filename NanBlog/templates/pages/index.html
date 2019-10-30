@@ -19,24 +19,24 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="owl-carousel active-post-carusel">
-
-                    <!-- <div v-for="article in CarouselAll"  class="post-box mb-30">
+                    
+                    <div class="post-box mb-30">
                         <div class="d-flex">
                             <div>
                                 <a href="#">
-                                    <img :src=`${base_url}/`+`media/`+`${article.node.auteur.image}` alt="">
+                                    <img src="/static/img/author/a1.png" alt="">
                                 </a>
                             </div>
                             <div class="post-meta">
                                 <div class="meta-head">
-                                    <a href="#">${ article.node.auteur.lastName } ${ article.node.auteur.firstName }</a>
+                                    <a href="#">Marvel Maison</a>
                                 </div>
                                 <div class="meta-details">
                                     <ul>
                                         <li>
                                             <a href="#">
                                                 <span class="lnr lnr-calendar-full"></span>
-                                                ${ article.node.dateAdd}
+                                                13th Oct, 2018
                                             </a>
                                         </li>
                                         <li>
@@ -61,11 +61,12 @@
                                 </div>
                             </div>
                         </div>
-                        <p>${ article.node.description.substring(0,300) }</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
                         <div class="post-btn">
-                            <a :href=``+`${base_url}`+`/single_blog/`+`${article.node.id}`+`` class="primary-btn text-uppercase">Read More</a>
+                            <a href="#" class="primary-btn text-uppercase">Read More</a>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="post-box mb-30">
                         <div class="d-flex">
@@ -113,54 +114,8 @@
                         <div class="post-btn">
                             <a href="#" class="primary-btn text-uppercase">Read More</a>
                         </div>
-                    </div> -->
-                    <div class="post-box mb-30">
-                            <div class="d-flex">
-                                <div>
-                                    <a href="#">
-                                        <img src="/static/img/author/a1.png" alt="">
-                                    </a>
-                                </div>
-                                <div class="post-meta">
-                                    <div class="meta-head">
-                                        <a href="#">Marvel Maison</a>
-                                    </div>
-                                    <div class="meta-details">
-                                        <ul>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="lnr lnr-calendar-full"></span>
-                                                    13th Oct, 2018
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="lnr lnr-picture"></span>
-                                                    Image Post
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="lnr lnr-coffee-cup"></span>
-                                                    Food & Travel
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="lnr lnr-bubble"></span>
-                                                    03 Comments
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                            <div class="post-btn">
-                                <a href="#" class="primary-btn text-uppercase">Read More</a>
-                            </div>
-                    </div> -->
+                    </div>
+
                     
                 </div>
             </div>
@@ -179,18 +134,18 @@
                         
                     <div v-for="article in dataAllarticle" class="single-post-item">
                         <figure>
-                            <img class="post-img img-fluid" :src=`${base_url}/`+`media/`+`${article.node.imageSingle}` alt="">
+                            <img class="post-img img-fluid" :src=`${base_url}/`+`media/`+`${article.node.image}` alt="">
                         </figure>
                         <h3>
-                            <a :href=``+`${base_url}`+`/single_blog/`+`${article.node.id}`+`` >${ article.node.titre }</a>
+                            <a href="blog-details.html">${ article.node.titre }</a>
                         </h3>
                         <p>${ article.node.description.substring(0,300) }</p>
-                        <a :href=``+`${base_url}`+`/single_blog/`+`${article.node.id}`+`` class="primary-btn text-uppercase mt-15">continue Reading</a>
+                        <a href="blog-details.html" class="primary-btn text-uppercase mt-15">continue Reading</a>
                         <div class="post-box">
                             <div class="d-flex">
                                 <div>
                                     <a href="#">
-                                        <img :src=`${base_url}/`+`media/`+`${article.node.auteur.image}` alt="">
+                                        <img  :src=`${base_url}/`+`media/`+`${article.node.auteur.image}` alt="">
                                     </a>
                                 </div>
                                 <div class="post-meta">
@@ -265,7 +220,7 @@
                     </form>
                 </div>
 
-                <!-- <div class="single-widget protfolio-widget">
+                <div class="single-widget protfolio-widget">
                     <img class="img-fluid" src="/static/img/blog/user2.png" alt="">
                     <a href="#">
                         <h4>Charlie ALison Barber</h4>
@@ -283,12 +238,11 @@
                         <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
                         <li><a href="#"><i class="fa fa-behance"></i></a></li>
                     </ul>
-                </div> -->
+                </div>
 
                 <div class="single-widget popular-posts-widget">
-                    <h4 class="title">Article Populaire</h4>
+                    <h4 class="title">Popular Posts</h4>
                     <div class="blog-list ">
-
                         <div class="single-popular-post d-flex flex-row">
                             <div class="popular-thumb">
                                 <img class="img-fluid" src="/static/img/blog/r1.jpg" alt="">
@@ -300,12 +254,44 @@
                                 <p class="text-uppercase">02 hours ago</p>
                             </div>
                         </div>
-
+                        <div class="single-popular-post d-flex flex-row">
+                            <div class="popular-thumb">
+                                <img class="img-fluid" src="/static/img/blog/r2.jpg" alt="">
+                            </div>
+                            <div class="popular-details">
+                                <a href="blog-details.html">
+                                    <h4>The Amazing Hubble</h4>
+                                </a>
+                                <p class="text-uppercase">02 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="single-popular-post d-flex flex-row">
+                            <div class="popular-thumb">
+                                <img class="img-fluid" src="/static/img/blog/r3.jpg" alt="">
+                            </div>
+                            <div class="popular-details">
+                                <a href="blog-details.html">
+                                    <h4>Astronomy Astrology</h4>
+                                </a>
+                                <p class="text-uppercase">02 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="single-popular-post d-flex flex-row">
+                            <div class="popular-thumb">
+                                <img class="img-fluid" src="/static/img/blog/r4.jpg" alt="">
+                            </div>
+                            <div class="popular-details">
+                                <a href="blog-details.html">
+                                    <h4>Asteroids telescope</h4>
+                                </a>
+                                <p class="text-uppercase">02 hours ago</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="single-widget category-widget">
-                    <h4 class="title">Article Par Categorie</h4>
+                    <h4 class="title">Post Categories</h4>
                     <ul>
                         <li v-for="item in dataAllCategory"><a  :href=``+`${base_url}`+`/category/`+`${item.node.id}`+`` class="justify-content-between align-items-center d-flex">
                                 <p>${ item.node.nom}</p> <span>${ item.node.articleCategorie.edges.length }</span>

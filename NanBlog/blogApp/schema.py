@@ -143,7 +143,6 @@ class ArticleNode(DjangoObjectType):
             'description':['icontains','exact','istartswith'],
             'contenu':['icontains','exact','istartswith'],
             'status':['exact',],
-            'is_archive': ['exact',],
         }
         order_by = OrderingFilter(
             fields=(

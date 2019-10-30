@@ -61,7 +61,7 @@ def index(request):
     return render(request,'pages/index.html')
 
 
-def category(request, idcat):
+def category(request,idcat):
     data={
         'idcat':idcat
     }
