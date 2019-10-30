@@ -4,7 +4,7 @@ from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 from .models import *
 from Utilisateurs.models import MyUser
-from django_filters import OrderingFilter 
+from django_filters import OrderingFilter , FilterSet 
 from pprint import pprint
 from graphql_relay.node.node import from_global_id
 ########################################################################################################
@@ -95,9 +95,22 @@ class RelayCreateTag(graphene.relay.ClientIDMutation):
         return RelayCreateTag(tag=tag_modif)
 
                 
-    
+######################## Filter ##########################
+class ArticleFilter(FilterSet):
+    class Meta:
+        model = Article
+        fields = ("date_add","date_upd")
+
+    order_by = OrderingFilter(
+        fields=(
+            ('date_add', 'date_add'),
+        )
+    )
+
+#########################################################
     
 class CategorieNode(DjangoObjectType):
+    # article = DjangoFilterConnectionField(ArticleNode,filterset_class=ArticleFilter)
     class Meta:
         model = Categorie
         fields = "__all__"
@@ -106,7 +119,8 @@ class CategorieNode(DjangoObjectType):
         }
         interfaces = (relay.Node,)
         connection_class = ExtendConnection
-        
+    def resolve_article(self, info, **kwargs):
+        return ArticleFilter(kwargs).qs
 class RelayCreateCategorie(graphene.relay.ClientIDMutation):
     categorie = graphene.Field(CategorieNode)
     class Input:
@@ -134,6 +148,7 @@ class RelayCreateCategorie(graphene.relay.ClientIDMutation):
         cat.save()
         return RelayCreateCategorie(categorie=cat)
     
+
 class ArticleNode(DjangoObjectType):
     class Meta:
         model = Article
@@ -444,7 +459,7 @@ class RelayCreateLike(graphene.relay.ClientIDMutation):
 
 class Query(graphene.ObjectType):
     article = relay.Node.Field(ArticleNode)
-    all_articles = DjangoFilterConnectionField(ArticleNode)
+    all_articles = DjangoFilterConnectionField(ArticleNode,filterset_class=ArticleFilter)
     
     category = relay.Node.Field(CategorieNode)
     all_categories = DjangoFilterConnectionField(CategorieNode)
@@ -468,6 +483,8 @@ class RelayMutation(graphene.AbstractType):
     relay_create_response_comment = RelayCreateResponseComment.Field()
     relay_creat_like = RelayCreateLike.Field()
     relay_create_tag = RelayCreateTag.Field()
+
+
 ####################################################################
 ########################TEST##################################
 

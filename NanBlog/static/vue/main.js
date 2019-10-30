@@ -1,3 +1,4 @@
+console.log("bonjour le monde ")
 var app = new Vue({
     el: '#app',
     data: {
@@ -17,6 +18,7 @@ var app = new Vue({
         message: '',
         suscribe:'',
         base_url:'',
+        patrick:'test patrick',
     },
     delimiters:["${","}"],
     mounted(){
@@ -268,7 +270,7 @@ var app = new Vue({
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             let formData = new FormData();
             formData.append('suscribe', '' + this.suscribe);
-            axios.post('https://127.0.0.1:8000/contacts/souscription',formData,
+            axios.post('https://localhost:8000/contacts/souscription',formData,
             {
             } ).then(response => {
                     

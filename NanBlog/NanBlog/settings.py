@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.linkedin_oauth2',
     'allauth.socialaccount.providers.discord',
     'django.contrib.sites',
+    'django.contrib.flatpages',
     'widget_tweaks',
     'crispy_forms',
     'django_extensions',
@@ -219,8 +220,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'statusbar': True,
 }
 
-FILEBROWSER_DIRECTORY='../media_cdn'
-FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100
+    
+
 
 REST_FRAMEWORK  =  { 
     "DEFAULT_PERMISSION_CLASSES" :  [ 
@@ -252,8 +253,8 @@ STATICFILES_DIRS = [
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
-STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
+STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

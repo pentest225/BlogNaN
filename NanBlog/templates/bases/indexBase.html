@@ -44,23 +44,38 @@
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
-                        <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="menu-active"><a href="{% url 'index' %}">Home </a></li>
                         <li class="menu-has-children"><a href="">Categorie</a>
                             <ul>
                                 <li v-for="item in dataAllCategory"><a  :href=`${base_url}/`+`category/`+`${item.node.id}`>${ item.node.nom }</a></li>
                                 
                             </ul>
                         </li>
-                        <li><a href="{% url 'archive' %}">Archive</a></li>
+
+                        <li><a href="{#{% url 'archive' %}#}">Archive</a></li>
+                        <li><a href="{#{% url 'archive' %}#}">Archive</a></li>
                         
+
                         <li><a href="{% url 'contact' %}">Contact</a></li>
+                        {% if not user.is_authenticated %}
+                        <li><a href="{% url 'account_login' %}" class="genric-btn primary circle">Inscription {{ user.username }} <span class="lnr lnr-arrow-right"></a></li>
+                        <li><a href="{% url 'account_signup' %}" class="genric-btn primary circle">Connexion <span class="lnr lnr-arrow-right"></a></li>
+                        {% endif %}
                         {% if user.is_authenticated %}
-                        <li class="menu-has-children"><a>{{ user.id}} {{ user.first_name }}</a>
+                        <li class="menu-has-children">
+                        <a href="#">
+                            <img src="{{user.image.url}}" alt="" height=40 width=40 class="rounded-circle">
+                        </a>
                             <ul>
-                                <li><a href="{% url 'account_logout' %}">logout</a></li>
+                                <li><a href="{% url 'single_blog' %}">{{ user.username }}</a></li>
+                                <li><hr><hr></li>
+                                <li><a href="{% url 'dash' %}">Tableaux de bord</a></li>
+                                <li><a href="{% url 'single_blog' %}">Parametre</a></li>
+                                <li><hr><hr></li>
+                                <li><a href="{% url 'account_logout' %}">Logout</a></li>
                             </ul>
                         </li>
-                        {% endif %} 
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
@@ -88,13 +103,13 @@
                         <h6 class="footer_title">Newsletter</h6>
                         <p>Stay updated with our latest trends</p>
                         <div id="mc_embed_signup">
-                            <form target="_blank"  class="subscribe_form relative">
+                            <div class="subscribe_form relative">
                                 <div class="input-group d-flex flex-row">
-                                    <input name="EMAIL" v-model="suscribe" placeholder="Email Address" required="" type="email">
-                                    <button v-on:click.prevent="suscription" class="btn sub-btn"><span class="lnr lnr-arrow-right"></span></button>
+                                    <input name="EMAIL" type='email' v-model="suscribe" placeholder="Email Address" required="" type="email">
+                                    <button  v-on:click="suscription" class="btn sub-btn"><span class="lnr lnr-arrow-right"></span></button>
                                 </div>
                                 <div class="mt-10 info"></div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
