@@ -212,8 +212,6 @@ TINYMCE_DEFAULT_CONFIG = {
 
     
 
-FILEBROWSER_DIRECTORY='../media_cdn'
-FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -246,3 +244,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
 STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# FILEBROWSER_DIRECTORY= ''
+FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100
