@@ -1,6 +1,7 @@
 {% extends 'bases/indexBase.html' %}
     
 {% block content %}
+{% load social_share %}
 <!-- start banner Area -->
 <section class="banner-area relative">
     <div class="overlay overlay-bg"></div>
@@ -25,69 +26,41 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="main_blog_details">
-                    <img class="img-fluid" src="/static/img/blog/news-blog.jpg" alt="">
-                    <h4>Cartridge Is Better Than Ever <br /> A Discount Toner</h4>
+                    <img class="img-fluid" :src=`${base_url}/`+`media/`+`${singleAtircle.imageSingle}` alt="">
+                    <h4>${ singleAtircle.titre }</h4>
                     <div class="user_details">
                         <div class="float-left">
-                            <a href="#">Lifestyle</a>
-                            <a href="#">Gadget</a>
+                            
+                            <a v-for="tags in singleAtircle.tag.edges" href="#">${ tags.node.nom }</a>
                         </div>
                         <div class="float-right">
                             <div class="media">
                                 <div class="media-body">
-                                    <h5>Mark wiens</h5>
-                                    <p>12 Dec, 2017 11:21 am</p>
+                                    <h5>${ singleAtircle.auteur.lastName } ${ singleAtircle.auteur.firstName }</h5>
+                                    <p>${ singleAtircle.dateAdd }</p>
                                 </div>
                                 <div class="d-flex">
-                                    <img src="/static/img/blog/user-img.jpg" alt="">
+                                    <img :src=`${base_url}/`+`media/`+`${singleAtircle.auteur.image}` alt="">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why
-                        you
-                        should have to spend money on boot camp when you can get the MCSE study materials yourself
-                        at
-                        a fraction of the camp price. However, who has the willpower</p>
-                    <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why
-                        you
-                        should have to spend money on boot camp when you can get the MCSE study materials yourself
-                        at
-                        a fraction of the camp price. However, who has the willpower to actually sit through a
-                        self-imposed
-                        MCSE training. who has the willpower to actually sit through a self-imposed MCSE training.</p>
-                    <blockquote class="blockquote">
-                        <p class="mb-0">MCSE boot camps have its supporters and its detractors. Some people do not
-                            understand
-                            why you should have to spend money on boot camp when you can get the MCSE study
-                            materials
-                            yourself at a fraction of the camp price. However, who has the willpower to actually
-                            sit
-                            through a self-imposed MCSE training.</p>
-                    </blockquote>
-                    <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why
-                        you
-                        should have to spend money on boot camp when you can get the MCSE study materials yourself
-                        at
-                        a fraction of the camp price. However, who has the willpower</p>
-                    <p>MCSE boot camps have its supporters and its detractors. Some people do not understand why
-                        you
-                        should have to spend money on boot camp when you can get the MCSE study materials yourself
-                        at
-                        a fraction of the camp price. However, who has the willpower</p>
+                    <!-- <p>${ singleAtircle.contenu }</p> -->
+                    <span v-html="singleAtircle.contenu"></span>
                     <div class="news_d_footer">
-                        <a href="#"><i class="lnr lnr lnr-heart"></i>Lily and 4 people like this</a>
-                        <a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>06
-                            Comments</a>
+                        <a href="#"><i class="lnr lnr lnr-heart"></i>${ singleAtircle.articleLike.edges.length}   Like</a>
+                        <a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>${ singleAtircle.articleCommentaire.edges.length} Commentaire</a>
                         <div class="news_socail ml-auto">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                            <a href="#"><i class="fa fa-rss"></i></a>
+                            <!-- <p>partager</p> -->
+                            {% post_to_facebook object_or_url  %}
+                            {% post_to_gplus object_or_url %}
+                            {% post_to_linkedin  object_or_url %}
+                            {% post_to_twitter "New Song: {{object.title}}. Check it out!" object_or_url %}
+                            
                         </div>
                     </div>
                 </div>
-                <div class="navigation-area">
+                <!-- <div class="navigation-area">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
                             <div class="thumb">
@@ -118,132 +91,78 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="comments-area">
-                    <h4>05 Comments</h4>
+                    <h4>${ singleAtircle.articleCommentaire.edges.length} Commentaire</h4>
+
+                    <div  v-for="comment in singleAtircle.articleCommentaire.edges" >
                     <div class="comment-list">
                         <div class="single-comment justify-content-between d-flex">
                             <div class="user justify-content-between d-flex">
                                 <div class="thumb">
-                                    <img src="/static/img/blog/c1.jpg" alt="">
+                                    <img :src=`${base_url}/`+`media/`+`${comment.node.user.image}` alt="">
                                 </div>
                                 <div class="desc">
-                                    <h5><a href="#">Emilly Blunt</a></h5>
-                                    <p class="date">December 4, 2017 at 3:12 pm </p>
+                                    <h5><a href="#">${ comment.node.user.lastName } ${ comment.node.user.firstName}</a></h5>
+                                    <p class="date">${ comment.node.dateAdd } </p>
                                     <p class="comment">
-                                        Never say goodbye till the end comes!
+                                        <span v-html="comment.node.message"></span>
                                     </p>
                                 </div>
                             </div>
                             <div class="reply-btn">
-                                <a href="" class="btn-reply text-uppercase">reply</a>
+                                <a href="" class="btn-reply text-uppercase">repondre</a>
                             </div>
                         </div>
                     </div>
-                    <div class="comment-list left-padding">
+
+                    <div  v-for="response  in comment.node.response.edges " class="comment-list left-padding">
                         <div class="single-comment justify-content-between d-flex">
                             <div class="user justify-content-between d-flex">
                                 <div class="thumb">
-                                    <img src="/static/img/blog/c2.jpg" alt="">
+                                    <img :src=`${base_url}/`+`media/`+`${response.node.user.image}` alt="">
                                 </div>
                                 <div class="desc">
-                                    <h5><a href="#">Elsie Cunningham</a></h5>
-                                    <p class="date">December 4, 2017 at 3:12 pm </p>
+                                    <h5><a href="#">${ response.node.user.lastName } ${ response.node.user.firstName}</a></h5>
+                                    <p class="date">${ response.node.dateAdd } </p>
                                     <p class="comment">
-                                        Never say goodbye till the end comes!
+                                            <span v-html="response.node.message"></span>
                                     </p>
                                 </div>
                             </div>
                             <div class="reply-btn">
-                                <a href="" class="btn-reply text-uppercase">reply</a>
+                                <a href="" class="btn-reply text-uppercase">repondre</a>
                             </div>
                         </div>
                     </div>
-                    <div class="comment-list left-padding">
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="thumb">
-                                    <img src="/static/img/blog/c3.jpg" alt="">
-                                </div>
-                                <div class="desc">
-                                    <h5><a href="#">Annie Stephens</a></h5>
-                                    <p class="date">December 4, 2017 at 3:12 pm </p>
-                                    <p class="comment">
-                                        Never say goodbye till the end comes!
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="reply-btn">
-                                <a href="" class="btn-reply text-uppercase">reply</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment-list">
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="thumb">
-                                    <img src="/static/img/blog/c4.jpg" alt="">
-                                </div>
-                                <div class="desc">
-                                    <h5><a href="#">Maria Luna</a></h5>
-                                    <p class="date">December 4, 2017 at 3:12 pm </p>
-                                    <p class="comment">
-                                        Never say goodbye till the end comes!
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="reply-btn">
-                                <a href="" class="btn-reply text-uppercase">reply</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment-list">
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="thumb">
-                                    <img src="/static/img/blog/c5.jpg" alt="">
-                                </div>
-                                <div class="desc">
-                                    <h5><a href="#">Ina Hayes</a></h5>
-                                    <p class="date">December 4, 2017 at 3:12 pm </p>
-                                    <p class="comment">
-                                        Never say goodbye till the end comes!
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="reply-btn">
-                                <a href="" class="btn-reply text-uppercase">reply</a>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
-                <div class="comment-form">
-                    <h4>Leave a Reply</h4>
+                </div>
+
+                <div  v-if="singleAtircle.isArchive"  class="comment-form">
+                        <h4> Article Fermer Au commentaire</h4>
+                        <form>
+                            <div class="form-group">
+                                <textarea class="form-control mb-10" rows="5" name="message" placeholder="Cet article est fermer au commentaire car il éte achiver par le webmaster du du blog"
+                                    onfocus="this.placeholder = ''" disabled  onblur="this.placeholder = 'Commentaire'" required=""></textarea>
+                            </div>
+                        </form>
+                </div>
+
+                <div v-else="" class="comment-form">
+                    <h4>Laisser Un Commentaire</h4>
                     <form>
-                        <div class="form-group form-inline">
-                            <div class="form-group col-lg-6 col-md-6 name">
-                                <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = 'Enter Name'">
-                            </div>
-                            <div class="form-group col-lg-6 col-md-6 email">
-                                <input type="email" class="form-control" id="email" placeholder="Enter email address"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
-                            </div>
-                        </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="subject" placeholder="Subject" onfocus="this.placeholder = ''"
-                                onblur="this.placeholder = 'Subject'">
+                            <textarea class="form-control mb-10" rows="5" name="message" placeholder="Commentaire"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                         </div>
-                        <div class="form-group">
-                            <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege"
-                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea>
-                        </div>
-                        <a href="#" class="primary-btn submit_btn text-uppercase">Send Message</a>
+                        <a href="#" class="primary-btn submit_btn text-uppercase">Commenter</a>
                     </form>
                 </div>
+                
             </div>
 
-            <div class="col-lg-4 sidebar">
+            <div  class="col-lg-4 sidebar">
                 <div class="single-widget search-widget">
                     <form class="example" action="#" style="margin:auto;max-width:300px">
                         <input type="text" placeholder="Search Posts" name="search2">
@@ -252,17 +171,15 @@
                 </div>
 
                 <div class="single-widget protfolio-widget">
-                    <img class="img-fluid" src="/static/img/blog/user2.png" alt="">
+                    <img class="img-fluid" :src=`${base_url}/`+`media/`+`${singleAtircle.auteur.image}` alt="">
                     <a href="#">
-                        <h4>Charlie ALison Barber</h4>
+                        <h4>${ singleAtircle.auteur.lastName } ${ singleAtircle.auteur.firstName }</h4>
                     </a>
                     <div class="desigmation">
-                        <p>Senior blog writer</p>
+                        <p v-for="special in singleAtircle.auteur.specialite.edges">${ special.node.specialiste }</p>
                     </div>
                     <p>
-                        Boot camps have its supporters andit sdetractors. Some people do not understand why you
-                        should have to spend
-                        money on boot camp whenyou can get. Boot camps have itssuppor ters andits detractors.
+                        ${ singleAtircle.auteur.description } 
                     </p>
                     <ul>
                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -273,81 +190,35 @@
                 </div>
 
                 <div class="single-widget popular-posts-widget">
-                    <h4 class="title">Popular Posts</h4>
-                    <div class="blog-list ">
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r1.jpg" alt="">
+                        <h4 class="title">Article Populaire</h4>
+                        <div class="blog-list ">
+    
+                            <div class="single-popular-post d-flex flex-row">
+                                <div class="popular-thumb">
+                                    <img class="img-fluid" src="/static/img/blog/r1.jpg" alt="">
+                                </div>
+                                <div class="popular-details">
+                                    <a href="blog-details.html">
+                                        <h4>Space Final Frontier</h4>
+                                    </a>
+                                    <p class="text-uppercase">02 hours ago</p>
+                                </div>
                             </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Space Final Frontier</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r2.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>The Amazing Hubble</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r3.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Astronomy Astrology</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r4.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Asteroids telescope</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
+    
+                    
                         </div>
                     </div>
-                </div>
-
-                <div class="single-widget category-widget">
-                    <h4 class="title">Post Categories</h4>
-                    <ul>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Techlology</p> <span>37</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Lifestyle</p> <span>24</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Fashion</p> <span>59</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Art</p> <span>29</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Food</p> <span>15</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Architecture</p> <span>09</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Adventure</p> <span>44</span>
-                            </a></li>
-                    </ul>
-                </div>
+    
+                    <div class="single-widget category-widget">
+                            <h4 class="title">Article Par Categorie</h4>
+                            <ul>
+                                <li v-for="item in dataAllCategory"><a  :href=``+`${base_url}`+`/category/`+`${item.node.id}`+`` class="justify-content-between align-items-center d-flex">
+                                        <p>${ item.node.nom}</p> <span>${ item.node.articleCategorie.edges.length }</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                    </div>
 
                 <div class="single-widget newsletter-widget">
                         <h4 class="title">Newsletter</h4>

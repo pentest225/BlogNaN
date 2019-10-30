@@ -170,9 +170,9 @@
                     this.getdata()
                 },
                 methods: {
-
                     getdata: function() {
                         this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
                         axios({
