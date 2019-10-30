@@ -33,6 +33,7 @@ class RegistrationForm(SignupForm, forms.ModelForm):
             'last_name',
             'description',
 		)
+        labels = {'groups': 'Type de compte', 'description': 'Votre Bio'}
     def save(self, request):
         group = self.cleaned_data['groups']
         g = Group.objects.get(name=group[0])
