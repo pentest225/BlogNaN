@@ -13,6 +13,7 @@ class Specialite(models.Model):
     
 class MyUser(AbstractUser):
     image = models.ImageField(upload_to='utilisateur/', default='default_avatar.png', null=True)
+
     groups = models.ManyToManyField(Group,related_name="utilisateur_groups")
     user_permissions = models.ManyToManyField(Permission,related_name="utilisateur_permissions")
     description = models.TextField()
@@ -21,6 +22,8 @@ class MyUser(AbstractUser):
     status = models.BooleanField(default=True,null=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    REQUIRED_FIELDS = ['email', 'last_name', 'first_name']
+
     class Meta:
         """Meta definition for utilisateur."""
         verbose_name = 'utilisateur'
