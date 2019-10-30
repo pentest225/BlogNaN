@@ -57,8 +57,7 @@
                         {% if user.is_authenticated %}
                         <li class="menu-has-children"><a>{{ user.id}} {{ user.first_name }}</a>
                             <ul>
-                                <li><a href="{% url 'account_logout' %}">Reseau</a></li>
-                                <li><a href="{% url 'single_blog' %}">Programmation</a></li>
+                                <li><a href="{% url 'account_logout' %}">logout</a></li>
                             </ul>
                         </li>
                         {% endif %} 

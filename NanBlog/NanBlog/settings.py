@@ -131,7 +131,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS =1
-ACCOUNT_FORMS = {'signup': 'Utilisateurs.forms.RegistrationForm'}
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
@@ -139,6 +138,8 @@ ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 LOGIN_REDIRECT_URL = 'index' 
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_FORMS = {'signup': 'Utilisateurs.forms.RegistrationForm'}
+
 # redirects to /accounts/profile by default
 
 # TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
@@ -254,6 +255,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
 STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIT_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
