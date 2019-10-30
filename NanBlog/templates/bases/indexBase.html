@@ -153,6 +153,9 @@
                     categoryId:'',
                     CarouselAll:[],
                     archives: [],
+                    Popular:[],
+                    commentaire:'',
+                    articlecomment:'',
                     idcat :'',
                     idart:'',
                     nom: '',
@@ -170,6 +173,7 @@
                 },
                 methods: {
                     getdata: function() {
+
                         this.base_url = 'https://127.0.0.1:8000'
                         console.log('data getting')
                         axios.defaults.xsrfCookieName = 'csrftoken'
@@ -223,7 +227,7 @@
                                                     }
                                                     }
                                                 }
-                                                }	
+                                                }   
                                             }
                                             }
                                         }
@@ -270,7 +274,7 @@
                                                     }
                                                     }
                                                 }
-                                                }	
+                                                }   
                                             }
                                         },
                                     },
@@ -323,19 +327,19 @@
                                                     }
                                                     }
                                                 }
-                                    }
-
-                                                    articleLike{
-                                                    edges{
-                                                        node{
-                                                        user{
-                                                            id,lastName,firstName,image
-                                                        }
-                                                        }
+                                    },
+                                                  articleLike{
+                                                    edgeCount
+                                                  edges{
+                                                    node{
+                                                      user{
+                                                        id,lastName,firstName,image
+                                                      }
                                                     }
-                                                    },
-                                                contenu,isArchive
-                                            }	
+                                                  }
+                                                },
+                                              contenu,isArchive
+                                            }   
                                             }
                                     },
                                     articlearchive : allArticles(isArchive:true){
@@ -423,13 +427,12 @@
                                             }
                                             }
                                     },
-                                    articleLike{
-                                            edges{
-                                                node{
-                                                user{
-                                                    id,lastName,firstName,
-                                                }
-                                                }
+                                        articleLike{
+                                          edges{
+                                            node{
+                                              user{
+                                                id,lastName,firstName,
+                                              }
                                             }
                                         }
                                         auteur{
@@ -449,7 +452,7 @@
                                             }
 
                                             }
-                                    },contenu
+                                    },contenu,isArchive
                                     }
                                 }
                                     
@@ -466,13 +469,12 @@
                             this.archives = result.articlearchive.edges
                             this.singleAtircle  = result.article
                             this.CarouselAll = this.dataAllarticle.slice(1, 4)
-                            // this.categoryId =
-                            console.log(this.idcat)
-                            console.log(this.idart)
-                            console.log(this.archives)
-                            console.log(this.dataAllCategory)
-                            console.log(this.dataAllCategory)
-                            //.log(this.singleAtircle)
+                            console.log(this.dataAllarticle)
+                            this.Popular = result.allArticles.edges.node
+                            //console.log(this.idcat)
+                            //console.log(this.idart)
+                            // console.log(this.categoryId)
+                            //console.log(this.singleAtircle)
                             
             
                         })  
@@ -480,6 +482,9 @@
                             console.log(err);
                         })
                     },
+                    
+                    
+
                     sendmessage: function () {
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -532,6 +537,46 @@
                             .catch((err) => {
                                 console.log(err);
                             })
+                    },
+                    postcomment: function() {
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        let formData = new FormData();
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        formData.append('commentaire', '' + this.commentaire);
+                        console.log(this.commentaire);
+                        console.log (this.idart);
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                mutation: `
+                                mutation{
+                                    relayCreateComment(input:{sujet:"testgraph",message:"${ this.commentaire }",article:"${ this.idart }",status:true}){
+                                      comment{
+                                        message
+                                      }
+                                    }
+                                  }
+                                 `
+                            }
+                        })
+                        .then(response => {
+                        console.log(response)
+                                if (response.data.succes == true) {
+                                    new Toast({
+                                        message: 'Commentaire envoyer avec success',
+                                        type: 'success'
+                                    });
+                                    this.commentaire = ''
+                                }else{
+                                    swal("Votre Commentaire n'a par ete posté");
+                                }
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
                     },
                 },
             

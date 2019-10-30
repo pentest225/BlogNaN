@@ -111,7 +111,7 @@
                     </form>
                 </div>
 
-                <div class="single-widget protfolio-widget">
+                <!-- <div class="single-widget protfolio-widget">
                     <img class="img-fluid" src="/static/img/blog/user2.png" alt="">
                     <a href="#">
                         <h4>Charlie ALison Barber</h4>
@@ -129,11 +129,12 @@
                         <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
                         <li><a href="#"><i class="fa fa-behance"></i></a></li>
                     </ul>
-                </div>
+                </div> -->
 
                 <div class="single-widget popular-posts-widget">
-                    <h4 class="title">Popular Posts</h4>
+                    <h4 class="title">Article Populaire</h4>
                     <div class="blog-list ">
+
                         <div class="single-popular-post d-flex flex-row">
                             <div class="popular-thumb">
                                 <img class="img-fluid" src="/static/img/blog/r1.jpg" alt="">
@@ -145,67 +146,20 @@
                                 <p class="text-uppercase">02 hours ago</p>
                             </div>
                         </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r2.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>The Amazing Hubble</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r3.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Astronomy Astrology</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r4.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Asteroids telescope</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
+
+                
                     </div>
                 </div>
 
                 <div class="single-widget category-widget">
-                    <h4 class="title">Post Categories</h4>
-                    <ul>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Techlology</p> <span>37</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Lifestyle</p> <span>24</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Fashion</p> <span>59</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Art</p> <span>29</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Food</p> <span>15</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Architecture</p> <span>09</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Adventure</p> <span>44</span>
-                            </a></li>
-                    </ul>
+                        <h4 class="title">Article Par Categorie</h4>
+                        <ul>
+                            <li v-for="item in dataAllCategory"><a  :href=``+`${base_url}`+`/category/`+`${item.node.id}`+`` class="justify-content-between align-items-center d-flex">
+                                    <p>${ item.node.nom}</p> <span>${ item.node.articleCategorie.edges.length }</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
                 </div>
 
                 <div class="single-widget newsletter-widget">

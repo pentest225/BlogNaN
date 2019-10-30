@@ -253,8 +253,6 @@ class RelayCreateComment(graphene.relay.ClientIDMutation):
     class Input:
         id = graphene.ID()
         article = graphene.ID()
-        nom = graphene.String()
-        email = graphene.String()
         message = graphene.String()
         sujet = graphene.String()
         status = graphene.Boolean()
