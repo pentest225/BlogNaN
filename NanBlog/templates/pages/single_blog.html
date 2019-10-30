@@ -51,13 +51,12 @@
                         <a href="#"><i class="lnr lnr lnr-heart"></i>${ singleAtircle.articleLike.edges.length}   Like</a>
                         <a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>${ singleAtircle.articleCommentaire.edges.length} Commentaire</a>
                         <div class="news_socail ml-auto">
-                            <!-- {% post_to_facebook object_or_url "Partager" %} -->
-                            <!-- {% post_to_twitter  object_or_url "Post to Twitter" %} -->
-                            <p>partager</p>
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                            <a href="#"><i class="fa fa-rss"></i></a>
+                            <!-- <p>partager</p> -->
+                            {% post_to_facebook object_or_url  %}
+                            {% post_to_gplus object_or_url %}
+                            {% post_to_linkedin  object_or_url %}
+                            {% post_to_twitter "New Song: {{object.title}}. Check it out!" object_or_url %}
+                            
                         </div>
                     </div>
                 </div>
@@ -191,65 +190,35 @@
                 </div>
 
                 <div class="single-widget popular-posts-widget">
-                    <h4 class="title">Popular Posts</h4>
-                    <div class="blog-list ">
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r1.jpg" alt="">
+                        <h4 class="title">Article Populaire</h4>
+                        <div class="blog-list ">
+    
+                            <div class="single-popular-post d-flex flex-row">
+                                <div class="popular-thumb">
+                                    <img class="img-fluid" src="/static/img/blog/r1.jpg" alt="">
+                                </div>
+                                <div class="popular-details">
+                                    <a href="blog-details.html">
+                                        <h4>Space Final Frontier</h4>
+                                    </a>
+                                    <p class="text-uppercase">02 hours ago</p>
+                                </div>
                             </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Space Final Frontier</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r2.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>The Amazing Hubble</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r3.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Astronomy Astrology</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r4.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Asteroids telescope</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
+    
+                    
                         </div>
                     </div>
-                </div>
-
-                <div class="single-widget category-widget">
-                        <h4 class="title">Post Categories</h4>
-                        <ul>
-                            <li v-for="item in dataAllCategory"><a  :href=``+`${base_url}`+`/category/`+`${item.node.id}`+`` class="justify-content-between align-items-center d-flex">
-                                    <p>${ item.node.nom}</p> <span>${ item.node.articleCategorie.edges.length }</span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                </div>
+    
+                    <div class="single-widget category-widget">
+                            <h4 class="title">Article Par Categorie</h4>
+                            <ul>
+                                <li v-for="item in dataAllCategory"><a  :href=``+`${base_url}`+`/category/`+`${item.node.id}`+`` class="justify-content-between align-items-center d-flex">
+                                        <p>${ item.node.nom}</p> <span>${ item.node.articleCategorie.edges.length }</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                    </div>
 
                 <div class="single-widget newsletter-widget">
                         <h4 class="title">Newsletter</h4>
