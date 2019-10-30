@@ -153,6 +153,7 @@
                     singleAtircle:[],
                     categoryId:'',
                     CarouselAll:[],
+                    Popular:[],
                     idcat :'',
                     idart:'',
                     nom: '',
@@ -325,6 +326,7 @@
                                                 }
                                     },
                                                   articleLike{
+                                                    edgeCount
                                                   edges{
                                                     node{
                                                       user{
@@ -371,7 +373,7 @@
                                             }
                                             }
                                     },
-                                                                articleLike{
+                                        articleLike{
                                           edges{
                                             node{
                                               user{
@@ -397,7 +399,7 @@
                                             }
                                             
                                             }
-                                    },contenu
+                                    },contenu,isArchive
                                     }
                                         }
                                     
@@ -413,11 +415,12 @@
                             this.categoryId=result.category
                             this.singleAtircle  = result.article
                             this.CarouselAll = this.dataAllarticle.slice(1, 4)
-                            // this.categoryId =
-                            console.log(this.idcat)
-                            console.log(this.idart)
+                            console.log(this.dataAllarticle)
+                            this.Popular = result.allArticles.edges.node
+                            //console.log(this.idcat)
+                            //console.log(this.idart)
                             // console.log(this.categoryId)
-                            //.log(this.singleAtircle)
+                            //console.log(this.singleAtircle)
                             
             
                         })  

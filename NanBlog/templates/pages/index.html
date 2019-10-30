@@ -286,8 +286,9 @@
                 </div>
 
                 <div class="single-widget popular-posts-widget">
-                    <h4 class="title">Popular Posts</h4>
+                    <h4 class="title">Article Populaire</h4>
                     <div class="blog-list ">
+
                         <div class="single-popular-post d-flex flex-row">
                             <div class="popular-thumb">
                                 <img class="img-fluid" src="/static/img/blog/r1.jpg" alt="">
@@ -299,44 +300,12 @@
                                 <p class="text-uppercase">02 hours ago</p>
                             </div>
                         </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r2.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>The Amazing Hubble</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r3.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Astronomy Astrology</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="single-popular-post d-flex flex-row">
-                            <div class="popular-thumb">
-                                <img class="img-fluid" src="/static/img/blog/r4.jpg" alt="">
-                            </div>
-                            <div class="popular-details">
-                                <a href="blog-details.html">
-                                    <h4>Asteroids telescope</h4>
-                                </a>
-                                <p class="text-uppercase">02 hours ago</p>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
 
                 <div class="single-widget category-widget">
-                    <h4 class="title">Post Categories</h4>
+                    <h4 class="title">Article Par Categorie</h4>
                     <ul>
                         <li v-for="item in dataAllCategory"><a  :href=``+`${base_url}`+`/category/`+`${item.node.id}`+`` class="justify-content-between align-items-center d-flex">
                                 <p>${ item.node.nom}</p> <span>${ item.node.articleCategorie.edges.length }</span>

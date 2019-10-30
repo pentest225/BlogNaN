@@ -180,31 +180,15 @@
                 </div>
 
                 <div class="single-widget category-widget">
-                    <h4 class="title">Post Categories</h4>
-                    <ul>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Techlology</p> <span>37</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Lifestyle</p> <span>24</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Fashion</p> <span>59</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Art</p> <span>29</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Food</p> <span>15</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Architecture</p> <span>09</span>
-                            </a></li>
-                        <li><a href="#" class="justify-content-between align-items-center d-flex">
-                                <p>Adventure</p> <span>44</span>
-                            </a></li>
-                    </ul>
-                </div>
+                        <h4 class="title">Post Categories</h4>
+                        <ul>
+                            <li v-for="item in dataAllCategory"><a  :href=``+`${base_url}`+`/category/`+`${item.node.id}`+`` class="justify-content-between align-items-center d-flex">
+                                    <p>${ item.node.nom}</p> <span>${ item.node.articleCategorie.edges.length }</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
 
                 <div class="single-widget newsletter-widget">
                         <h4 class="title">Newsletter</h4>
