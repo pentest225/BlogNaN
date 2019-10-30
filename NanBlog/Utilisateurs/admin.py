@@ -10,7 +10,7 @@ class SpecialiteAdmin(admin.ModelAdmin):
     list_filter = ('status', 'date_add', 'date_upd')
 
 
-@admin.register(MyUser)
+# @admin.register(MyUser)
 class MyUserAdmin(admin.ModelAdmin):
     list_display = (
         'id',
