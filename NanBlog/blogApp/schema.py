@@ -158,6 +158,7 @@ class ArticleNode(DjangoObjectType):
             'description':['icontains','exact','istartswith'],
             'contenu':['icontains','exact','istartswith'],
             'status':['exact',],
+            'is_archive': ['exact',],
         }
         order_by = OrderingFilter(
             fields=(
@@ -267,8 +268,6 @@ class RelayCreateComment(graphene.relay.ClientIDMutation):
     class Input:
         id = graphene.ID()
         article = graphene.ID()
-        nom = graphene.String()
-        email = graphene.String()
         message = graphene.String()
         sujet = graphene.String()
         status = graphene.Boolean()

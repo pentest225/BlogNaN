@@ -80,7 +80,7 @@ def index(request):
     }
     return render(request,'pages/index.html',data)
 
-def category(request,idcat):
+def category(request, idcat):
     data={
         'idcat':idcat
     }

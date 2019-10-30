@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'allConfig.apps.AllconfigConfig',
     'django_admin_generator',
     'social_django',
+    'django_social_share',
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL ="https"
