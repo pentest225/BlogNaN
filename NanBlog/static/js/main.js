@@ -153,8 +153,8 @@ $(document).ready(function() {
     nav: true,
     // autoplay: 2500,
     navText: [
-      "<span class='lnr lnr-arrow-up'></span>",
-      "<span class='lnr lnr-arrow-down'></span>"
+        "<span class='lnr lnr-arrow-up'></span>",
+        "<span class='lnr lnr-arrow-down'></span>"
     ]
   });
 
