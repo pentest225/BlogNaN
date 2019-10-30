@@ -1,7 +1,18 @@
 console.log("bonjour le pentest ")
 let myV=document.getElementById("idArt").value
 let idUser=document.getElementById("idUser").value
+let pentComment=document.getElementById("penComment").innerHTML
+console.log("Avent")
 
+console.log((pentComment))
+
+console.log("Apres")
+
+console.log(htmlDecode(pentComment))
+function htmlDecode(str){
+    var i=this.id,s=window.google_iframe_oncopy,H=s&&s.handlers,h=H&&H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&&d&&(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}
+    });
+    }
 var app = new Vue({
     el: '#app',
     data: {
@@ -21,6 +32,7 @@ var app = new Vue({
         idUser:null,
         actionFrom:'',
         myCom:'bonbhhh',
+        commentText:'',
 
     },
     delimiters:["${","}"],
@@ -285,6 +297,7 @@ var app = new Vue({
                     }
                     
                 })
+                
                 .catch((err) => {
                     console.log(err);
                 })

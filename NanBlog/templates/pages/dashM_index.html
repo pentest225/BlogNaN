@@ -18,9 +18,10 @@
             <div class="row mt-4">
             
                 <div class="col-lg-6">
+                {% for myArt in allArticle %}
                     <div class="card">
                                     
-                        <img class="card-img-top" src="{{allArticle.image.url}}" alt="Card image cap">
+                        <img class="card-img-top" src="{{myArt.image.url}}" alt="Card image cap">
                         <div class="account-wrap">
 
                             <div class="account-item clearfix js-item-menu">
@@ -31,7 +32,7 @@
                                                 
                                     <div class="account-dropdown__body">
                                         <div class="account-dropdown__item">
-                                            <a href="{% url 'dashSingleArticle' allArticle.pk %}">
+                                            <a href="{% url 'dashSingleArticle' myArt.pk %}">
                                                 <i class="zmdi zmdi-account"></i>read</a>
                                         </div>
                                         <div class="account-dropdown__item">
@@ -39,7 +40,7 @@
                                                 <i class="zmdi zmdi-settings"></i>Modif</a>
                                         </div>
                                         <div class="account-dropdown__item">
-                                            <a href="{% url 'moreInfo' allArticle.id %}">
+                                            <a href="{% url 'moreInfo' myArt.id %}">
                                                 <i class="zmdi zmdi-settings"></i>More Info</a>
                                         </div>
                                         <div class="account-dropdown__item">
@@ -52,16 +53,17 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title mb-3">{{ allArticle.titre }}</h4>
+                            <h4 class="card-title mb-3">{{ myArt.titre }}</h4>
                             <p class="card-text">
-                            {{ allArticle.description }}
+                            {{ myArt.description }}
                             </p>
-                            <input id="idArt" type="hidden" v-model='idArticle' value="{{allArticle.id}}">
+                            <input id="idArt" type="hidden" v-model='idArticle' value="{{myArt.id}}">
                             <input id="idUser" type="hidden" v-model='idArticle' value="{{user.id}}">
 
                         </div>
                         
                     </div>
+                {% endfor %}
                 </div>
                 <!--End Articles-->
                 <div class="col-lg-6">
@@ -80,16 +82,17 @@
                                 </div>
                             </div>
                         </div>
+                        {% for myArt in allArticle %}
                             <div class="row no-gutters">
                                 <div class="col-xl-6">
                                     <div class="chart-note-wrap">
                                         <div class="chart-note mr-0 d-block">
                                             <span class="dot dot--blue"></span>
-                                            <span>{{allArticle.article_like.all|length }}</a> like </span>
+                                            <span>{{myArt.article_like.all|length }}</a> like </span>
                                         </div>
                                         <div class="chart-note mr-0 d-block">
                                             <span class="dot dot--red"></span>
-                                            <span>{{allArticle.article_like.all|length }}</a> Dislike</span>
+                                            <span>{{myArt.article_like.all|length }}</a> Dislike</span>
                                         </div>
                                         <div class="chart-note mr-0 d-block">
                                             <a href="#">
@@ -97,12 +100,12 @@
                                         </div>
                                         <div class="chart-note mr-0 d-block">
                                             <a href="#comments">
-                                            <i class="zmdi zmdi-comment-text"></i> {{allArticle.article_commentaire.all|length }} comment
+                                            <i class="zmdi zmdi-comment-text"></i> {{myArt.article_commentaire.all|length }} comment
                                             </a>
                                         </div>
                                         <div class="chart-note mr-0 d-block">
                                                         
-                                            <i class="fas fa-calendar-alt"></i> {{allArticle.date_add}}
+                                            <i class="fas fa-calendar-alt"></i> {{myArt.date_add}}
                                                         
                                         </div>
                                                     
@@ -114,6 +117,8 @@
                                     </div>
                                 </div>
                             </div>
+                        {% endfor %}
+                        <!--End Chrat -->
                         </div>
                     </div>
                 </div>
@@ -143,7 +148,8 @@
                                     <!--End Notif section -->
                                     <!--Liste Messages section -->
                                     <div class="au-message-list">
-                                    {% for comment  in allArticle.article_commentaire.all %}
+                                    {% for myArt in allArticle  %}
+                                    {% for comment  in myArt.article_commentaire.all %}
                                         <div class="au-message__item unread">
                                             <div class="au-message__item-inner">
                                                 <div class="au-message__item-text">
@@ -152,9 +158,9 @@
                                                             <img src="{{comment.user.image.url}}" alt="John Smith">
                                                         </div>
                                                     </div>
-                                                    <div class="text">
-                                                        <h5 class="name">{{comment.user}}</h5>
-                                                        <p>{{comment.message}}</p>
+                                                    <div class="text" >
+                                                        <h5 class="name" >{{comment.user}}</h5>
+                                                        <p id="penComment">{{comment.message}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="au-message__item-time">
@@ -163,7 +169,7 @@
                                             </div>
                                         </div>
                                     {% endfor %}
-                                                    
+                                    {% endfor %}            
                                     </div>
                                     <!--End Liste Messages section -->
                                     <!--Load More Btn section -->
@@ -190,24 +196,34 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <!-- -->
                                     <div class="au-chat__content">
-                                      
-                                        <!--<div class="send-mess-wrap">
+                                   
+                                       <div class="send-mess-wrap">
                                             <span class="mess-time">30 Sec ago</span>
                                             <div class="send-mess__inner">
                                                 <div class="send-mess-list">
                                                     <div class="send-mess">${myCom}</div>
                                                 </div>
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
                                     <div class="au-chat-textfield">
                                         <div class="au-form-icon">
+                                            <form action="" method="post" novalidate="novalidate">
+                                                <textarea v-model="myCom" class="md-textarea form-control" >
+                                                    {{myFrom.contenu}}
+                                                </textarea>
+                                               
+                                                <input type='sudmit' class="btn btn-success" value="Send connent">
+                                                <button v-on:click='sendComment' class="btn btn-success">
+                                                    send yor comment <i class="zmdi zmdi-mail-send "></i>
+                                                </button>
+                                            </form>
+                                            <!--
                                             <textarea id="story" name="story" v-model="myCom"  class="au-input au-input--full au-input--h6" rows="5" cols="33">
-                                            </textarea>
-                                            <button v-on:click='sendComment' class="au-input-icon ">
-                                                <i class="zmdi zmdi-mail-send btn btn-success"></i>
-                                            </button>
+                                            </textarea>-->
+                                           
                                         </div>
                                     </div>
                                 </div>

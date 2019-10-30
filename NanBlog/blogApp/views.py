@@ -144,13 +144,15 @@ def dash(request):
     if request.user.is_authenticated:
         myUser=request.user
         allCat=Categorie.objects.filter(status=True)
-        allArticle=Article.objects.filter(auteur=request.user,status=True)[:1].get()
+        allArticle=Article.objects.filter(auteur=request.user,status=True)[:1]
+        # j'ai enlever le get car quand il n'y pas d'article il retourne une erreur 
         print("#####################################ALL ARTICLES #########################")
-
-        print(allArticle)
+        myForm=ArticleFrom()
+        
         data={
             'allArticle':allArticle,
-            'allCat':allCat
+            'allCat':allCat,
+            'myFrom':myForm
         }
     return render(request,'pages/dashM_index.html',data)
 
@@ -159,10 +161,14 @@ def moreInfo(request,id):
         myUser=request.user
         allCat=Categorie.objects.filter(status=True)
         allArticle=Article.objects.get(pk=id)
+        myForm=ArticleFrom()
+
         print(allArticle)
         data={
             'allArticle':allArticle,
-            'allCat':allCat
+            'allCat':allCat,
+            'myFrom':myForm
+
         }
         
         

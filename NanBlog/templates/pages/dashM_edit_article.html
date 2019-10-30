@@ -3,45 +3,45 @@
 {% block content %}
 <div class="main-content">
     <div class="section__content section__content--p30">
-        <div class="card">
-            <div class="card-header">
-                <strong class="card-title mb-3">Edit a New Article </strong>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="card col-md-8">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <h3 class="text-center title-2">More info about </h3>
-                            </div>
-                            <hr>
-                            <!-- {{myFrom.contenu}} -->
-                            <form action="" method="post" novalidate="novalidate">
-                                {{myFrom.contenu}}
-                            </form>
-                        </div>
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title mb-3">Profile Card</strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="mx-auto d-block col-md-3">
+                    <div class="row">
+                        <lable class=" mt-2  title-2">Select The categoryse </h5> {{myFrom.categorie}}
+                    </div>
+                    <div class="row">
+                        <lable class=" mt-2  title-2">Titre </h5> {{myFrom.titre}}
+                    </div>
+                    <div class="row">
+                        <lable class=" mt-2  title-2">Description </h5> {{myFrom.description}}
+                    </div>
+                    <div class="row">
+                        <lable class=" mt-2  title-2">Image </h5> {{myFrom.image}}
+                    </div>
+                    <div class="row">
+                        <lable class=" mt-2  title-2">Single Image </h5> {{myFrom.image}}
                     </div>
                 </div>
-                <hr>
-                <div class="card-text text-sm-center">
-                    <a href="#">
-                        <i class="fa fa-facebook pr-1"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa fa-twitter pr-1"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa fa-linkedin pr-1"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa fa-pinterest pr-1"></i>
-                    </a>
+                <div class="card col-md-9">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3 class="text-center title-2">All User info </h3>
+                        </div>
+                        <hr>
+                        {{myFrom.contenu}}
+                    </div>
                 </div>
             </div>
+            <hr>
+            <input type='sudmit' class="btn btn-primary" value="Save article ">
+
         </div>
     </div>
-</div>
-<div class="main-content">
+  
 
 
 {% endblock content %}
