@@ -1,6 +1,7 @@
 console.log("bonjour le pentest ")
 let myV=document.getElementById("idArt").value
 let idUser=document.getElementById("idUser").value
+
 var app = new Vue({
     el: '#app',
     data: {

@@ -145,15 +145,15 @@ def dash(request):
         myUser=request.user
         allCat=Categorie.objects.filter(status=True)
         allArticle=Article.objects.filter(auteur=request.user,status=True)[:1].get()
+        print("#####################################ALL ARTICLES #########################")
 
         print(allArticle)
         data={
             'allArticle':allArticle,
             'allCat':allCat
         }
-        
-        
     return render(request,'pages/dashM_index.html',data)
+
 def moreInfo(request,id):
     if request.user.is_authenticated:
         myUser=request.user
