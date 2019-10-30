@@ -35,9 +35,9 @@ class RegistrationForm(SignupForm, forms.ModelForm):
 		)
         labels = {'groups': 'Type de compte', 'description': 'Votre Bio'}
     def save(self, request):
-        group = self.cleaned_data['groups']
-        g = Group.objects.get(name=group[0])
-        print(g)
+        # group = self.cleaned_data['groups']
+        # g = Group.objects.get(name=group[0])
+        # print(g)
         # Ensure you call the parent class's save.
         # .save() returns a User object.
         user = super(RegistrationForm, self).save(request)
