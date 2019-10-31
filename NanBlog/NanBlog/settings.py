@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.linkedin_oauth2',
     'allauth.socialaccount.providers.discord',
     'django.contrib.sites',
+    'django.contrib.flatpages',
     'widget_tweaks',
     'crispy_forms',
     'django_extensions',
@@ -265,3 +266,5 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = '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'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100
