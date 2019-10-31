@@ -34,7 +34,7 @@
 </head>
 
 <body>
-    
+    <div id="app">
     <!-- Start header Area -->
     <header id="header">
         <div class="container box_1170 main-menu">
@@ -121,8 +121,10 @@
         </div>
     </footer>
     <!-- End footer Area -->
+</div>
     <script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
     <script src="/static/js/vendor/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
     <script src="/static/js/easing.min.js"></script>
@@ -138,8 +140,7 @@
     <!-- Vue js -->
     <script src="/static/js/toas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="/static/js/axios.js"></script>
-    <script src="/static/js/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
             var app = new Vue({
                 el: '#app',
@@ -152,7 +153,6 @@
                     singleAtircle:[],
                     categoryId:'',
                     CarouselAll:[],
-                    archives: [],
                     Popular:[],
                     commentaire:'',
                     articlecomment:'',
@@ -163,13 +163,18 @@
                     email: '',
                     message: '',
                     suscribe:'',
+                    search:'',
                     base_url:'',
+                    reponse:'',
+                    commentform:true,
+                    reponseform:false,
                 },
                 delimiters:["${","}"],
                 mounted(){
                     this.idcat="{{idcat}}";
                     this.idart="{{idart}}";
                     this.getdata()
+                    //this.reponsebutton()
                 },
                 methods: {
                     getdata: function() {
@@ -298,15 +303,15 @@
                                                     user{
                                                         id,username,image,lastName,firstName
                                                     },
-                                                        response{
-                                                            edges{
-                                                            node{
-                                                                user{
-                                                                id,firstName,lastName,image
-                                                                }
+                                                      response{
+                                                        edges{
+                                                          node{
+                                                            user{
+                                                              id,firstName,lastName,image
                                                             }
-                                                            }
-                                                        },
+                                                          }
+                                                        }
+                                                      },
                                                     ,message,sujet,dateAdd,dateUpd
                                                     }
                                                 }
@@ -342,57 +347,6 @@
                                             }   
                                             }
                                     },
-                                    articlearchive : allArticles(isArchive:true){
-                                        edges{
-                                            node{
-                                            id,titre,description,dateAdd,dateUpd,image,imageSingle
-                                            tag{
-                                                edges{
-                                                node{
-                                                    nom
-                                                }
-                                                }
-                                            },
-                                            auteur{
-                                            username,lastName,firstName,description,email
-                                            social{
-                                                edges{
-                                                node{
-                                                    id,name,lien
-                                                }
-                                                }
-                                            }
-                                            specialite{
-                                                edges{
-                                                node{
-                                                    id,specialiste
-                                                }
-                                                }
-                                            }
-                                            },
-                                            articleCommentaire{
-                                                edges{
-                                                node{
-                                                    user{
-                                                    id,username,firstName,lastName,image
-                                                    },
-                                                    response{
-                                                    edges{
-                                                        node{
-                                                        user{
-                                                            id,username,lastName,firstName,image
-                                                        }
-                                                        }
-                                                    }
-                                                    },
-                                                    message,sujet, dateAdd,dateUpd
-                                                }
-                                                }
-                                            }
-                                            }
-                                        }
-                                        
-                                    },
                                     article(id:"${ this.idart }"){
                                         id,titre,image,imageSingle,description,dateAdd,dateUpd,
                                         tag{
@@ -411,19 +365,19 @@
                                                 user{
                                                     id,username,lastName,firstName,image
                                                 },
-                                                    response{
-                                                    edges{
-                                                        node{
-                                                        user{
-                                                            lastName,firstName,id,image,
-                                                        }
-                                                        message,
-                                                        }
-
+                                                  response{
+                                                  edges{
+                                                    node{
+                                                      user{
+                                                        lastName,firstName,id,image,
+                                                      }
+                                                      message,
                                                     }
-                                                    }
-                                                    message,sujet,dateAdd,dateUpd
-
+                                                    
+                                                  }
+                                                }
+                                                message,sujet,dateAdd,dateUpd
+                                              
                                             }
                                             }
                                     },
@@ -434,6 +388,7 @@
                                                 id,lastName,firstName,
                                               }
                                             }
+                                          }
                                         }
                                         auteur{
                                             lastName,username,firstName,email,isStaff,isActive,image,description,
@@ -450,11 +405,11 @@
                                                 id,specialiste
                                                 }
                                             }
-
+                                            
                                             }
                                     },contenu,isArchive
                                     }
-                                }
+                                        }
                                     
                                 `
                             }
@@ -466,7 +421,6 @@
                             this.categoryId=result.category
                             this.dataAllarticle = result.allArticles.edges
                             this.categoryId=result.category
-                            this.archives = result.articlearchive.edges
                             this.singleAtircle  = result.article
                             this.CarouselAll = this.dataAllarticle.slice(1, 4)
                             console.log(this.dataAllarticle)
@@ -482,8 +436,6 @@
                             console.log(err);
                         })
                     },
-                    
-                    
 
                     sendmessage: function () {
                         axios.defaults.xsrfCookieName = 'csrftoken'
@@ -544,8 +496,8 @@
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
                         formData.append('commentaire', '' + this.commentaire);
-                        console.log(this.commentaire);
-                        console.log (this.idart);
+                       // console.log(this.commentaire);
+                       // console.log (this.idart);
                         axios({
                             url: this.base_url + '/graphql',
                             method: 'post',
@@ -576,11 +528,184 @@
                             console.log(err);
                         })
                     },
+                    searchpost:function(){
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        let formData = new FormData();
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        formData.append('search', '' + this.search);
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                query{
+                                    allArticles(status:true,titre_Icontains:"${ this.search }"){
+                                                                          edges{
+                                                                              node{
+                                                                                  id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
+                                                                                  tag{
+                                                                                  edges{
+                                                                                      node{
+                                                                                      id,nom
+                                                                                      }
+                                                                                  }
+                                                                                              },
+                                                                                  categorie{
+                                                                                  nom
+                                                                                  },
+                                                                                  articleCommentaire{
+                                                                                  edges{
+                                                                                      node{
+                                                                                      user{
+                                                                                          id,username,image,lastName,firstName
+                                                                                      },
+                                                                                        response{
+                                                                                          edges{
+                                                                                            node{
+                                                                                              user{
+                                                                                                id,firstName,lastName,image
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        },
+                                                                                      ,message,sujet,dateAdd,dateUpd
+                                                                                      }
+                                                                                  }
+                                                                      },
+                                                                                  auteur{
+                                                                                  username,firstName,email,isStaff,isActive,image,description,lastName
+                                                                                  social{
+                                                                                      edges{
+                                                                                      node{
+                                                                                          id,name,lien
+                                                                                      }
+                                                                                      }
+                                                                                  },
+                                                                                  specialite{
+                                                                                      edges{
+                                                                                      node{
+                                                                                          id,specialiste
+                                                                                      }
+                                                                                      }
+                                                                                  }
+                                                                      },
+                                                                                    articleLike{
+                                                                                      edgeCount
+                                                                                    edges{
+                                                                                      node{
+                                                                                        user{
+                                                                                          id,lastName,firstName,image
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  },
+                                                                                contenu,isArchive
+                                                                              }   
+                                                                              }
+                                                                      }
+                                  }
+                            `
+                            
+                            }
+                        })
+                        .then(response => {
+                            result = response.data.data
+                            this.dataAllarticle = result.allArticles.edges
+                            console.log(this.dataAllarticle)
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                    },
+                    postlike:function(){
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                    mutation{
+                                    relayCreatLike(input:{article:"${ this.idart }",status:true}){
+                                            like {
+                                            status
+                                        }
+                                    }
+                                }
+                                `
+                            }
+                        })
+                        .then(response => {
+                         if (response.data.data.relayCreateComment != null) {
+                                    new Toast({
+                                        message: 'Article like',
+                                        type: 'success'
+                                    });
+                                }else{
+                                    new Toast({
+                                        message: 'Article like',
+                                        type: 'success'
+                                    });
+                                }
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                    },
+                    postreponse: function() {
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        formData.append('reponse', '' + this.reponse);
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                    mutation{
+                              relayCreateResponseComment(input:{commentaire:"",message:"${ this.idart }",status:true}){
+                                response{
+                                  message
+                                    }
+                                  }
+                                }
+                                `
+                            }
+                        })
+                        .then(response => {
+                        console.log(response)
+                                if (response.data.data.relayCreateComment != null) {
+                                    new Toast({
+                                        message: 'Commentaire envoyer avec success',
+                                        type: 'success'
+                                    });
+                                }else{
+                                    swal("Entrer Votre Commentaire ");
+                                }
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                    },
+                    reponsebutton:function(){
+                        this.commentform = false;
+                        this.reponseform = true;
+                    },
+                
+                
                 },
+
             
-            
+
+                
                 })
     </script>
 </body>
 
 </html>
+
