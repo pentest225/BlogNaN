@@ -16,12 +16,12 @@
             </div>
                         
             <div class="row mt-4">
-            
+                <!-- lastArticle -->
                 <div class="col-lg-6">
                 {% for myArt in allArticle %}
                     <div class="card">
                                     
-                        <img class="card-img-top" src="{{myArt.image.url}}" alt="Card image cap">
+                        <img class="card-img-top" :src="lastArticle.node.image" alt="Card image cap">
                         <div class="account-wrap">
 
                             <div class="account-item clearfix js-item-menu">
@@ -53,8 +53,9 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title mb-3">{{ myArt.titre }}</h4>
+                            <h4 class="card-title mb-3">${lastArticle.node.titre}</h4>
                             <p class="card-text">
+                                ${lastArticle.node.description}
                             {{ myArt.description }}
                             </p>
                             <input id="idArt" type="hidden" v-model='idArticle' value="{{myArt.id}}">

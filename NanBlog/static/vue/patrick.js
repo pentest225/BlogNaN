@@ -124,7 +124,9 @@ var app = new Vue({
                 this.lastArticle=result.allUser.edges[0].node.articleAuteur.edges[0]
                 this.listeComment=this.lastArticle.node.articleCommentaire.edges
                 console.log("#####################")
-                console.log(this.listeComment)
+                // console.log(this.listeComment)
+                console.log("fa-angrycreative")
+                console.log(this.lastArticle.node)
             })  
             .catch((err) => {
                 console.log(err);
