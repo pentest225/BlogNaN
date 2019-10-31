@@ -254,13 +254,18 @@
                     email: '',
                     message: '',
                     suscribe:'',
+                    search:'',
                     base_url:'',
+                    reponse:'',
+                    commentform:true,
+                    reponseform:false,
                 },
                 delimiters:["${","}"],
                 mounted(){
                     this.idcat="{{idcat}}";
                     this.idart="{{idart}}";
                     this.getdata()
+                    //this.reponsebutton()
                 },
                 methods: {
                     getdata: function() {
@@ -574,11 +579,222 @@
                                 console.log(err);
                             })
                     },
+                    postcomment: function() {
+                        this.base_url = 'https://127.0.0.1:8000'
+                        let formData = new FormData();
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        formData.append('commentaire', '' + this.commentaire);
+                       // console.log(this.commentaire);
+                       // console.log (this.idart);
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                mutation{
+                                    relayCreateComment(input:{sujet:"testgraph",message:"${ this.commentaire }",article:"${ this.idart }",status:true}){
+                                      comment{
+                                        message
+                                      }
+                                    }
+                                  }
+                            `
+                            }
+                        })
+                        .then(response => {
+                        console.log(response)
+                                if (response.data.data.relayCreateComment != null) {
+                                    new Toast({
+                                        message: 'Commentaire envoyer avec success',
+                                        type: 'success'
+                                    });
+                                }else{
+                                    swal("Entrer Votre Commentaire ");
+                                }
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                    },
+                    searchpost:function(){
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        let formData = new FormData();
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        formData.append('search', '' + this.search);
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                query{
+                                    allArticles(status:true,titre_Icontains:"${ this.search }"){
+                                                                          edges{
+                                                                              node{
+                                                                                  id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
+                                                                                  tag{
+                                                                                  edges{
+                                                                                      node{
+                                                                                      id,nom
+                                                                                      }
+                                                                                  }
+                                                                                              },
+                                                                                  categorie{
+                                                                                  nom
+                                                                                  },
+                                                                                  articleCommentaire{
+                                                                                  edges{
+                                                                                      node{
+                                                                                      user{
+                                                                                          id,username,image,lastName,firstName
+                                                                                      },
+                                                                                        response{
+                                                                                          edges{
+                                                                                            node{
+                                                                                              user{
+                                                                                                id,firstName,lastName,image
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        },
+                                                                                      ,message,sujet,dateAdd,dateUpd
+                                                                                      }
+                                                                                  }
+                                                                      },
+                                                                                  auteur{
+                                                                                  username,firstName,email,isStaff,isActive,image,description,lastName
+                                                                                  social{
+                                                                                      edges{
+                                                                                      node{
+                                                                                          id,name,lien
+                                                                                      }
+                                                                                      }
+                                                                                  },
+                                                                                  specialite{
+                                                                                      edges{
+                                                                                      node{
+                                                                                          id,specialiste
+                                                                                      }
+                                                                                      }
+                                                                                  }
+                                                                      },
+                                                                                    articleLike{
+                                                                                      edgeCount
+                                                                                    edges{
+                                                                                      node{
+                                                                                        user{
+                                                                                          id,lastName,firstName,image
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  },
+                                                                                contenu,isArchive
+                                                                              }   
+                                                                              }
+                                                                      }
+                                  }
+                            `
+                            
+                            }
+                        })
+                        .then(response => {
+                            result = response.data.data
+                            this.dataAllarticle = result.allArticles.edges
+                            console.log(this.dataAllarticle)
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                    },
+                    postlike:function(){
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                    mutation{
+                                    relayCreatLike(input:{article:"${ this.idart }",status:true}){
+                                            like {
+                                            status
+                                        }
+                                    }
+                                }
+                                `
+                            }
+                        })
+                        .then(response => {
+                         if (response.data.data.relayCreateComment != null) {
+                                    new Toast({
+                                        message: 'Article like',
+                                        type: 'success'
+                                    });
+                                }else{
+                                    new Toast({
+                                        message: 'Article like',
+                                        type: 'success'
+                                    });
+                                }
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                    },
+                    postreponse: function() {
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        formData.append('reponse', '' + this.reponse);
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                    mutation{
+                              relayCreateResponseComment(input:{commentaire:"",message:"${ this.idart }",status:true}){
+                                response{
+                                  message
+                                    }
+                                  }
+                                }
+                                `
+                            }
+                        })
+                        .then(response => {
+                        console.log(response)
+                                if (response.data.data.relayCreateComment != null) {
+                                    new Toast({
+                                        message: 'Commentaire envoyer avec success',
+                                        type: 'success'
+                                    });
+                                }else{
+                                    swal("Entrer Votre Commentaire ");
+                                }
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                    },
+                    reponsebutton:function(){
+                        this.commentform = false;
+                        this.reponseform = true;
+                    },
+                
+                
                 },
+
             
-            
+
+                
                 })
     </script>
 </body>
 
 </html>
+
