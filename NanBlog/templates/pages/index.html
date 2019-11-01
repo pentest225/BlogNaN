@@ -19,9 +19,8 @@
     <div class="container box_1170">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <div class="owl-carousel active-post-carusel">
-
-                    <!-- <div v-for="article in CarouselAll"  class="post-box mb-30">
+                <!-- <div class="owl-carousel active-post-carusel">
+                    <div v-for="article in CarouselAll"  class="post-box mb-30"> 
                         <div class="d-flex">
                             <div>
                                 <a href="#">
@@ -66,9 +65,9 @@
                         <div class="post-btn">
                             <a :href=``+`${base_url}`+`/single_blog/`+`${article.node.id}`+`` class="primary-btn text-uppercase">Read More</a>
                         </div>
-                    </div> -->
+                </div> -->
 
-                    <div class="post-box mb-30">
+                <div class="post-box mb-30">
                         <div class="d-flex">
                             <div>
                                 <a href="#">
@@ -161,7 +160,7 @@
                             <div class="post-btn">
                                 <a href="#" class="primary-btn text-uppercase">Read More</a>
                             </div>
-                    </div>
+                    </div> -->
                     
                 </div>
             </div>
@@ -174,13 +173,16 @@
 <div class="main-body section-gap mt--30">
     <div class="container box_1170">
         <div class="row">
+                
             <div class="col-lg-8 post-list">
-                <!-- Start Post Area -->
+                    <div v-if="searchdiv" class="alert alert-primary" role="alert">
+                            ${ searchmessage }
+                    </div>
                 <section class="post-area">
-                        
+                           
                     <div v-for="article in dataAllarticle" class="single-post-item">
                         <figure>
-                            <img class="post-img img-fluid" :src=`${base_url}/`+`media/`+`${article.node.image}` alt="">
+                            <img class="post-img img-fluid" :src=`${base_url}/`+`media/`+`${article.node.imageSingle}` alt="">
                         </figure>
                         <h3>
                             <a :href=``+`${base_url}`+`/single_blog/`+`${article.node.id}`+`` >${ article.node.titre }</a>
