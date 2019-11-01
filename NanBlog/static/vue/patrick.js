@@ -39,7 +39,7 @@ var app = new Vue({
         email: '',
         message: '',
         suscribe:'',
-        patrick:'Test Patrick',
+        patrick:"POTH ",
         articleActive:true,
         idArticle:'',
         idUser:null,
@@ -48,7 +48,10 @@ var app = new Vue({
         commentText:'',
         lastArticle:[],
         listeComment:[],
-        UserName:document.getElementById('UserName').value
+        UserName:document.getElementById('UserName').value,
+        base_url:'https://localhost:8000',
+        base_url_image:'https://localhost:8000/media/',
+
     },
     delimiters:["${","}"],
     mounted(){
@@ -56,18 +59,18 @@ var app = new Vue({
     },
     methods: {
         getdata: function(){
-            this.base_url = 'localhost:8000'
+            // this.base_url = 'localhost:8000'
             console.log('data getting')
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'
             axios({
-                url: 'https://'+this.base_url + '/graphql',
+                url:''+this.base_url + '/graphql',
                 method: 'post',
                 data: {
                     query: `
                     query{
   
-                        allUser(username:"admin"){
+                        allUser(username:"dagouaga"){
                             edges{
                             node{
                                 id,username,lastName,firstName,image,email,
@@ -140,7 +143,7 @@ var app = new Vue({
             formData.append('sujet', '' + this.sujet);
             formData.append('email', '' + this.email);
             formData.append('message', '' + this.message);
-            axios.post('http://127.0.0.1:8000/contacts/message',formData,
+            axios.post('https://127.0.0.1:8000/contacts/message',formData,
             {
             } ).then(response => {
                     console.log(response)

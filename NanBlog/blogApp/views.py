@@ -194,14 +194,17 @@ def dashProfil(request):
     
 def singleArticleDash(request,id):
     allCat=Categorie.objects.filter(status=True)
-    allArticle=Article.objects.get(pk=id)
+    allArticle=Article.objects.get(id=3)
     data={
         'allArticle':allArticle,
-        'allCat':allCat
+        'allCat':allCat,
+        'id':id
     }
+    print("#########################################")
     print(allArticle)
     
     return render(request,'pages/dashM_single_article.html',data)
+
 @login_required
 def deleteArticle(request,id):
     

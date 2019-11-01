@@ -21,18 +21,18 @@
                 {% for myArt in allArticle %}
                     <div class="card">
                                     
-                        <img class="card-img-top" :src="lastArticle.node.image" alt="Card image cap">
+                        <img class="card-img-top" :src="base_url_image + lastArticle.node.image " alt="Card image cap">
                         <div class="account-wrap">
 
                             <div class="account-item clearfix js-item-menu">
                                 <div class="content">
-                                    <a class="js-acc-btn" href="#">more</a>
+                                    <a class="js-acc-btn" :href=" 'dashSingleArticle/' + lastArticle.node.id ">more</a>
                                 </div>
                                 <div class="account-dropdown js-dropdown">
                                                 
                                     <div class="account-dropdown__body">
                                         <div class="account-dropdown__item">
-                                            <a href="{% url 'dashSingleArticle' myArt.pk %}">
+                                            <a :href=" 'dashSingleArticle/' + lastArticle.node.id ">
                                                 <i class="zmdi zmdi-account"></i>read</a>
                                         </div>
                                         <div class="account-dropdown__item">

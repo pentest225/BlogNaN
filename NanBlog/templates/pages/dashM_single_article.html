@@ -13,7 +13,7 @@
                     <span data-on="On" data-off="Off" class="switch-label"></span>
                     <span class="switch-handle"></span>
                     </label>
-                    <a type="button" href="{% url 'deleteArticle' allArticle.id %}" class="btn btn-outline-danger btn-lg "><i class='fa fa-archive'></i> Delect Article </a>
+                    <a type="button" href="" class="btn btn-outline-danger btn-lg "><i class='fa fa-archive'></i> Delect Article </a>
                     <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
                     <i class="zmdi zmdi-plus"></i>add Articles</a>
                 </div>
@@ -23,12 +23,21 @@
     <div class='m-t-10'>
         <div class="card  col-md-8 ">
                                     
-            <img class="card-img-top" src="{{allArticle.image.url}}" alt="Card image cap">
+            <img class="card-img-top" src="" alt="Card image cap">
             
             <div class="card-body">
-                <h4 class="card-title mb-3">{{allArticle.titre}}</h4>
-                    {{allArticle.contenu}}
-                <p class="card-text"></p>
+                <h4 class="card-title mb-3">Lorem Ipsum</h4>
+                    
+                <p class="card-text">
+
+                    Lorem Ipsum
+                    "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+                    "Il ny a personne qui naime la souffrance pour elle-même, qui ne la recherche et qui ne la veuille pour elle-même..."
+
+
+                    Qu'est-ce que le Lorem Ipsum?
+                    Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.
+                </p>
             </div>
         </div>
     </div>

@@ -27,10 +27,12 @@ class TagAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
 
     list_display = (
+        'id',
         'categorie',
         'auteur',
         'titre',
         'afficheImage',
+        'image',
         'affiche',
         'status',
         'date_add',
