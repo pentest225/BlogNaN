@@ -62,18 +62,17 @@
                 </div>
             </div>
             <nav class="navbar-mobile">
-                <div class="container-fluid">
-                    <ul class="navbar-mobile__list list-unstyled">
-                        {% for myCat in allCat %}
-                        <li class="active has-sub">
-                            <a class="js-arrow" href="{% url 'dashCategory' myCat.pk %} ">
-                                <i class="fas fa-tachometer-alt"></i>{{myCat.nom}} </a>
-                        </li>
-                        {% endfor %}
-                        <li><a href="{% url 'index' %}">Home page </a></li>
-                    </ul>
-                </div>
-            </nav>
+                    <div class="container-fluid">
+                        <ul class="navbar-mobile__list list-unstyled">
+                                <li><a href="{% url 'dash' %}">Dashboard</a></li>
+                            <li class="active has-sub" v-for="item in dataAllCategory">
+                                    <a class="js-arrow" :href=``+`${base_url}`+`/allCat/`+`${item.node.id}`+``>
+                                        <i class="fas fa-tachometer-alt"></i>${item.node.nom} </a>
+                                </li>
+                            <li><a href="{% url 'index' %}">Home page </a></li>
+                        </ul>
+                    </div>
+                </nav>
         </header>
         <!-- END HEADER MOBILE-->
 
@@ -86,19 +85,16 @@
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
-                        <li><a href="{% url 'dash' %}">Dashboard</a></li>
-                        {% for myCat in allCat %}
-                        <li class="active has-sub">
-                            <a class="js-arrow" href="{% url 'dashCategory' myCat.pk %} ">
-                                <i class="fas fa-tachometer-alt"></i>{{myCat.nom}} </a>
-                        </li>
-                        {% endfor %}
-
-                        <li><a href="{% url 'index' %}">Home page </a></li>
-                        
-                    </ul>
-                </nav>
+                        <ul class="list-unstyled navbar__list">
+                            <li><a href="{% url 'dash' %}">Dashboard</a></li>
+                                
+                            <li class="active has-sub" v-for="item in dataAllCategory">
+                                <a class="js-arrow" :href=``+`${base_url}`+`/allCat/`+`${item.node.id}`+``>
+                                    <i class="fas fa-tachometer-alt"></i>${item.node.nom} </a>
+                            </li>
+                            <li><a href="{% url 'index' %}">Home page </a></li>
+                        </ul>
+                    </nav>
             </div>
         </aside>
         <!-- END MENU SIDEBAR-->
@@ -230,15 +226,18 @@
                                     </div>
                                 </div>
                                 <div class="account-wrap">
-                                    <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
-                                            <img src="{{user.image.url}}" alt="" height=40 width=40 class="rounded-circle">
+                                    <div class="account-item clearfix js-item-menu dropdown">
+                                        <div  class=" row dropdown-toggle"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  >
+                                            <div class="image">
+                                                    <img src="{{user.image.url}}" alt="" height=40 width=40 class="rounded-circle">
+                                                </div>
+                                                <div class="content">
+                                                    <a class="js-acc-btn" href="#">{{user.username}}</a>
+                                                </div>
                                         </div>
-                                        <div class="content">
-                                            <a class="js-acc-btn" href="#">{{user.username}}</a>
-                                        </div>
-                                        <div class="account-dropdown js-dropdown">
-                                            <div class="info clearfix">
+
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="info clearfix dropdown-item">
                                                 <div class="image">
                                                     <a href="#">
                                                         <img src="{{user.image.url}}" alt="" height=60 width=60 class="rounded-circle">
@@ -251,7 +250,7 @@
                                                     <span class="email">{{user.email}}</span>
                                                 </div>
                                             </div>
-                                            <div class="account-dropdown__body">
+                                            <div class="account-dropdown__body dropdown-item">
                                                 <div class="account-dropdown__item">
                                                     <a href="{% url 'dashProfil' %}">
                                                         <i class="zmdi zmdi-account"></i>Account</a>
@@ -265,7 +264,7 @@
                                                         <i class="zmdi zmdi-money-box"></i>Billing</a>
                                                 </div>
                                             </div>
-                                            <div class="account-dropdown__footer">
+                                            <div class="account-dropdown__footer dropdown-item">
                                                 <a href="{% url 'account_logout' %}">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
@@ -289,7 +288,6 @@
         </div>
 
     </div>
-
     <!-- Jquery JS-->
     <script src="/static/Dash/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
@@ -313,12 +311,267 @@
 
     <!-- Main JS-->
     <!-- Vue js -->
+    <script src="/static/Dash/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/static/vue/patrick.js"></script>
-    <script src="/static/Dash/js/main.js"></script>
 
-
+    <script>
+            Vue.component('comment_user',{
+                delimiters:["${","}"],
+                template:`
+                <div class="au-message__item unread">
+                    <div class="au-message__item-inner">
+                        <div class="au-message__item-text">
+                            <div class="avatar-wrap">
+                                <div class="avatar">
+                                    <img :src='`+"base_url_image "+ "item.node.user.node.image"+ `' alt="John Smith">
+                                </div>
+                            </div>
+                            <div class="text" >
+                                <h5 class="name" >`+" ${item.node.user.username}  "+`</h5>
+                                <p id="penComment" v-html="item.node.message"></p>
+                            </div>
+                        </div>
+                        <div class="au-message__item-time">
+                            <span>`+" ${item.node.dateAdd} "+`</span>
+                        </div>
+                    </div>
+                </div>
+                `,
+                props:['item']
+            })
+            
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    dataAllCategory:[],
+                    datSingleCategory:[],
+                    categoryId:'',
+                    nom: '',
+                    sujet: '',
+                    email: '',
+                    message: '',
+                    suscribe:'',
+                    Patrick:"POTH ",
+                    articleActive:true,
+                    idUser:'{{id}}',
+                    actionFrom:'',
+                    myCom:'bonbhhh',
+                    commentText:'',
+                    lastArticle:[],
+                    listeComment:[],
+                    userArtices:[],
+                    userArticesByCat:[],
+                    loader:false,
+                    // UserName:document.getElementById('UserName').value,
+                    base_url:'https://localhost:8000',
+                    base_url_image:'https://localhost:8000/media/',
+                    NameUser:"{{user.username}}",
+                    singleArticle:[],
+                    categorieName:'',
+                    emptyArticles:false
+                },
+                delimiters:["${","}"],
+                mounted(){
+                    this.UserName="{{user.username}}";
+                    this.idArticle="{{id}}";
+                    this.categoryId="{{idCat}}";
+                    this.getdata();
+    
+                },
+                beforeUpdate() {
+                    this.loader=true;
+                    this.getArticleByCatId();
+                },
+                methods: {
+                    getdata: function(){
+                        // this.base_url = 'localhost:8000'
+                        console.log('data getting')
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios({
+                            url:''+this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                query{
+                                    allUser(username:"${this.UserName}"){
+                                        edges{
+                                        node{
+                                            id,username,lastName,firstName,image,email,
+                                                    
+                                            specialite{edges{
+                                            node{
+                                                specialiste,
+                                            },
+                                            },
+                                            },social{
+                                            edges{
+                                                node{
+                                                id,name,lien
+                                                }
+                                            }
+                                            },articleAuteur{
+                                            edges{
+                                                node{
+                                                id,titre,description,image,contenu,isArchive,imageSingle,dateAdd,dateUpd,status,categorie{
+                                                id,nom
+                                                }
+                                                articleCommentaire{
+                                                    edges{
+                                                    node{
+                                                        id,message,sujet,status,dateAdd,dateUpd,
+                                                        user{
+                                                            username,firstName,lastName,image,email,
+                                                        specialite{edges{
+                                                                        node{
+                                                                        specialiste,
+                                                                        },
+                                                                    },
+                                                        },social{
+                                                                edges{
+                                                                    node{
+                                                                    id,name,lien
+                                                                    }
+                                                                }
+                                                                }
+                                                        }
+                                                    }
+                                                    }
+                                                }
+                                                }
+                                            }
+                                            }
+                                        },
+                                        }
+                                    },
+                                    article(id:"${this.idArticle}"){
+                                        id,categorie {
+                                        id,nom
+                                        },titre,description,image,contenu,isArchive,imageSingle,status,dateAdd,dateUpd,
+                                        tag{
+                                            edges{
+                                            node{
+                                            id,nom
+                                            }
+                                        } 
+                                        },articleCommentaire{
+                                        edges{
+                                            node{
+                                            id,sujet,dateAdd,dateUpd,user{
+                                                email,username,image,firstName
+                                            }
+                                            }
+                                        }
+                                        },articleLike{
+                                        edges{
+                                            node{
+                                            id,user{
+                                                id,username,firstName
+                                            }
+                                            }
+                                        }
+                                        }
+                                    },
+                                    allCategories{
+                                            edges{
+                                            node{
+                                                id,nom,status,dateAdd,dateUpd
+                                            }
+                                            }
+                                        },
+                                        category(id:"Q2F0ZWdvcmllTm9kZTox"){
+                                            id,nom,status,dateAdd,dateUpd
+                                        }
+                                    }
+                               `
+                            }
+                        })
+                        .then(response => {
+                            result = response.data.data
+                            console.log(response.data)
+                            console.log(result.allUser.edges[0].node.articleAuteur)
+                            if (result.allUser.edges[0].node.articleAuteur.edges.length == 0){
+                                this.emptyArticles=true
+                            }
+                            else{
+                                this.lastArticle=result.allUser.edges[0].node.articleAuteur.edges[0]
+                                this.listeComment=this.lastArticle.node.articleCommentaire.edges
+                                this.singleArticle=result.article
+                                this.dataAllCategory=result.allCategories.edges
+                                this.userArticles=result.allUser.edges[0].node.articleAuteur
+                                console.log("##################### All article user {{ user.username }}")
+                                // console.log(this.listeComment)
+                                console.log("Single Article ")
+                                console.log(this.userArticles)
+                            }
+                            
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                    },
+                    sendComment:function(){
+                        this.actionFrom="addContent"
+                        this.idArticle=myV
+                        this.idUser=idUser
+    
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                            axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                            axios.post('https://localhost:8000/updateArticle', {
+                                action: '' + this.actionFrom,
+                                idArticle: '' + this.idArticle,
+                                idUser:''+this.idUser,
+                                comment:''+this.myCom,
+                                }).then(response => {
+                                    console.log(response) 
+                                    if(response.data.addCommentOk){
+                                        swal("Cemment add ", "", "success");
+                                    }
+                                    else{
+                                        this.error=true
+                                        this.isSuccess=false
+                                        this.messageRes=response.data.message
+                                    }
+                                    this.isregister=false
+                                    console.log("success variable"+this.isSuccess)
+                                    console.log("success variable"+this.error)
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    this.isregister=false
+                                })
+                        },
+                        getArticleByCatId:function(){
+                            
+                            console.log(this.userArticles.edges)
+                            console.log(this.categoryId)
+                            for (let i = 0; i < this.userArticles.edges.length; i++) {
+                                
+                                const element = this.userArticles.edges[i];
+                                if (element.node.categorie.id == this.categoryId) {
+                                    this.userArticesByCat.push(element)
+                                }
+                            }
+                            for (let j = 0; j < this.dataAllCategory.length ; j++) {
+                                console.log("Bonsoir ")
+                                
+                                const element = this.dataAllCategory[j];
+                                if (element.node.id == this.categoryId) {
+                                    this.categorieName=element.node.nom
+                                }
+                            }
+                            this.loader=false
+                
+                    }
+                },
+    
+    
+                })
+    
+        
+        </script>
+    
 
 </body>
 

@@ -126,12 +126,13 @@ def moreInfo(request,id):
 def dashCategory(request,id):
     allCat=Categorie.objects.filter(status=True)  
     print(allCat)
-    myCat=Categorie.objects.get(pk=id)
+    myCat=Categorie.objects.get(pk=3)
     allArticle=Article.objects.filter(categorie=myCat,auteur=request.user,status=True)
     data={
         'allArticle':allArticle,
         'cat':myCat,
-        'allCat':allCat
+        'allCat':allCat,
+        'idCat':id,
     }
     print(allArticle)
     return render(request,'pages/dashM_category.html',data)
@@ -141,16 +142,13 @@ def dashProfil(request):
     
     return render(request,'pages/dashM_profil.html')
     
-def singleArticleDash(request,id):
-    allCat=Categorie.objects.filter(status=True)
-    allArticle=Article.objects.get(pk=id)
-    data={
-        'allArticle':allArticle,
-        'allCat':allCat
-    }
-    print(allArticle)
     
+def singleArticleDash(request,id):
+    data={
+        'id':id
+    }
     return render(request,'pages/dashM_single_article.html',data)
+
 @login_required
 def deleteArticle(request,id):
     

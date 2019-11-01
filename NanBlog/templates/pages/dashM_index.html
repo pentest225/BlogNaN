@@ -1,14 +1,14 @@
 {% extends 'bases/dashBase.html' %}
 
 {% block content %}
-<div id='app'>
+<div id=''>
 <div class="main-content">
-    <div class="section__content section__content--p30">
+    <div  v-if="emptyArticles" class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="overview-wrap">
-                        <h2 class="title-1">overview ${patrick}</h2>
+                    <div class="overview-wrap" >
+                        <h2 class="title-1">overview ${Patrick}</h2>
                         <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
                             <i class="zmdi zmdi-plus"></i>add Articles</a>
                     </div>
@@ -18,52 +18,50 @@
             <div class="row mt-4">
             
                 <div class="col-lg-6">
-                {% for myArt in allArticle %}
-                    <div class="card">
-                                    
-                        <img class="card-img-top" src="{{myArt.image.url}}" alt="Card image cap">
-                        <div class="account-wrap">
-
-                            <div class="account-item clearfix js-item-menu">
-                                <div class="content">
-                                    <a class="js-acc-btn" href="#">more</a>
-                                </div>
-                                <div class="account-dropdown js-dropdown">
-                                                
-                                    <div class="account-dropdown__body">
-                                        <div class="account-dropdown__item">
-                                            <a href="{% url 'dashSingleArticle' myArt.pk %}">
-                                                <i class="zmdi zmdi-account"></i>read</a>
+                        <div class="card">
+                                <img class="card-img-top" :src="base_url_image + lastArticle.node.image " alt="Card image cap">
+                                <div class="account-wrap">
+        
+                                    <div class="account-item clearfix js-item-menu">
+                                        <div class="content">
+                                            <a class="js-acc-btn" :href=" 'dashSingleArticle/' + lastArticle.node.id ">more</a>
                                         </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="{% url 'editArticleDash'  %}">
-                                                <i class="zmdi zmdi-settings"></i>Modif</a>
-                                        </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="{% url 'moreInfo' myArt.id %}">
-                                                <i class="zmdi zmdi-settings"></i>More Info</a>
-                                        </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="#">
-                                                <i class="zmdi zmdi-money-box"></i>Delect</a>
+                                        <div class="account-dropdown js-dropdown">
+                                                        
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                    <a :href=" 'dashSingleArticle/' + lastArticle.node.id ">
+                                                        <i class="zmdi zmdi-account"></i>read</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="{% url 'editArticleDash'  %}">
+                                                        <i class="zmdi zmdi-settings"></i>Modif</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a :href=" 'moreInfo/' + lastArticle.node.id ">
+                                                        <i class="zmdi zmdi-settings"></i>More Info</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-money-box"></i>Delect</a>
+                                                </div>
+                                            </div>
+                                                        
                                         </div>
                                     </div>
-                                                
                                 </div>
+                                <div class="card-body">
+                                    <h4 class="card-title mb-3">${lastArticle.node.titre}</h4>
+                                    <p class="card-text">
+                                        ${lastArticle.node.description}
+                                    
+                                    </p>
+                                    <!-- <input id="idArt" type="hidden" v-model='idArticle' value="{{myArt.id}}">
+                                    <input id="idUser" type="hidden" v-model='idArticle' value="{{user.id}}"> -->
+        
+                                </div>
+                                
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title mb-3">{{ myArt.titre }}</h4>
-                            <p class="card-text">
-                            {{ myArt.description }}
-                            </p>
-                            <input id="idArt" type="hidden" v-model='idArticle' value="{{myArt.id}}">
-                            <input id="idUser" type="hidden" v-model='idArticle' value="{{user.id}}">
-
-                        </div>
-                        
-                    </div>
-                {% endfor %}
                 </div>
                 <!--End Articles-->
                 <div class="col-lg-6">
@@ -126,7 +124,7 @@
                     <div class="">
                         <div class="au-card au-card--no-shadow au-card--no-pad m-b-40" id='comments'>
                         <!--Header section -->
-                            <div class="au-card-title" style="background-image:url('images/bg-title-02.jpg');">
+                            <div class="au-card-title" style="background-image:url('/static/Dash/images/bg-title-02.jpg');">
                                 <div class="bg-overlay bg-overlay--blue"></div>
                                 <h3>
                                     <i class="zmdi zmdi-comment-text"></i>New Messages</h3>
@@ -148,33 +146,16 @@
                                     <!--End Notif section -->
                                     <!--Liste Messages section -->
                                     <div class="au-message-list">
-                                    {% for myArt in allArticle  %}
-                                    {% for comment  in myArt.article_commentaire.all %}
-                                        <div class="au-message__item unread">
-                                            <div class="au-message__item-inner">
-                                                <div class="au-message__item-text">
-                                                    <div class="avatar-wrap">
-                                                        <div class="avatar">
-                                                            <img src="{{comment.user.image.url}}" alt="John Smith">
-                                                        </div>
-                                                    </div>
-                                                    <div class="text" >
-                                                        <h5 class="name" >{{comment.user}}</h5>
-                                                        <p id="penComment">{{comment.message}}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="au-message__item-time">
-                                                    <span>{{comment.date_add}}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                    {% endfor %}            
+                                            <comment_user
+                                            v-for="user in listeComment"
+                                            v-bind:item="user"
+                                            v-bind:key="user.id"
+                                            ></comment_user>            
                                     </div>
                                     <!--End Liste Messages section -->
                                     <!--Load More Btn section -->
                                     <div class="au-message__footer">
-                                        <button class="au-btn au-btn-load js-load-btn">load more</button>
+                                            <button class="btn btn-outline-success au-message__item ">Add comment</button>
                                     </div>
                                     <!--End load More -->
 
@@ -244,6 +225,26 @@
             </div>
         </div>
     </div>
+    <!-- SI L'UTILISATEUR N'A PAS D'ARTICLE  -->
+    <div  v-if="! emptyArticles" class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 p-5">
+                        <div class="overview-wrap" >
+                            
+                            <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
+                                <i class="zmdi zmdi-plus"></i>add Articles</a>
+                        </div>
+                    </div>
+                </div>
+                                
+                <div class="row m-auto">
+                        <h2 class="title-1 text-center">Desole vous n'avez acunarticle sur votre compte ;-( </h2>
+                </div>
+            </div>
+    </div>
+
+    
 </div>
 </div>
 <script>
