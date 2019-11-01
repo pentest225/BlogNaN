@@ -201,7 +201,7 @@ def singleArticleDash(request,id):
         'id':id
     }
     print("#########################################")
-    print(allArticle)
+    
     
     return render(request,'pages/dashM_single_article.html',data)
 

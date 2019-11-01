@@ -40,8 +40,7 @@ var app = new Vue({
         suscribe:'',
         patrick:"POTH ",
         articleActive:true,
-        idArticle:'',
-        idUser:'',
+        idUser:'{{id}}',
         actionFrom:'',
         myCom:'bonbhhh',
         commentText:'',
@@ -50,12 +49,12 @@ var app = new Vue({
         UserName:document.getElementById('UserName').value,
         base_url:'https://localhost:8000',
         base_url_image:'https://localhost:8000/media/',
-        NameUser:''
+        NameUser:"{{user.username}}",
 
     },
     delimiters:["${","}"],
     mounted(){
-        this.NameUser={{ user.username }},
+        
         this.getdata()
 
     },
@@ -117,6 +116,34 @@ var app = new Vue({
                                 }
                                 }
                             },
+                            }
+                        },
+                        article(id:"QXJ0aWNsZU5vZGU6NA=="){
+                            id,categorie {
+                            id,nom
+                            },titre,description,image,contenu,isArchive,imageSingle,status,dateAdd,dateUpd,
+                            tag{
+                                edges{
+                                node{
+                                id,nom
+                                }
+                            } 
+                            },articleCommentaire{
+                            edges{
+                                node{
+                                id,sujet,dateAdd,dateUpd,user{
+                                    email,username,image,firstName
+                                }
+                                }
+                            }
+                            },articleLike{
+                            edges{
+                                node{
+                                id,user{
+                                    id,username,firstName
+                                }
+                                }
+                            }
                             }
                         }
                         }
@@ -256,3 +283,16 @@ var app = new Vue({
 
 
     })
+
+new Vue({
+    el:'#article',
+    data:{
+        idArticle:document.getElementById("idArticle").value,
+        myArticle:[],
+    },
+    delimiters:["${","}"],
+    mounted():{
+        this.getArticle()
+    },
+    method:
+})
