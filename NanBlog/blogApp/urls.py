@@ -3,7 +3,7 @@ from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 from django.conf.urls import url, include
 from rest_framework.routers import DefaultRouter
-from .views import CategorieViewset, ArticleViewset, TagViewset, CommentaireViewset, ResponseCommentaireViewset, LikeViewset
+from .views import CategorieViewset, ArticleViewset, DisLikeViewset, DemandeAdesionViewset, TagViewset, CommentaireViewset, ResponseCommentaireViewset, LikeViewset
 
 router = DefaultRouter()
 router.register(r'categorie', CategorieViewset, basename='categorie')
@@ -13,6 +13,9 @@ router.register(r'comment', CommentaireViewset, basename='comment')
 router.register(r'responsecomment', ResponseCommentaireViewset, basename='responsecomment')
 router.register(r'tag', TagViewset, basename='tag')
 router.register(r'like', LikeViewset, basename='like')
+router.register(r'dislike', DisLikeViewset, basename='dislike')
+router.register(r'demande', DemandeAdesionViewset, basename='demande')
+
 
 
 from . import views

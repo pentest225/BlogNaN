@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Categorie, Article, Tag, Commentaire, ResponseCommentaire, Like
+from .models import Categorie, Article, Tag, Commentaire, ResponseCommentaire, Like, DisLike, DemandeAdesion
 from rest_framework import viewsets
-from .serializer import CategorieSerializer, ArticleSerializer, TagSerializer, CommentaireSerializer, ResponseCommentaireSerializer, LikeSerializer
+from .serializer import CategorieSerializer, ArticleSerializer, DisLikeSerializer, DemandeAdesionSerializer, TagSerializer, CommentaireSerializer, ResponseCommentaireSerializer, LikeSerializer
 from django.contrib.auth.decorators import login_required
 from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.permissions import IsAuthenticated
@@ -23,6 +23,18 @@ class LikeViewset(viewsets.ModelViewSet):
     permission_classes = [HasAPIKey | IsAuthenticated]
     serializer_class = LikeSerializer
     queryset = Like.objects.all()
+    
+class DisLikeViewset(viewsets.ModelViewSet):
+    filter_backends = (DynamicSearchFilter,)
+    permission_classes = [HasAPIKey | IsAuthenticated]
+    serializer_class = DisLikeSerializer
+    queryset = DisLike.objects.all()
+    
+class DemandeAdesionViewset(viewsets.ModelViewSet):
+    filter_backends = (DynamicSearchFilter,)
+    permission_classes = [HasAPIKey | IsAuthenticated]
+    serializer_class = DemandeAdesionSerializer
+    queryset = DemandeAdesion.objects.all()
     
 class ResponseCommentaireViewset(viewsets.ModelViewSet):
     filter_backends = (DynamicSearchFilter,)

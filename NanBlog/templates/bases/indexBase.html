@@ -15,7 +15,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Ruft Blog</title>
+    <title>Nan Blog</title>
 
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700|Roboto:400,500" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -215,25 +215,25 @@
     </footer>
     <!-- End footer Area -->
 </div>
-    <script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-    <script src="/static/js/vendor/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-    <script src="/static/js/easing.min.js"></script>
-    <script src="/static/js/hoverIntent.js"></script>
-    <script src="/static/js/superfish.min.js"></script>
-    <script src="/static/js/jquery.ajaxchimp.min.js"></script>
-    <script src="/static/js/jquery.magnific-popup.min.js"></script>
-    <script src="/static/js/owl.carousel.min.js"></script>
-    <script src="/static/js/jquery.nice-select.min.js"></script>
-    <script src="/static/js/waypoints.min.js"></script>
-    <script src="/static/js/mail-script.js"></script>
-    <script src="/static/js/main.js"></script>
-    <!-- Vue js -->
-    <script src="/static/js/toas.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"></script>
+<script src="/static/js/vendor/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+<script src="/static/js/easing.min.js"></script>
+<script src="/static/js/hoverIntent.js"></script>
+<script src="/static/js/superfish.min.js"></script>
+<script src="/static/js/jquery.ajaxchimp.min.js"></script>
+<script src="/static/js/jquery.magnific-popup.min.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/jquery.nice-select.min.js"></script>
+<script src="/static/js/waypoints.min.js"></script>
+<script src="/static/js/mail-script.js"></script>
+<script src="/static/js/main.js"></script>
+<!-- Vue js -->
+<script src="/static/js/toas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
             var app = new Vue({
                 el: '#app',
@@ -259,6 +259,9 @@
                     reponse:'',
                     commentform:true,
                     reponseform:false,
+                    searchdiv:false,
+                    searchmessage:'',
+                    trouver:'',
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -702,7 +705,11 @@
                         .then(response => {
                             result = response.data.data
                             this.dataAllarticle = result.allArticles.edges
-                            console.log(this.dataAllarticle)
+                            this.trouver = this.dataAllarticle.length
+                            this.searchmessage = ( this.trouver + ' Resultat Trouver Pour la Recherche ' +this.search)
+                            this.searchdiv = true,
+                            console.log(this.trouver)
+                            console.log(this.searchmessage)
                         })  
                         .catch((err) => {
                             console.log(err);
