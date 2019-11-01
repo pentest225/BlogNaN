@@ -22,15 +22,90 @@
     <!--
             CSS
             ============================================= -->
-        <link rel="stylesheet" href="/static/css/linearicons.css">
-        <link rel="stylesheet" href="/static/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/static/css/bootstrap.css">
-        <link rel="stylesheet" href="/static/css/magnific-popup.css">
-        <link rel="stylesheet" href="/static/css/nice-select.css">
-        <link rel="stylesheet" href="/static/css/animate.min.css">
-        <link rel="stylesheet" href="/static/css/owl.carousel.css">
-        <link rel="stylesheet" href="/static/css/main.css">
-        <link rel="stylesheet" href="/static/css/toas.css">
+    <link rel="stylesheet" href="/static/css/linearicons.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/magnific-popup.css">
+    <link rel="stylesheet" href="/static/css/nice-select.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/toas.css">
+    <style>
+            .lds-dual-ring {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            }
+            .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 46px;
+            height: 46px;
+            margin: 1px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            border-color: #631515 transparent rgb(46, 23, 23) transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+            }
+            @keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+            }
+            .btn-primary.focus, .btn-primary:focus,.btn-primary:active,
+            textarea:focus, 
+            textarea.form-control:focus,
+            select.selectmultiple:focus,
+            select:focus, 
+            input.form-control:focus, 
+            input[type=text]:focus, 
+            input[type=password]:focus, 
+            input[type=email]:focus, 
+            input[type=number]:focus, 
+            [type=text].form-control:focus, 
+            [type=password].form-control:focus, 
+            [type=email].form-control:focus, 
+            [type=tel].form-control:focus, 
+            [contenteditable].form-control:focus {
+            box-shadow: inset 0 -1px 0 #ddd;
+            }
+            .lds-hourglass {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+            }
+            .lds-hourglass:after {
+            content: " ";
+            display: block;
+            border-radius: 50%;
+            width: 0;
+            height: 0;
+            margin: 6px;
+            box-sizing: border-box;
+            border: 26px solid #dfc;
+            border-color: #dfc transparent #dfc transparent;
+            animation: lds-hourglass 1.2s infinite;
+            }
+            @keyframes lds-hourglass {
+            0% {
+                transform: rotate(0);
+                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+            }
+            50% {
+                transform: rotate(900deg);
+                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            }
+            100% {
+                transform: rotate(1800deg);
+            }
+            }
+
+        </style>
 </head>
 
 <body>
@@ -54,6 +129,24 @@
                         <li><a href="{% url 'archive' %}">Archive</a></li>
                         
                         <li><a href="{% url 'contact' %}">Contact</a></li>
+                        {% if not user.is_authenticated %}
+                        <li><a href="{% url 'account_login' %}" class="btn btn-success circle" style="font-size: 15px;">Connexion<span class="lnr lnr-arrow-right"></a></li>
+                        <li><a href="{% url 'account_signup' %}" class="btn btn-warning circle" style="font-size: 15px;">Inscription<span class="lnr lnr-arrow-right"></a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <li class="menu-has-children">
+                        <a href="#">
+                            <img src="{{user.image.url}}" alt="" height=40 width=40 class="rounded-circle">
+                        </a>
+                            <ul>
+                                <li><a href="">{{ user.username }}</a></li>
+                                <li><hr><hr></li>
+                                <li><a href="{% url 'dash' %}">Tableaux de bord</a></li>
+                                <li><hr><hr></li>
+                                <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
@@ -154,8 +247,6 @@ crossorigin="anonymous"></script>
                     categoryId:'',
                     CarouselAll:[],
                     Popular:[],
-                    commentaire:'',
-                    articlecomment:'',
                     idcat :'',
                     idart:'',
                     nom: '',
@@ -181,7 +272,6 @@ crossorigin="anonymous"></script>
                 },
                 methods: {
                     getdata: function() {
-
                         this.base_url = 'https://127.0.0.1:8000'
                         console.log('data getting')
                         axios.defaults.xsrfCookieName = 'csrftoken'
@@ -439,7 +529,6 @@ crossorigin="anonymous"></script>
                             console.log(err);
                         })
                     },
-
                     sendmessage: function () {
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'

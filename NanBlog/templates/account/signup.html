@@ -1,7 +1,7 @@
 {% extends 'bases/otherBase.html' %}
 
 {% load i18n %}
-
+{% load crispy_forms_tags %}
 {% load widget_tweaks %}
 
 {% block content %}
@@ -21,127 +21,77 @@
         </div>
     </div>
 </section>
-<!-- End banner Area -->
-<div class="main-bg">
-    <div class="form-v8"><div class="page-content">
-		<div class="form-v8-content">
-			
-			<div class="form-right">
-				<div class="tab">
-					<div class="tab-inner">
-						<button class="tablinks" onclick="openCity(event, 'sign-up')" id="defaultOpen">Compte Visiteur</button>
-					</div>
-					<div class="tab-inner">
-						<button class="tablinks" onclick="openCity(event, 'sign-in')">Membre</button>
-					</div>
-				</div>
-				<form class="form-detail" id="signup_form" method="post" action="">
-					<div class="tabcontent" id="sign-up">
-                        <p>Détails sur le type de compte</p><br><br><br>
-                        {% csrf_token %}
-                        {% for hidden in form.hidden_fields %}
-                          {{ hidden }}
-                        {% endfor %}
-                        {% if form.non_field_errors %}
-                        <div class="alert alert-danger" role="alert">
-                        {% for error in form.non_field_errors %}
-                            {{ error }}
-                        {% endfor %}
-                        </div>
-                        {% endif %}    
-                        {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-						<div class="form-row">
-							<label class="form-row-inner">
-                <input id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" type="text" class="input-text {% if form.email.errors %}is-invalid{% endif %}"  required="" value="{{ form.email.value|default:'' }}" />
-								<span class="label">Email</span>
-		  						<span class="border"></span>
-							</label>
-						</div>
-						<div class="form-row">
-							<label class="form-row-inner">
-                <input id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" type="text" class="input-text {% if form.username.errors %}is-invalid{% endif %}"   required="" value="{{ form.username.value|default:'' }}" />
-								<span class="label">Nom d'utilisateur</span>
-		  						<span class="border"></span>
-							</label>
-						</div>
-						<div class="form-row">
-							<label class="form-row-inner">
-                <input id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" type="password" class="input-text {% if form.password1.errors %}is-invalid{% endif %}"  required="" value="{{ form.password1.value|default:'' }}" />
-								<span class="label">Mot de passe</span>
-								<span class="border"></span>
-							</label>
-						</div>
-						<div class="form-row">
-							<label class="form-row-inner">
-                <input id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" type="password" class="input-text {% if form.password2.errors %}is-invalid{% endif %}"   required="" value="{{ form.password2.value|default:'' }}" />
-								<span class="label">Confirmer mot de passe</span>
-								<span class="border"></span>
-							</label>
-						</div>
-						<div class="form-row-last">
-              <input type="submit" name="register" class="register" value="S'inscrire">
-              <p>{% blocktrans %}If you have not created an account yet, then please
-              <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}</p>
-						</div>
-					</div>
-				</form>
-				<form class="form-detail" id="signup_form" method="post" action="">
-
-					<div class="tabcontent" id="sign-in">
-                        <p>Détails sur le type de compte</p><br><br><br>
-                        {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-              {{ hidden }}
-            {% endfor %}
-            {% if form.non_field_errors %}
-            <div class="alert alert-danger" role="alert">
-            {% for error in form.non_field_errors %}
-                {{ error }}
-            {% endfor %}
-            </div>
-            {% endif %}    
-						<div class="form-row">
-                <label class="form-row-inner">
-                  <input id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" type="text" class="input-text {% if form.email.errors %}is-invalid{% endif %}"  required="" value="{{ form.email.value|default:'' }}" />
-                  <span class="label">Email</span>
-                    <span class="border"></span>
-                </label>
-              </div>
-              <div class="form-row">
-                <label class="form-row-inner">
-                  <input id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" type="text" class="input-text {% if form.username.errors %}is-invalid{% endif %}"   required="" value="{{ form.username.value|default:'' }}" />
-                  <span class="label">Nom d'utilisateur</span>
-                    <span class="border"></span>
-                </label>
-              </div>
-              <div class="form-row">
-                <label class="form-row-inner">
-                  <input id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" type="password" class="input-text {% if form.password1.errors %}is-invalid{% endif %}"  required="" value="{{ form.password1.value|default:'' }}" />
-                  <span class="label">Mot de passe</span>
-                  <span class="border"></span>
-                </label>
-              </div>
-              <div class="form-row">
-                <label class="form-row-inner">
-                  <input id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" type="password" class="input-text {% if form.password2.errors %}is-invalid{% endif %}"   required="" value="{{ form.password2.value|default:'' }}" />
-                  <span class="label">Confirmer mot de passe</span>
-                  <span class="border"></span>
-                </label>
-              </div>
-						<div class="form-row-last">
-              <input type="submit" name="register" class="register" value="S'inscrire">
-              <p>{% blocktrans %}If you have not created an account yet, then please
-                  <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}</p>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
+<div class="container-contact100">
+    <div class="wrap-contact100">
+        <form class="contact100-form validate-form" id="signup_form" method="post"  enctype="multipart/form-data">
+                <span class="contact100-form-title">
+                    Créer un compte
+                </span>
+                <p>Détails sur le type de compte</p><br>
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                    {{ form.email|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                    {{ form.username|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                    {{ form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                    {{ form.last_name|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0" >
+                    {{ form.description|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                    {{ form.groups|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0" >
+                    {{ form.image|as_crispy_field }}
+                    </div>
+                </div>
+               <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                    {{ form.password1|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                    {{ form.password2|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button type="submit" class="contact100-form-btn">
+                            <span>
+                                Submit
+                                <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <p>{% blocktrans %}If you have not created an account yet, then please
+                    <a href="{{ login_url }}" style="color:orange;">sign in</a> first.{% endblocktrans %}</p>
+                </div>
+        </form>
+        <br>
+        <div class="social text-center">
+            <ul>
+                <li style="color: black">Ou Inscrivez-vous avec:</li><br><br>
+                <li><a title="Facebook" href="/accounts/facebook/login/?process=login" class="facebook"><span class="fa fa-facebook"></span></a></li>
+                <li><a title="Github" href="/accounts/github/login/?process=login" class="github"><span class="fa fa-github"></span></a></li>
+                <li><a title="Google" href="/accounts/google/login/?process=login" class="google"><span class="fa fa-google"></span></a></li>
+                <li><a title="Discord" href="/accounts/discord/login/?process=login" class="discord"><span class="fa fa-cc-discover"></span></a></li>
+                <li><a title="LinkedIn" href="/accounts/linkedin_oauth2/login/?process=login" class="linkedin"><span class="fa fa-linkedin"></span></a></li>
+            </ul>
+        </div>
     </div>
 </div>
-</div>
-    
 
 {% endblock content %}
