@@ -167,7 +167,8 @@ def moreInfo(request,id):
         data={
             'allArticle':allArticle,
             'allCat':allCat,
-            'myFrom':myForm
+            'myFrom':myForm,
+            'id':id
 
         }
         

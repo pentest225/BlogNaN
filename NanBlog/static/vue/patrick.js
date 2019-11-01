@@ -46,7 +46,7 @@ var app = new Vue({
         commentText:'',
         lastArticle:[],
         listeComment:[],
-        UserName:document.getElementById('UserName').value,
+        // UserName:document.getElementById('UserName').value,
         base_url:'https://localhost:8000',
         base_url_image:'https://localhost:8000/media/',
         NameUser:"{{user.username}}",
@@ -284,15 +284,3 @@ var app = new Vue({
 
     })
 
-new Vue({
-    el:'#article',
-    data:{
-        idArticle:document.getElementById("idArticle").value,
-        myArticle:[],
-    },
-    delimiters:["${","}"],
-    mounted():{
-        this.getArticle()
-    },
-    method:
-})

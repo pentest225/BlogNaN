@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,7 +43,8 @@
 </head>
 
 <body class="animsition" >
-    <div class="page-wrapper" id="app">
+    <div id="app">
+    <div class="page-wrapper" >
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
             <div class="header-mobile__bar">
@@ -64,12 +64,11 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        {% for myCat in allCat %}
-                        <li class="active has-sub">
-                            <a class="js-arrow" href="{% url 'dashCategory' myCat.pk %} ">
-                                <i class="fas fa-tachometer-alt"></i>{{myCat.nom}} </a>
-                        </li>
-                        {% endfor %}
+                            <li><a href="{% url 'dash' %}">Dashboard</a></li>
+                        <li class="active has-sub" v-for="item in dataAllCategory">
+                                <a class="js-arrow" :href=" base_url  + 'allCatallCat/' +item.node.id ">
+                                    <i class="fas fa-tachometer-alt"></i>${item.node.nom} </a>
+                            </li>
                         <li><a href="{% url 'index' %}">Home page </a></li>
                     </ul>
                 </div>
@@ -81,7 +80,7 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img src="/static/Dash/images/icon/logo.png" alt="Cool Admin" />
+                    <img src="/static/Dash/images/icon/logo.png" alt="Cool Admin"/>
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -236,7 +235,7 @@
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#">{{user.username}}</a>
-                                            <input id="UserName" type='hidden' value="{{user.username}}"  >
+                                            <!-- <input id="UserName" type='hidden' value="{{user.username}}"  > -->
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -254,7 +253,7 @@
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
-                                                    <a href="{% url 'dashProfil' %}">
+                                                    <a href="#">
                                                         <i class="zmdi zmdi-account"></i>Account</a>
                                                 </div>
                                                 <div class="account-dropdown__item">
@@ -267,7 +266,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="{% url 'account_logout' %}">
+                                                <a href="#">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>
@@ -290,6 +289,7 @@
         </div>
 
     </div>
+</div>
 
     <!-- Jquery JS-->
     <script src="/static/Dash/vendor/jquery-3.2.1.min.js"></script>
@@ -314,19 +314,15 @@
 
     <!-- Main JS-->
     <!-- Vue js -->
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/static/vue/patrick.js"></script>
     <script src="/static/Dash/js/main.js"></script>
 
 
-
 </body>
 <script>
-    console.log("bonjour le pentest ")
-    // let myV=document.getElementById("idArt").value
-    // let idUser=document.getElementById("idUser").value
-
     Vue.component('comment_user',{
         delimiters:["${","}"],
         template:`
@@ -370,12 +366,11 @@
             commentText:'',
             lastArticle:[],
             listeComment:[],
-            UserName:document.getElementById('UserName').value,
+            // UserName:document.getElementById('UserName').value,
             base_url:'https://localhost:8000',
             base_url_image:'https://localhost:8000/media/',
             NameUser:"{{user.username}}",
             singleArticle:[],
-
         },
         delimiters:["${","}"],
         mounted(){
