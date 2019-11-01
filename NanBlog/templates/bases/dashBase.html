@@ -88,12 +88,12 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li><a href="{% url 'dash' %}">Dashboard</a></li>
-                        {% for myCat in allCat %}
-                        <li class="active has-sub">
-                            <a class="js-arrow" href="{% url 'dashCategory' myCat.pk %} ">
-                                <i class="fas fa-tachometer-alt"></i>{{myCat.nom}} </a>
+                         
+                        <li class="active has-sub" v-for="item in dataAllCategory">
+                            <a class="js-arrow" :href=" base_url  + 'allCatallCat/' +item.node.id ">
+                                <i class="fas fa-tachometer-alt"></i>${item.node.nom} </a>
                         </li>
-                        {% endfor %}
+                        
 
                         <li><a href="{% url 'index' %}">Home page </a></li>
                         
@@ -355,7 +355,6 @@
         el: '#app',
         data: {
             dataAllCategory:[],
-            datAllIngredientesByCategoriy:[],
             datSingleCategory:[],
             categoryId:'',
             nom: '',
@@ -375,11 +374,13 @@
             base_url:'https://localhost:8000',
             base_url_image:'https://localhost:8000/media/',
             NameUser:"{{user.username}}",
+            singleArticle:[],
 
         },
         delimiters:["${","}"],
         mounted(){
             this.UserName="{{user.username}}";
+            this.idArticle="{{id}}"
             this.getdata()
 
         },
@@ -396,7 +397,7 @@
                         query: `
                         query{
   
-                            allUser(username:"this.UserNamw"){
+                            allUser(username:"${this.UserName}"){
                                 edges{
                                 node{
                                     id,username,lastName,firstName,image,email,
@@ -470,7 +471,17 @@
                                     }
                                 }
                                 }
-                            }
+                            },
+                            allCategories{
+                                    edges{
+                                    node{
+                                        id,nom,status,dateAdd,dateUpd
+                                    }
+                                    }
+                                },
+                                category(id:"Q2F0ZWdvcmllTm9kZTox"){
+                                    id,nom,status,dateAdd,dateUpd
+                                }
                             }
                         `
                     }
@@ -480,10 +491,12 @@
                     console.log(response.data)
                     this.lastArticle=result.allUser.edges[0].node.articleAuteur.edges[0]
                     this.listeComment=this.lastArticle.node.articleCommentaire.edges
+                    this.singleArticle=result.article
+                    this.dataAllCategory=result.allCategories.edges
                     console.log("#####################")
                     // console.log(this.listeComment)
-                    console.log("fa-angrycreative")
-                    console.log(this.lastArticle.node)
+                    console.log("Single Article ")
+                    console.log(this.dataAllCategory)
                 })  
                 .catch((err) => {
                     console.log(err);
