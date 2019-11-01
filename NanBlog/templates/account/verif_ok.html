@@ -1,0 +1,31 @@
+{% extends 'bases/otherBase.html' %}
+
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
+
+
+{% block content %}
+<div class="wrapper">
+
+  
+  <div class="profile-card js-profile-card alert alert-danger">
+    <div style="margin-top: 100px">
+    </div>
+
+    <div class="profile-card__cnt js-profile-cnt">
+      <div class="profile-card__txt"> <h2 class="text-dark title"> Compte Activé </h2><hr>
+      <p>{% blocktrans %}Votre compte a bien été vérifié, vous pouvez vous connecter en cliquand sur le bouton ci-dessous{% endblocktrans %}</p>
+      <a href="{% url 'account_login' %}" class="btn btn-success">{% trans 'Se connecter' %}</a>
+
+      </div>    
+      
+      
+    </div>
+      
+  </div>
+
+</div>
+
+{% endblock %}
