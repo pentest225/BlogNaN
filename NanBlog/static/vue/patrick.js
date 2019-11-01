@@ -29,7 +29,6 @@ Vue.component('comment_user',{
 var app = new Vue({
     el: '#app',
     data: {
-        base_url:'',
         dataAllCategory:[],
         datAllIngredientesByCategoriy:[],
         datSingleCategory:[],
@@ -42,7 +41,7 @@ var app = new Vue({
         patrick:"POTH ",
         articleActive:true,
         idArticle:'',
-        idUser:null,
+        idUser:'',
         actionFrom:'',
         myCom:'bonbhhh',
         commentText:'',
@@ -51,11 +50,14 @@ var app = new Vue({
         UserName:document.getElementById('UserName').value,
         base_url:'https://localhost:8000',
         base_url_image:'https://localhost:8000/media/',
+        NameUser:''
 
     },
     delimiters:["${","}"],
     mounted(){
+        this.NameUser={{ user.username }},
         this.getdata()
+
     },
     methods: {
         getdata: function(){
