@@ -130,8 +130,8 @@
                         
                         <li><a href="{% url 'contact' %}">Contact</a></li>
                         {% if not user.is_authenticated %}
-                        <li><a href="{% url 'account_login' %}" class="btn btn-success circle" style="font-size: 15px;">Connexion<span class="lnr lnr-arrow-right"></a></li>
-                        <li><a href="{% url 'account_signup' %}" class="btn btn-warning circle" style="font-size: 15px;">Inscription<span class="lnr lnr-arrow-right"></a></li>
+                        <li><a href="{% url 'account_login' %}" class="btn btn-success circle" style="font-size: 15px;">Connexion</a></li>
+                        <li><a href="{% url 'inscription' %}" class="btn btn-warning circle" style="font-size: 15px;">Inscription</a></li>
                         {% endif %}
                         {% if user.is_authenticated %}
                         <li class="menu-has-children">
