@@ -45,8 +45,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.linkedin_oauth2',
     'allauth.socialaccount.providers.discord',
     'django.contrib.sites',
+    'django.contrib.flatpages',
     'widget_tweaks',
+    'crispy_forms',
     'django_extensions',
+    'django_twilio',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -136,7 +139,14 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 LOGIN_REDIRECT_URL = 'index' 
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_FORMS = {'signup': 'Utilisateurs.forms.RegistrationForm'}
+
 # redirects to /accounts/profile by default
+
+# TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
+# TWILIO_AUTH_TOKEN =  os.environ["TWILIO_AUTH_TOKEN"]
+# TWILIO_DEFAULT_CALLERID =  os.environ["TWILIO_DEFAULT_CALLERID"]
 
 WSGI_APPLICATION = 'NanBlog.wsgi.application'
 
@@ -184,7 +194,7 @@ GRAPHENE = {
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 360,
-    'width': 900,
+    'width': 800,
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',
@@ -247,4 +257,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
 STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIT_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100

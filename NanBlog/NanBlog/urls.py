@@ -28,6 +28,7 @@ urlpatterns = [
     path('admin/filebrowser/', site.urls),
     path('',include('blogApp.urls')),
     path('contacts/',include('Contacts.urls')),
+    path('user/',include('Utilisateurs.urls')),
     path('tinymce/', include('tinymce.urls')),
     path("graphql", GraphQLView.as_view(graphiql=True,schema=schema)),
 
