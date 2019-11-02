@@ -9,8 +9,8 @@
                 <div class="col-md-12">
                     <div class="overview-wrap" >
                         <h2 class="title-1">overview </h2>
-                        <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
-                            <i class="zmdi zmdi-plus"></i>add Articles</a>
+                        <a href="" class="au-btn au-btn-icon au-btn--blue">
+                            <i class="zmdi zmdi-plus"></i>Devenir Membre</a>
                     </div>
                 </div>
             </div>
@@ -19,22 +19,20 @@
             
                 <div class="col-lg-6">
                         <div class="card">
-                                <img class="card-img-top" :src="base_url_image + lastArticle.node.image " alt="Card image cap">
-                                
+                                <img class="card-img-top" :src="base_url_image + lastArticleLike.node.image " alt="Card image cap">
                                 <div class="card-body">
-                                    <h4 class="card-title mb-3">${lastArticle.node.titre}</h4>
+                                    <h4 class="card-title mb-3">${lastArticleLike.node.titre}</h4>
                                     <p class="card-text">
-                                        ${lastArticle.node.description}
+                                        ${lastArticleLike.node.description}
                                     
                                     </p>
-                                    <!-- <input id="idArt" type="hidden" v-model='idArticle' value="{{allArticle.id}}">
+                                    <!-- <input id="idArt" type="hidden" v-model='idArticle' value="{{myArt.id}}">
                                     <input id="idUser" type="hidden" v-model='idArticle' value="{{user.id}}"> -->
         
                                 </div>
-                                
                                 <div class="card-footer">
                                         <div class="table-data-feature">
-                                                <a  :href=``+`${base_url}`+`/dashSingleArticle/`+`${lastArticle.node.id}`+`` class="item" data-toggle="tooltip" data-placement="top" title="show">
+                                                <a  :href=``+`${base_url}`+`/dashSingleArticle/`+`${lastArticleLike.node.id}`+`` class="item" data-toggle="tooltip" data-placement="top" title="show">
                                                     <i class="zmdi zmdi-mail-send"></i>
                                                 </a>
                                                 <a class="item" data-toggle="tooltip" data-placement="top" title="Edit">
@@ -43,17 +41,71 @@
                                                 <a class="item" data-toggle="tooltip" data-placement="top" title="Delete">
                                                     <i class="zmdi zmdi-delete"></i>
                                                 </a>
-                                                <a :href=``+`${base_url}`+`/moreInfo/`+`${lastArticle.node.id}`+`` class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                                <a :href=``+`${base_url}`+`/moreInfo/`+`${lastArticleLike.node.id}`+`` class="item" data-toggle="tooltip" data-placement="top" title="More">
                                                     <i class="zmdi zmdi-more"></i>
                                                 </a>
                                             </div>
                                 </div>
-                              
                                 
                             </div>
                 </div>
                 <!--End Articles-->
-                
+                <div class="col-lg-6">
+                    <div class="au-card chart-percent-card">
+                        <div class="au-card-inner">
+                        <div class='row'>
+                            <h3 class="col-sm title-2 tm-b-5">char by %</h3>
+                            <div class="col-sm">
+                                <div class="row">
+                                    <h3 class="title-2 tm-b-5 col-sm">Status:</h3>
+                                    <label class="switch switch-text switch-primary switch-pill col-sm">
+                                    <input type="checkbox" v-model='articleActive' class="switch-input" checked="true" v-on:change='testFunction'>
+                                    <span data-on="On" data-off="Off" class="switch-label"></span>
+                                    <span class="switch-handle"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        {% for myArt in allArticle %}
+                            <div class="row no-gutters">
+                                <div class="col-xl-6">
+                                    <div class="chart-note-wrap">
+                                        <div class="chart-note mr-0 d-block">
+                                            <span class="dot dot--blue"></span>
+                                            <span>{{myArt.article_like.all|length }}</a> like </span>
+                                        </div>
+                                        <div class="chart-note mr-0 d-block">
+                                            <span class="dot dot--red"></span>
+                                            <span>{{myArt.article_like.all|length }}</a> Dislike</span>
+                                        </div>
+                                        <div class="chart-note mr-0 d-block">
+                                            <a href="#">
+                                                <i class="fa fa-eye"></i> views
+                                        </div>
+                                        <div class="chart-note mr-0 d-block">
+                                            <a href="#comments">
+                                            <i class="zmdi zmdi-comment-text"></i> {{myArt.article_commentaire.all|length }} comment
+                                            </a>
+                                        </div>
+                                        <div class="chart-note mr-0 d-block">
+                                                        
+                                            <i class="fas fa-calendar-alt"></i> {{myArt.date_add}}
+                                                        
+                                        </div>
+                                                    
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="percent-chart">
+                                        <canvas id="percent-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <!--End Chrat -->
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="">
                         <div class="au-card  au-card--no-pad m-b-40" id='comments'>
@@ -126,9 +178,9 @@
                                     <div class="au-chat-textfield">
                                         <div class="au-form-icon">
                                             <form action="" method="post" novalidate="novalidate">
-                                                <textarea v-model="myCom" class="md-textarea form-control" >
+                                                <!-- <textarea v-model="myCom" class="md-textarea form-control" > -->
                                                     {{myFrom.contenu}}
-                                                </textarea>
+                                                <!-- </textarea> -->
                                                
                                                 <input type='sudmit' class="btn btn-success" value="Send connent">
                                                 <button v-on:click='sendComment' class="btn btn-success">
@@ -166,8 +218,8 @@
                     <div class="col-md-12 p-5">
                         <div class="overview-wrap" >
                             
-                            <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
-                                <i class="zmdi zmdi-plus"></i>add Articles</a>
+                            <a href="" class="au-btn au-btn-icon au-btn--blue">
+                                <i class="zmdi zmdi-plus"></i>Devenir Membre </a>
                         </div>
                     </div>
                 </div>
