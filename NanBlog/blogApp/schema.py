@@ -170,8 +170,8 @@ class RelayCreateArticle(graphene.relay.ClientIDMutation):
         image = info.context.FILES.get('image')
         image_single = info.context.FILES.get('image_single')
         categorie = kwargs.get('categorie') or None
-        # auteur = info.context.user or None
-        auteur = MyUser.objects.get(pk=1)
+        auteur = info.context.user or None
+        # auteur = MyUser.objects.get(pk=1)
         tag = kwargs.get('tag') or None
         titre = kwargs.get('titre') or None
         description = kwargs.get('description') or None
@@ -266,8 +266,8 @@ class RelayCreateComment(graphene.relay.ClientIDMutation):
     def mutate_and_get_payload(root,info,**kwargs):
 
         article = kwargs.get('article') or None
-        # user = info.context.user or None
-        user = MyUser.objects.get(pk=1)
+        user = info.context.user or None
+        # user = MyUser.objects.get(pk=1)
         message = kwargs.get('message') or None
         sujet = kwargs.get('sujet') or None
         status = kwargs.get('status',None)
@@ -407,8 +407,8 @@ class RelayCreateLike(graphene.relay.ClientIDMutation):
         status = kwargs.get('status',None)
         id = kwargs.get('id') or None
         article = kwargs.get('article') or None
-        # user = info.context.user or None
-        user = MyUser.objects.get(pk=1)
+        user = info.context.user or None
+        # user = MyUser.objects.get(pk=1)
         like_user=None
         if id :
             id= from_global_id(id)
@@ -465,8 +465,8 @@ class RelayCreateDemande(graphene.relay.ClientIDMutation):
     def mutate_and_get_payload(root,info,**kwargs):
         status = kwargs.get('status',None)
         id = kwargs.get('id') or None
-        # user = info.context.user or None
-        user = MyUser.objects.get(pk=1)
+        user = info.context.user or None
+        #user = MyUser.objects.get(pk=1)
         demande_user=None
         if id :
             id= from_global_id(id)
@@ -520,8 +520,8 @@ class RelayCreateDisLike(graphene.relay.ClientIDMutation):
         status = kwargs.get('status',None)
         id = kwargs.get('id') or None
         article = kwargs.get('article') or None
-        # user = info.context.user or None
-        user = MyUser.objects.get(pk=1)
+        user = info.context.user or None
+        # user = MyUser.objects.get(pk=1)
         dis_like_user=None
         if id :
             id= from_global_id(id)
