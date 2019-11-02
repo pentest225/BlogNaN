@@ -375,6 +375,8 @@
                     contenue: '',
                     title: '',
                     file: '',
+                    returntrue: false,
+                    returnfalse: false,
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -582,8 +584,8 @@
                         
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios.post('https://127.0.0.1:8000/addarticle',
-                            formData, this.id, 
+                        axios.post('https://127.0.0.1:8000/darticle',
+                            formData,
                             {
                                 headers: {
                                     
