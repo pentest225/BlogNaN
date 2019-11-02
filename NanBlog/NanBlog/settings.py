@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'django_admin_generator',
     'social_django',
     'django_social_share',
+    'drf_yasg',
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL ="https"
@@ -139,7 +140,7 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 LOGIN_REDIRECT_URL = 'index' 
-ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
 ACCOUNT_FORMS = {'signup': 'Utilisateurs.forms.RegistrationForm'}
 
 # redirects to /accounts/profile by default

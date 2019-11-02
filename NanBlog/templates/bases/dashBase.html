@@ -231,9 +231,7 @@
                                             <div class="image">
                                                     <img src="{{user.image.url}}" alt="" height=40 width=40 class="rounded-circle">
                                                 </div>
-                                                <div class="content">
-                                                    <a class="js-acc-btn" href="#">{{user.username}}</a>
-                                                </div>
+                                                
                                         </div>
 
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -245,9 +243,9 @@
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">{{user.last_name}}</a>
+                                                        <a href="#">{{user.username}}</a>
                                                     </h5>
-                                                    <span class="email">{{user.email}}</span>
+                                                    <span class="email">{{user.laste_name}} {{user.first_name}} </span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body dropdown-item">
@@ -316,30 +314,30 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-            Vue.component('comment_user',{
-                delimiters:["${","}"],
-                template:`
-                <div class="au-message__item unread">
-                    <div class="au-message__item-inner">
-                        <div class="au-message__item-text">
-                            <div class="avatar-wrap">
-                                <div class="avatar">
-                                    <img :src='`+"base_url_image "+ "item.node.user.node.image"+ `' alt="John Smith">
-                                </div>
-                            </div>
-                            <div class="text" >
-                                <h5 class="name" >`+" ${item.node.user.username}  "+`</h5>
-                                <p id="penComment" v-html="item.node.message"></p>
-                            </div>
-                        </div>
-                        <div class="au-message__item-time">
-                            <span>`+" ${item.node.dateAdd} "+`</span>
-                        </div>
-                    </div>
-                </div>
-                `,
-                props:['item']
-            })
+            // Vue.component('comment_user',{
+            //     delimiters:["${","}"],
+            //     template:`
+            //     <div class="au-message__item unread">
+            //         <div class="au-message__item-inner">
+            //             <div class="au-message__item-text">
+            //                 <div class="avatar-wrap">
+            //                     <div class="avatar">
+            //                         <img :src='`+"base_url_image "+ "item.node.user.node.image"+ `' alt="John Smith">
+            //                     </div>
+            //                 </div>
+            //                 <div class="text" >
+            //                     <h5 class="name" >`+" ${item.node.user.username}  "+`</h5>
+            //                     <p id="penComment" v-html="item.node.message"></p>
+            //                 </div>
+            //             </div>
+            //             <div class="au-message__item-time">
+            //                 <span>`+" ${item.node.dateAdd} "+`</span>
+            //             </div>
+            //         </div>
+            //     </div>
+            //     `,
+            //     props:['item']
+            // })
             
             var app = new Vue({
                 el: '#app',
@@ -375,6 +373,11 @@
                     contenue: '',
                     title: '',
                     file: '',
+                    returntrue: false,
+                    returnfalse: false,
+                    thereIsArticles:true,
+                    lastArticleLike:[],
+                    ArticleLikeByCat:[],
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -387,6 +390,7 @@
                 beforeUpdate() {
                     this.loader=true;
                     this.getArticleByCatId();
+                    this.getLikeArticleByCatId();
                 },
                 methods: {
                     getdata: function(){
@@ -416,7 +420,40 @@
                                                 id,name,lien
                                                 }
                                             }
-                                            },articleAuteur{
+                                            },
+                                            userLike{
+                                            edges{
+                                                node{
+                                                id,article{
+                                                    id,titre,description,image,isArchive,status,dateAdd,dateUpd,
+                                                    categorie{
+                                                    id,nom
+                                                    },
+                                                    auteur{
+                                                    id,username,firstName,lastName,image,description,
+                                                    social{
+                                                        edges{
+                                                        node{
+                                                            id,lien
+                                                        }
+                                                        }
+                                                    },
+                  
+                                                    }
+                                                    tag{
+                                                    edges{
+                                                        node{
+                                                        id,nom
+                                                        }
+                                                    }
+                                                    },
+                                                    contenu
+                
+                                                }
+                                                }
+                                            }
+                                            },
+                                                articleAuteur{
                                             edges{
                                                 node{
                                                 id,titre,description,image,contenu,isArchive,imageSingle,dateAdd,dateUpd,status,categorie{
@@ -496,19 +533,25 @@
                             result = response.data.data
                             console.log(response.data)
                             console.log(result.allUser.edges[0].node.articleAuteur)
+
                             if (result.allUser.edges[0].node.articleAuteur.edges.length == 0){
                                 this.emptyArticles=true
+                                this.thereIsArticles=false
                             }
                             else{
+                                this.lastArticleLike=result.allUser.edges[0].node.articleAuteur.edges[0]
                                 this.lastArticle=result.allUser.edges[0].node.articleAuteur.edges[0]
                                 this.listeComment=this.lastArticle.node.articleCommentaire.edges
                                 this.singleArticle=result.article
                                 this.dataAllCategory=result.allCategories.edges
                                 this.userArticles=result.allUser.edges[0].node.articleAuteur
+                                this.userArticlesLike=result.allUser.edges[0].node.userLike
                                 console.log("##################### All article user {{ user.username }}")
                                 // console.log(this.listeComment)
                                 console.log("Single Article ")
                                 console.log(this.userArticles)
+                                this.emptyArticles=false
+                                this.thereIsArticles=true
                             }
                             
                         })  
@@ -552,7 +595,6 @@
                             console.log(this.userArticles.edges)
                             console.log(this.categoryId)
                             for (let i = 0; i < this.userArticles.edges.length; i++) {
-                                
                                 const element = this.userArticles.edges[i];
                                 if (element.node.categorie.id == this.categoryId) {
                                     this.userArticesByCat.push(element)
@@ -567,7 +609,6 @@
                                 }
                             }
                             this.loader=false
-                
                     },
                     handleFileUploaded: function() {
                         this.file = this.$refs.file.files[0];
@@ -582,8 +623,8 @@
                         
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios.post('https://127.0.0.1:8000/addarticle',
-                            formData, this.id, 
+                        axios.post('https://127.0.0.1:8000/darticle',
+                            formData,
                             {
                                 headers: {
                                     
@@ -610,10 +651,29 @@
                             this.returntrue = false;
                         })
                     },
+                    },
+                    getLikeArticleByCatId:function(){
+                            for (let i = 0; i < this.userArticlesLike.edges.length; i++) {
+                                const element = this.userArticlesLike.edges[i];
+                                console.log('ok ok')
+                                console.log(this.userArticlesLike)
+                                if (element.node.article.categorie.id == this.categoryId) {
+
+                                    this.ArticleLikeByCat.push(element)
+                                }
+                            }
+                            for (let j = 0; j < this.dataAllCategory.length ; j++) {
+                                const element = this.dataAllCategory[j];
+                                if (element.node.id == this.idArticle) {
+                                    this.categorieName=element.node.nom
+                                }
+                            }
+                            this.loader=false
+                    }
                 },
     
     
-                })
+                )
     
         
         </script>
