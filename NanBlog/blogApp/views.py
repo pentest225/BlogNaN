@@ -218,3 +218,26 @@ def updateArticle(request):
         }
      
     return JsonResponse(result, safe=False)
+
+def addarticle(request):
+    cat = request.POST.get('cat')
+    title = request.POST.get('title')
+    description = request.POST.get('email')
+    image = request.POST.get('image')
+    contenu = request.POST.get('contenu')
+    user= request.user.id
+    
+    issucces = False
+    
+    if cat !='' and not cat.isspace() and title != '' and not title.isspace() and description != '' and not description.isspace() and image != '' and not image.isspace() and contenu != '' and not contenu.isspace():
+        issucces = True
+        h = Article(categorie=cat,auteur=user,titre=title,description=description, image=image, contenu=contenu)
+        h.save()
+        print(cat, title, description, contenu)
+    else:
+        issucces = False
+    datas = {
+        'succes': issucces,
+        'name': title,
+    }
+    return JsonResponse(datas, safe=False)

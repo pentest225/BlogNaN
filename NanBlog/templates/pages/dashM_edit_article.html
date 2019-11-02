@@ -1,6 +1,7 @@
 {% extends 'bases/dashBase.html' %}
 
 {% block content %}
+<div id="app">
 <div class="main-content">
     <div class="section__content section__content--p30">
     <div class="card">
@@ -8,40 +9,59 @@
             <strong class="card-title mb-3">Ajouter un article</strong>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="mx-auto d-block col-md-3">
-                    <div class="row">
-                        <lable class=" mt-2  title-2">Select The categoryse </h5> {{myFrom.categorie}}
-                    </div>
-                    <div class="row">
-                        <lable class=" mt-2  title-2">Titre </h5> {{myFrom.titre}}
-                    </div>
-                    <div class="row">
-                        <lable class=" mt-2  title-2">Description </h5> {{myFrom.description}}
-                    </div>
-                    <div class="row">
-                        <lable class=" mt-2  title-2">Image </h5> {{myFrom.image}}
-                    </div>
-                    <div class="row">
-                        <lable class=" mt-2  title-2">Single Image </h5> {{myFrom.image}}
-                    </div>
-                </div>
-                <div class="card col-md-9">
-                    <div class="card-body">
-                        <div class="card-title">
-                            <h3 class="text-center title-2">Contenu de votre article</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="mx-auto d-block col-md-3">
+                        <div class="row">
+                            <lable class=" mt-2  title-2">Select The categoryse </h5> 
+                                <select v-model="cat" required id="id_categorie">
+                                        <option value="" selected>---------</option>
+                                      
+                                        <option value="1">Reseau securité</option>
+                                      
+                                        <option value="2">Programmation</option>
+                                      
+                                        <option value="3">decouverte</option>
+                                      
+                                        <option value="4">Techonologie</option>
+                                      
+                                        <option value="5">bases de données</option>
+                                      
+                                </select>
                         </div>
-                        <hr>
-                        {{myFrom.contenu}}
+                        <div class="row">
+                            <lable class=" mt-2  title-2">Titre </h5> <input type="text" v-model="title" maxlength="100" required id="id_titre">
+                        </div>
+                        <div class="row">
+                            <lable class=" mt-2  title-2">Description </h5> 
+                                <textarea v-model="descriptions" cols="40" rows="10" required id="id_description">
+                                </textarea>
+                        </div>
+                        <div class="row">
+                            <lable class=" mt-2  title-2">Single Image </h5> 
+                                <input type="file" v-on:change="handleFileUploaded()" id="file" ref="file" accept="image/*" required id="id_image">
+                        </div>
+                    </div>
+                    <div class="card col-md-9">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h3 class="text-center title-2">Contenu de votre article</h3>
+                            </div>
+                            <hr>
+                            <textarea class="tinymce4-editor" cols="40" id="id_contenu" v-model="contenue" rows="10" required></textarea>
+                            <script type="text/javascript">(function($){function tinymce4_init(selector){var tinymce4_config={'file_browser_callback':djangoFileBrowser,setup:function(editor){editor.on('change',function(){editor.save();});},"height":360,"width":800,"cleanup_on_startup":true,"custom_undo_redo_levels":20,"selector":"textarea#id_contenu","theme":"modern","plugins":"\n            textcolor save link image media preview codesample contextmenu\n            table code lists fullscreen  insertdatetime  nonbreaking\n            contextmenu directionality searchreplace wordcount visualblocks\n            visualchars code fullscreen autolink lists  charmap print  hr\n            anchor pagebreak\n            ","toolbar1":"\n            fullscreen preview bold italic underline | fontselect,\n            fontsizeselect  | forecolor backcolor | alignleft alignright |\n            aligncenter alignjustify | indent outdent | bullist numlist table |\n            | link image media | codesample |\n            ","toolbar2":"\n            visualblocks visualchars |\n            charmap hr pagebreak nonbreaking anchor |  code |\n            ","contextmenu":"formats | link image","menubar":true,"statusbar":true,"language":"fr_FR","directionality":"ltr"};if(typeof selector!='undefined'){tinymce4_config['selector']=selector;}
+                                tinymce.init(tinymce4_config);}
+                                tinymce4_init();})();</script>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <input type='sudmit' class="btn btn-primary" value="Save article ">
-
+                <hr>
+                <button type="submit" class="btn btn-primary" > Save article </button>
+            </form>
         </div>
     </div>
-  
+  </div>
 
 
 {% endblock content %}

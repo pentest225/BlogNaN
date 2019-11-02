@@ -33,6 +33,7 @@ urlpatterns = [
     path('editArticleDash',views.editArticleDash,name='editArticleDash'),
     path('updateArticle',views.updateArticle,name='updateArticle'),
     path('deleteArticle/<int:id>',views.deleteArticle,name='deleteArticle'),
+    path('addarticle', views.addarticle, name='addarticle'),
 
     re_path(r'^accounts/', include('allauth.urls')),
 

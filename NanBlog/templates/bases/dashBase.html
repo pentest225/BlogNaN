@@ -369,7 +369,12 @@
                     NameUser:"{{user.username}}",
                     singleArticle:[],
                     categorieName:'',
-                    emptyArticles:false
+                    emptyArticles:false,
+                    cat: '',
+                    descriptions: '',
+                    contenue: '',
+                    title: '',
+                    file: '',
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -563,7 +568,48 @@
                             }
                             this.loader=false
                 
-                    }
+                    },
+                    handleFileUploaded: function() {
+                        this.file = this.$refs.file.files[0];
+                    },
+                    addarticle: function() {
+                        let formData = new FormData();
+                        formData.append('categorie', this.cat);
+                        formData.append('title', this.title);
+                        formData.append('description', this.descriptions);
+                        formData.append('image', this.file);
+                        formData.append('contenu', this.contenue);
+                        
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios.post('https://127.0.0.1:8000/addarticle',
+                            formData, this.id, 
+                            {
+                                headers: {
+                                    
+                                    'Content-Type': 'multipart/form-data',
+                                }
+                        }).then((response) => {
+                            console.log(response.data);
+                            console.log(response.data.succes); 
+                            this.result = response.data;
+                            console.log(this.result.succes);
+                            if (this.result.succes){
+                                this.returntrue=true
+                                this.returnfalse=false
+
+                            }else{
+                                this.returnfalse=true
+                                this.returntrue=false
+                            }
+                        
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            this.returnfalse=false;
+                            this.returntrue = false;
+                        })
+                    },
                 },
     
     
