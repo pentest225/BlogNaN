@@ -216,7 +216,7 @@ def updateArticle(request):
         result={
             'addCommentOk':True
         }
-     
+
     return JsonResponse(result, safe=False)
 
 def addarticle(request):
