@@ -92,83 +92,65 @@ def archive(request):
 def dash(request):
     if request.user.is_authenticated:
         myUser=request.user
-        
         allCat=Categorie.objects.filter(status=True)
         allArticle=Article.objects.filter(auteur=request.user,status=True)[:1]
         # j'ai enlever le get car quand il n'y pas d'article il retourne une erreur 
-        print("#####################################GROUPE USER  #########################")
-        groupeUser=myUser.groups.filter(name='Membre').exists()
-        print(groupeUser)
-        if groupeUser:
-            myForm=ArticleFrom()
-            data={
-                'allArticle':allArticle,
-                'allCat':allCat,
-                'myFrom':myForm
-            }
-            return render(request,'pages/dashM_index.html',data)
-        else:
-            myForm=ArticleFrom()
-            data={
-                'allArticle':allArticle,
-                'allCat':allCat,
-                'myFrom':myForm
-            }
-            return render(request,'pages/v_index.html',data)
-            
+        print("#####################################ALL ARTICLES #########################")
+        myForm=ArticleFrom()
+        
+        data={
+            'allArticle':allArticle,
+            'allCat':allCat,
+            'myFrom':myForm
+        }
+    return render(request,'pages/dashM_index.html',data)
 
 def moreInfo(request,id):
     if request.user.is_authenticated:
         myUser=request.user
         allCat=Categorie.objects.filter(status=True)
-        allArticle=Article.objects.get(pk=13)
+        allArticle=Article.objects.get(pk=id)
         myForm=ArticleFrom()
 
         print(allArticle)
         data={
             'allArticle':allArticle,
             'allCat':allCat,
-            'myFrom':myForm,
-            'id':id
+            'myFrom':myForm
+
         }
+        
+        
     return render(request,'pages/dashM_moreInfo.html',data)
 
 def dashCategory(request,id):
     allCat=Categorie.objects.filter(status=True)  
     print(allCat)
-    myCat=Categorie.objects.get(pk=3)
+    myCat=Categorie.objects.get(pk=id)
     allArticle=Article.objects.filter(categorie=myCat,auteur=request.user,status=True)
     data={
         'allArticle':allArticle,
         'cat':myCat,
-        'allCat':allCat,
-        'idCat':id,
+        'allCat':allCat
     }
-    groupeUser=request.user.groups.filter(name='Membre').exists()
-    print(groupeUser)
-    if groupeUser:
-        return render(request,'pages/dashM_category.html',data)
-    else:
-        return render(request,'pages/v_cat.html',data)
+    print(allArticle)
+    return render(request,'pages/dashM_category.html',data)
 
 @login_required
 def dashProfil(request):
     
     return render(request,'pages/dashM_profil.html')
     
-    
 def singleArticleDash(request,id):
-    
+    allCat=Categorie.objects.filter(status=True)
+    allArticle=Article.objects.get(pk=id)
     data={
-        'id':id
+        'allArticle':allArticle,
+        'allCat':allCat
     }
-    groupeUser=request.user.groups.filter(name='Membre').exists()
-    print(groupeUser)
-    if groupeUser:
-        return render(request,'pages/dashM_single_article.html',data)
-    else:
-        return render(request,'pages/v_single_article.html',data)
-
+    print(allArticle)
+    
+    return render(request,'pages/dashM_single_article.html',data)
 @login_required
 def deleteArticle(request,id):
     
@@ -177,18 +159,13 @@ def deleteArticle(request,id):
 
 @login_required
 def editArticleDash(request):
-    groupeUser=request.user.groups.filter(name='Membre').exists()
-    print(groupeUser)
-    if groupeUser:
-        allCat=Categorie.objects.filter(status=True)
-        myFrom=ArticleFrom()
-        data={
-            'allCat':allCat,
-            'myFrom':myFrom
-        }
-        return render(request,'pages/dashM_edit_article.html',data)
-    else:
-        return redirect('index')
+    allCat=Categorie.objects.filter(status=True)
+    myFrom=ArticleFrom()
+    data={
+        'allCat':allCat,
+        'myFrom':myFrom
+    }
+    return render(request,'pages/dashM_edit_article.html',data)
 
 @login_required
 def updateArticle(request):
@@ -228,8 +205,3 @@ def updateArticle(request):
         }
      
     return JsonResponse(result, safe=False)
-
-################################################
-#              PAGE VISITEUR                   #
-#                                              #
-################################################

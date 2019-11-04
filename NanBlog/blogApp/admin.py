@@ -105,9 +105,7 @@ class LikeAdmin(admin.ModelAdmin):
         'date_add',
         'date_upd',
     )
-    
 class DisLikeAdmin(admin.ModelAdmin):
-
     list_display = (
         'article',
         'user',

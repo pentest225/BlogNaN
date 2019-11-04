@@ -90,9 +90,9 @@ class Like(models.Model):
     date_upd = models.DateTimeField(auto_now=True)
     
 class DisLike(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_dislike')
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_dislike')
-    status = models.BooleanField(default=True )
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_Dislike')
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_Dislike')
+    status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
     
