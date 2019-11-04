@@ -71,7 +71,7 @@ def signup_sendmail(request):
     # else:
     #     form = SignupForm()
     # return render(request, 'signup.html', {'form': form})
-def activate(request, uidb64, token):
+def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = models.MyUser.objects.get(pk=uid)
@@ -80,7 +80,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
-        # return redirect('home')
+        print("iudisd")
+        return render(request, 'account/verif_ok.html')
     else:
         return render(request, 'account/invalid_link.html')
