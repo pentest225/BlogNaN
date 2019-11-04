@@ -148,7 +148,6 @@ class ArticleNode(DjangoObjectType):
         order_by = OrderingFilter(
             fields=(
                 ('date_add','date_add'),
-                ('vue','vue'),
             )
         )
         interfaces = (relay.Node,)
@@ -165,13 +164,13 @@ class RelayCreateArticle(graphene.relay.ClientIDMutation):
         contenu = graphene.String()
         status = graphene.Boolean()
         is_archive = graphene.Boolean()
-        vue = graphene.Int()
+        
     def mutate_and_get_payload(root,info,**kwargs):
         image = info.context.FILES.get('image')
         image_single = info.context.FILES.get('image_single')
         categorie = kwargs.get('categorie') or None
-        auteur = info.context.user or None
-        # auteur = MyUser.objects.get(pk=1)
+        # auteur = info.context.user or None
+        auteur = MyUser.objects.get(pk=1)
         tag = kwargs.get('tag') or None
         titre = kwargs.get('titre') or None
         description = kwargs.get('description') or None
@@ -179,7 +178,6 @@ class RelayCreateArticle(graphene.relay.ClientIDMutation):
         status = kwargs.get('status',None)
         is_archive = kwargs.get('is_archive',None) 
         id = kwargs.get('id') or None
-        vue = kwargs.get('vue') or None
         
         art = None
         if id :
@@ -207,7 +205,6 @@ class RelayCreateArticle(graphene.relay.ClientIDMutation):
             'description':description,
             'contenu':contenu,
             'status':status,
-            'vue':vue,
             'is_archive':is_archive,
         }
         if id is None:
@@ -230,9 +227,6 @@ class RelayCreateArticle(graphene.relay.ClientIDMutation):
                         for t in v:
                             art.add(t)
                             article.save()
-                    elif vue:
-                        article.vue += vue
-                        article.save()
                     else:
                         art = setattr(article,k,v)
                         article.save()
@@ -266,8 +260,8 @@ class RelayCreateComment(graphene.relay.ClientIDMutation):
     def mutate_and_get_payload(root,info,**kwargs):
 
         article = kwargs.get('article') or None
-        user = info.context.user or None
-        # user = MyUser.objects.get(pk=1)
+        # user = info.context.user or None
+        user = MyUser.objects.get(pk=1)
         message = kwargs.get('message') or None
         sujet = kwargs.get('sujet') or None
         status = kwargs.get('status',None)
@@ -407,8 +401,8 @@ class RelayCreateLike(graphene.relay.ClientIDMutation):
         status = kwargs.get('status',None)
         id = kwargs.get('id') or None
         article = kwargs.get('article') or None
-        user = info.context.user or None
-        # user = MyUser.objects.get(pk=1)
+        # user = info.context.user or None
+        user = MyUser.objects.get(pk=1)
         like_user=None
         if id :
             id= from_global_id(id)
@@ -446,119 +440,6 @@ class RelayCreateLike(graphene.relay.ClientIDMutation):
                     print(getattr(like_user,k))
         return RelayCreateLike(like=like_user)
 
-class DemandeNode(DjangoObjectType):
-    class Meta:
-        model = DemandeAdesion
-        fields = "__all__"
-        filter_fields = {
-            'status':['exact',],
-        }
-        interfaces = (relay.Node,)
-        connection_class = ExtendConnection
-
-
-class RelayCreateDemande(graphene.relay.ClientIDMutation):
-    demande = graphene.Field(DemandeNode)
-    class Input:
-        id = graphene.ID()
-        status = graphene.Boolean()
-    def mutate_and_get_payload(root,info,**kwargs):
-        status = kwargs.get('status',None)
-        id = kwargs.get('id') or None
-        user = info.context.user or None
-        #user = MyUser.objects.get(pk=1)
-        demande_user=None
-        if id :
-            id= from_global_id(id)
-            id=id[1]
-        data = {
-            'user_id':user,
-            'status':status,
-        }
-        if id is None:
-            if user :
-                        
-                demande_user = DemandeAdesion(
-                **data
-                )
-                        
-                print(demande_user)
-                debug(demande_user)
-                demande_user.save()
-                        
-                return RelayCreateDemande(demande=demande_user)
-            else:
-                raise Exception('must be have all data to create demande')
-        else :
-            demande_user = DemandeAdesion.objects.get(id=id)
-            for k , v in data.items():
-                if v or type(v) is bool :
-                    print('key:',k,'=====','value:',v,'id:',id)
-                    demande_set = setattr(demande_user,k,v)
-                    demande_user.save()
-                    print(getattr(demande_user,k))
-        return RelayCreateDemande(demande=demande_user)
-
-class DisLikeNode(DjangoObjectType):
-    class Meta:
-        model = DisLike
-        fields = "__all__"
-        filter_fields = {
-            'status':['exact',],
-        }
-        interfaces = (relay.Node,)
-        connection_class = ExtendConnection
-        
-
-class RelayCreateDisLike(graphene.relay.ClientIDMutation):
-    dis_like = graphene.Field(DisLikeNode)
-    class Input:
-        id = graphene.ID()
-        article = graphene.ID()
-        status = graphene.Boolean()
-    def mutate_and_get_payload(root,info,**kwargs):
-        status = kwargs.get('status',None)
-        id = kwargs.get('id') or None
-        article = kwargs.get('article') or None
-        user = info.context.user or None
-        # user = MyUser.objects.get(pk=1)
-        dis_like_user=None
-        if id :
-            id= from_global_id(id)
-            id=id[1]
-        if article:
-            article = from_global_id(article)
-            article=article[1]
-            article = Article.objects.get(id=article)
-        data = {
-            'article':article,
-            'user':user,
-            'status':status,
-        }
-        if id is None:
-            if article :
-                        
-                dis_like_user = DisLike(
-                **data
-                )
-                        
-                print(dis_like_user)
-                debug(dis_like_user)
-                dis_like_user.save()
-                        
-                return RelayCreateDisLike(dis_like=dis_like_user)
-            else:
-                raise Exception('must be have all data to create disLike')
-        else :
-            dis_like_user = DisLike.objects.get(id=id)
-            for k , v in data.items():
-                if v or type(v) is bool :
-                    print('key:',k,'=====','value:',v,'id:',id)
-                    dis_like_set = setattr(dis_like_user,k,v)
-                    dis_like_user.save()
-                    print(getattr(dis_like_user,k))
-        return RelayCreateDisLike(dis_like=dis_like_user)
-
 
 class Query(graphene.ObjectType):
     article = relay.Node.Field(ArticleNode)
@@ -578,14 +459,7 @@ class Query(graphene.ObjectType):
 
     like = relay.Node.Field(LikeNode)
     all_like = DjangoFilterConnectionField(LikeNode)
-    
-    dislike = relay.Node.Field(DisLikeNode)
-    all_dislike = DjangoFilterConnectionField(DisLikeNode)
-    
-    demande = relay.Node.Field(DemandeNode)
-    all_demande = DjangoFilterConnectionField(DemandeNode)
 
-    demande = relay.Node.Field()
 class RelayMutation(graphene.AbstractType):
     relay_create_categorie = RelayCreateCategorie.Field()
     relay_create_article = RelayCreateArticle.Field()
@@ -593,8 +467,6 @@ class RelayMutation(graphene.AbstractType):
     relay_create_response_comment = RelayCreateResponseComment.Field()
     relay_creat_like = RelayCreateLike.Field()
     relay_create_tag = RelayCreateTag.Field()
-    relay_create_dislike = RelayCreateDisLike.Field()
-    relay_create_demande = RelayCreateDemande.Field()
 ####################################################################
 ########################TEST##################################
 

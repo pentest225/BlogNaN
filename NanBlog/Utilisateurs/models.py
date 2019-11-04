@@ -12,7 +12,7 @@ class Specialite(models.Model):
     date_upd = models.DateTimeField(auto_now=True)
     
 class MyUser(AbstractUser):
-    image = models.ImageField(upload_to='utilisateur/',default='/utilisateur/user2.png')
+    image = models.ImageField(upload_to='utilisateur/')
     groups = models.ManyToManyField(Group,related_name="Type_de_compte")
     # user_permissions = models.ManyToManyField(Permission,related_name="utilisateur_permissions")
     description = models.TextField()

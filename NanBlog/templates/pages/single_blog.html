@@ -48,25 +48,7 @@
                     <!-- <p>${ singleAtircle.contenu }</p> -->
                     <span v-html="singleAtircle.contenu"></span>
                     <div class="news_d_footer">
-                        
-                        <div>
-                                <!-- <div v-for="like in singleAtircle.articleLike.edges"  v-if=" singleAtircle.articleLike.edgeCount == 0 || like.node.user.username == admin">
-                                        <a> <i style="color: blue; font-size:19px;" class="fa fa-thumbs-up "></i>${singleAtircle.articleLike.edgeCount}</a>
-                                        <a style=" margin-left: 16px;"><i  style="font-size:19px" class="fa fa-thumbs-down "></i>${ singleAtircle.Dislike.edgeCount}</a>
-                                </div>  -->
-
-                                    <!-- <div v-if ="dislike in singleAtircle.Dislike.edges" v-if="dislike.node.user.username == admin ">
-                                        <a><i style="font-size:19px;" class="fa fa-thumbs-up "></i>${singleAtircle.articleLike.edgeCount}</a>
-                                        <a style=" margin-left: 16px;"><i  style="font-size:19px;color: red;"  class="fa fa-thumbs-down "></i>${ singleAtircle.Dislike.edgeCount}</a>
-                                    </div> -->
-            
-                                <div>
-                                    <a href="#" v-on:click.prevent="postlike" ><i style="font-size:19px;" class="fa fa-thumbs-up "></i>${singleAtircle.articleLike.edgeCount}</a>
-                                    <a href="#" style=" margin-left: 16px;"  v-on:click.prevent="postDislike" ><i  style="font-size:19px" class="fa fa-thumbs-down "></i>${ singleAtircle.Dislike.edgeCount }</a>
-                                </div>
-                        </div>
-                        
-                        
+                        <a href="#"  v-on:click.prevent="postlike" ><i class="lnr lnr lnr-heart"></i>${ singleAtircle.articleLike.edges.length}   Like</a>
                         <a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>${ singleAtircle.articleCommentaire.edges.length} Commentaire</a>
                         <div class="news_socail ml-auto">
                             <!-- <p>partager</p> -->
@@ -111,7 +93,7 @@
                     </div>
                 </div> -->
                 <div class="comments-area">
-                    <h4>${ singleAtircle.articleCommentaire.edgeCount} Commentaire</h4>
+                    <h4>${ singleAtircle.articleCommentaire.edges.length} Commentaire</h4>
                     <br>
                     <br>
                     <div  v-for="comment in singleAtircle.articleCommentaire.edges" >
@@ -177,7 +159,7 @@
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                         </div>
                         <a v-if="{{ user.is_authenticated}}" v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
-                        <div v-else="{{ user.is_authenticated }}">Merci de vous connectez pour commenter <a href="" class=" text-uppercase" target="_blank">Login</a></div>
+                        <div v-else="{{ user.is_authenticated}}">Merci de vous connectez pour commenter <a href="" class=" text-uppercase" target="_blank">Login</a></div>
                     </form>
                 </div>
             </div>

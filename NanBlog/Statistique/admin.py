@@ -10,7 +10,7 @@ from . import models
 class ClientAdmin(admin.ModelAdmin):
 
     list_display = (
-        
+        'id',
         'ip',
         'continent',
         'pays',
@@ -23,11 +23,14 @@ class ClientAdmin(admin.ModelAdmin):
     )
     list_filter = (
         'date_visite',
+        'id',
         'ip',
         'continent',
         'pays',
         'ville',
         'reseau',
+        'longitude',
+        'latitude',
         'page',
         'date_visite',
     )

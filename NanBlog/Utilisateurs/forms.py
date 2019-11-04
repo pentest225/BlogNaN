@@ -8,9 +8,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from . import models
-from django.utils.translation import gettext_lazy as _
 class RegistrationForm(UserCreationForm):
-    
+
     class Meta:
         model = models.MyUser
         fields = (
@@ -21,15 +20,7 @@ class RegistrationForm(UserCreationForm):
             'last_name',
             'description',
             'image',
-            'password1',
-            'password2',
             )
-        labels = {'groups': 'Type de compte', 'description': 'Votre Bio'}
-        help_texts = {
-            'password1': _('Some useful help text.'),
-            'password2': _('Some useful help text.'),
-            'username': _(''),
-        }
 # class RegistrationForm(forms.ModelForm):
 #     class Meta:
 #         model = MyUser
