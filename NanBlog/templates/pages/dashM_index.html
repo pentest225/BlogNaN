@@ -1,14 +1,14 @@
 {% extends 'bases/dashBase.html' %}
 
 {% block content %}
-<div id='app'>
+<div id=''>
 <div class="main-content">
-    <div class="section__content section__content--p30">
+    <div  v-if="thereIsArticles" class="section__content section__content--p30">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="overview-wrap">
-                        <h2 class="title-1">overview ${patrick}</h2>
+                    <div class="overview-wrap" >
+                        <h2 class="title-1">overview </h2>
                         <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
                             <i class="zmdi zmdi-plus"></i>add Articles</a>
                     </div>
@@ -18,52 +18,50 @@
             <div class="row mt-4">
             
                 <div class="col-lg-6">
-                {% for myArt in allArticle %}
-                    <div class="card">
-                                    
-                        <img class="card-img-top" src="{{myArt.image.url}}" alt="Card image cap">
-                        <div class="account-wrap">
-
-                            <div class="account-item clearfix js-item-menu">
-                                <div class="content">
-                                    <a class="js-acc-btn" href="#">more</a>
-                                </div>
-                                <div class="account-dropdown js-dropdown">
-                                                
-                                    <div class="account-dropdown__body">
-                                        <div class="account-dropdown__item">
-                                            <a href="{% url 'dashSingleArticle' myArt.pk %}">
-                                                <i class="zmdi zmdi-account"></i>read</a>
+                        <div class="card">
+                                <img class="card-img-top" :src="base_url_image + lastArticle.node.image " alt="Card image cap">
+                                <div class="account-wrap">
+        
+                                    <div class="account-item clearfix js-item-menu dropdown">
+                                        <div class="content">
+                                            <a class="js-acc-btn">more</a>
                                         </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="{% url 'editArticleDash'  %}">
-                                                <i class="zmdi zmdi-settings"></i>Modif</a>
-                                        </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="{% url 'moreInfo' myArt.id %}">
-                                                <i class="zmdi zmdi-settings"></i>More Info</a>
-                                        </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="#">
-                                                <i class="zmdi zmdi-money-box"></i>Delect</a>
+                                        <div class="account-dropdown js-dropdown dropdown-toggle " id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item  dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a :href=``+`${base_url}`+`/dashSingleArticle/`+`${lastArticle.node.id}`+`` >
+                                                        <i class="zmdi zmdi-account"></i>read</a>
+                                                </div>
+                                                <div class="account-dropdown__item dropdown-item">
+                                                    <a href="{% url 'editArticleDash'  %}">
+                                                        <i class="zmdi zmdi-settings"></i>Modif</a>
+                                                </div>
+                                                <div class="account-dropdown__item dropdown-item">
+                                                    <a :href=" 'moreInfo/' + lastArticle.node.id ">
+                                                        <i class="zmdi zmdi-settings"></i>More Info</a>
+                                                </div>
+                                                <div class="account-dropdown__item dropdown-item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-money-box"></i>Delect</a>
+                                                </div>
+                                            </div>
+                                                        
                                         </div>
                                     </div>
-                                                
                                 </div>
+                                <div class="card-body">
+                                    <h4 class="card-title mb-3">${lastArticle.node.titre}</h4>
+                                    <p class="card-text">
+                                        ${lastArticle.node.description}
+                                    
+                                    </p>
+                                    <!-- <input id="idArt" type="hidden" v-model='idArticle' value="{{myArt.id}}">
+                                    <input id="idUser" type="hidden" v-model='idArticle' value="{{user.id}}"> -->
+        
+                                </div>
+                                
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title mb-3">{{ myArt.titre }}</h4>
-                            <p class="card-text">
-                            {{ myArt.description }}
-                            </p>
-                            <input id="idArt" type="hidden" v-model='idArticle' value="{{myArt.id}}">
-                            <input id="idUser" type="hidden" v-model='idArticle' value="{{user.id}}">
-
-                        </div>
-                        
-                    </div>
-                {% endfor %}
                 </div>
                 <!--End Articles-->
                 <div class="col-lg-6">
@@ -124,112 +122,145 @@
                 </div>
                 <div class="row">
                     <div class="">
-                        <div class="au-card au-card--no-shadow au-card--no-pad m-b-40" id='comments'>
-                        <!--Header section -->
-                            <div class="au-card-title" style="background-image:url('images/bg-title-02.jpg');">
-                                <div class="bg-overlay bg-overlay--blue"></div>
-                                <h3>
-                                    <i class="zmdi zmdi-comment-text"></i>New Messages</h3>
-                                <button class="au-btn-plus au-message__item ">
-                                    <i class="zmdi zmdi-plus"></i>
-                                </button>
-                            </div>
-                        <!--End Header section -->
-                                        
-                            <div class="au-inbox-wrap js-inbox-wrap">
-                                <div class="au-message js-list-load">
-                                <!--Notif section -->
-                                    <div class="au-message__noti">
-                                        <p>You Have
-                                            <span>2</span>
-                                            new messages
-                                        </p>
-                                    </div>
-                                    <!--End Notif section -->
-                                    <!--Liste Messages section -->
-                                    <div class="au-message-list">
-                                    {% for myArt in allArticle  %}
-                                    {% for comment  in myArt.article_commentaire.all %}
-                                        <div class="au-message__item unread">
-                                            <div class="au-message__item-inner">
-                                                <div class="au-message__item-text">
-                                                    <div class="avatar-wrap">
-                                                        <div class="avatar">
-                                                            <img src="{{comment.user.image.url}}" alt="John Smith">
+                            <div class="">
+                                    <div class="au-card au-card--no-shadow au-card--no-pad m-b-40" id='comments'>
+                                    <!--Header section -->
+                                        <div class="au-card-title" style="background-image:url('images/bg-title-02.jpg');">
+                                            <div class="bg-overlay bg-overlay--blue"></div>
+                                            <h3>
+                                                <i class="zmdi zmdi-comment-text"></i>New Messages</h3>
+                                            <button class="au-btn-plus au-message__item ">
+                                                <i class="zmdi zmdi-plus"></i>
+                                            </button>
+                                        </div>
+                                    <!--End Header section -->
+                                                
+                                        <div class="au-inbox-wrap show-chat-box ">
+                                            <div class="au-message js-list-load">
+                                            <!--Notif section -->
+                                                <div class="au-message__noti">
+                                                    <p>You Have
+                                                        <span>2</span>
+                                                        new messages
+                                                    </p>
+                                                </div>
+                                                <!--End Notif section -->
+                                                <!--Liste Messages section -->
+                                                <div class="au-message-list">
+                                                    <div class="au-message__item unread">
+                                                        <div class="au-message__item-inner">
+                                                            <div class="au-message__item-text">
+                                                                <div class="avatar-wrap">
+                                                                    <div class="avatar">
+                                                                        <img src="images/icon/avatar-02.jpg" alt="John Smith">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text">
+                                                                    <h5 class="name">John Smith</h5>
+                                                                    <p>Have sent a photo</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="au-message__item-time">
+                                                                <span>12 Min ago</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="text" >
-                                                        <h5 class="name" >{{comment.user}}</h5>
-                                                        <p id="penComment">{{comment.message}}</p>
+                                                    <div class="au-message__item">
+                                                        <div class="au-message__item-inner">
+                                                            <div class="au-message__item-text">
+                                                                <div class="avatar-wrap">
+                                                                    <div class="avatar">
+                                                                        <img src="images/icon/avatar-05.jpg" alt="Michelle Sims">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text">
+                                                                    <h5 class="name">Michelle Sims</h5>
+                                                                    <p>Purus feugiat finibus</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="au-message__item-time">
+                                                                <span>Sunday</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="au-message__item js-load-item">
+                                                        <div class="au-message__item-inner">
+                                                            <div class="au-message__item-text">
+                                                                <div class="avatar-wrap">
+                                                                    <div class="avatar">
+                                                                        <img src="images/icon/avatar-05.jpg" alt="Michelle Sims">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text">
+                                                                    <h5 class="name">Michelle Sims</h5>
+                                                                    <p>Purus feugiat finibus</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="au-message__item-time">
+                                                                <span>Sunday</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                            
+                                                </div>
+                                                <!--End Liste Messages section -->
+                                                <!--Load More Btn section -->
+                                                <div class="au-message__footer">
+                                                    <button class="au-btn au-btn-load au-message__item">load more</button>
+                                                </div>
+                                                <!--End load More -->
+        
+                                            </div>
+                                            <!--CHAT SECTION  -->
+                                            <div class="au-chat">
+                                                <div class="au-chat__title">
+                                                    <div class="au-message__item p-2 btn btn-success m-4">
+                                                        <i class="fa fa-mail-reply-all"> go back</i>
                                                     </div>
                                                 </div>
-                                                <div class="au-message__item-time">
-                                                    <span>{{comment.date_add}}</span>
-                                                </div>
+                                                <div class="au-message__item js-load-item">
+                                                        <div class="au-message__item-inner">
+                                                            <div class="au-message__item-text">
+                                                                <div class="avatar-wrap">
+                                                                    <div class="avatar">
+                                                                        <img src="images/icon/avatar-05.jpg" alt="Michelle Sims">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text">
+                                                                    <h5 class="name">Michelle Sims</h5>
+                                                                    <p>Purus feugiat finibus</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="au-message__item-time">
+                                                                <span>Sunday</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- SECTION TEXT AREAR -->
+                                                    <div class="au-chat-textfield">
+                                                            <div class="au-form-icon">
+                                                                <!-- <form action="" method="post" novalidate="novalidate"> -->
+                                                                    <!-- <textarea v-model="myCom" class="md-textarea form-control" > -->
+                                                                            {{myFrom.contenu}}
+                                                                    <!-- </textarea> -->
+                                                       
+                                                                    <!-- <button v-on:click='sendComment' class="btn btn-success">
+                                                                        send yor comment <i class="zmdi zmdi-mail-send "></i>
+                                                                    </button> -->
+                                                                <!-- </form> -->
+                                                                <!--
+                                                                <textarea id="story" name="story" v-model="myCom"  class="au-input au-input--full au-input--h6" rows="5" cols="33">
+                                                                </textarea>-->
+                                                   
+                                                            </div>
+                                                        </div>
+                                                <!-- END SECTION TEXTAREA -->
                                             </div>
-                                        </div>
-                                    {% endfor %}
-                                    {% endfor %}            
-                                    </div>
-                                    <!--End Liste Messages section -->
-                                    <!--Load More Btn section -->
-                                    <div class="au-message__footer">
-                                        <button class="au-btn au-btn-load js-load-btn">load more</button>
-                                    </div>
-                                    <!--End load More -->
-
-                                </div>
-                                <!--CHAT SECTION  -->
-                                <div class="au-chat">
-                                    <div class="au-chat__title">
-                                        <div class="au-message__item p-2 btn btn-success m-4">
-                                            <i class="fa fa-mail-reply-all"> go back</i>
-                                        </div>
-                                        <div class="au-chat-info">
-                                            <div class="avatar-wrap online">
-                                                <div class="avatar avatar--small">
-                                                    <img src="/static/Dash/images/icon/avatar-02.jpg" alt="John Smith">
-                                                </div>
-                                            </div>
-                                            <span class="nick">
-                                                <a href="#">John Smith</a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!-- -->
-                                    <div class="au-chat__content">
-                                   
-                                       <div class="send-mess-wrap">
-                                            <span class="mess-time">30 Sec ago</span>
-                                            <div class="send-mess__inner">
-                                                <div class="send-mess-list">
-                                                    <div class="send-mess">${myCom}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="au-chat-textfield">
-                                        <div class="au-form-icon">
-                                            <form action="" method="post" novalidate="novalidate">
-                                                <textarea v-model="myCom" class="md-textarea form-control" >
-                                                    {{myFrom.contenu}}
-                                                </textarea>
-                                               
-                                                <input type='sudmit' class="btn btn-success" value="Send connent">
-                                                <button v-on:click='sendComment' class="btn btn-success">
-                                                    send yor comment <i class="zmdi zmdi-mail-send "></i>
-                                                </button>
-                                            </form>
-                                            <!--
-                                            <textarea id="story" name="story" v-model="myCom"  class="au-input au-input--full au-input--h6" rows="5" cols="33">
-                                            </textarea>-->
-                                           
+                                            <!--End CHAT SECTION -->
                                         </div>
                                     </div>
                                 </div>
-                                <!--End CHAT SECTION -->
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -244,6 +275,27 @@
             </div>
         </div>
     </div>
+    <!-- SI L'UTILISATEUR N'A PAS D'ARTICLE  -->
+    <div  v-if="emptyArticles" class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 p-5">
+                        <div class="overview-wrap" >
+                            
+                            <a href="{% url 'editArticleDash' %}" class="au-btn au-btn-icon au-btn--blue">
+                                <i class="zmdi zmdi-plus"></i>add Articles</a>
+                        </div>
+                    </div>
+                </div>
+                                
+                <div class="row m-auto">
+                        <h2 class="title-1 text-center">Desole vous n'avez acunarticle sur votre compte ;-( </h2>
+                </div>
+            </div>
+    </div>
+    <!-- FIN DE LA PAGE AMPTY ARTICLE  -->
+
+    
 </div>
 </div>
 <script>
