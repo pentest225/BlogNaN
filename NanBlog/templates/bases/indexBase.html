@@ -265,6 +265,13 @@ crossorigin="anonymous"></script>
                     searchdiv:false,
                     searchmessage:'',
                     trouver:'',
+                    like:0,
+                    disLike:0,
+                    nbrLike:0,
+                    nbrDisLike:0,
+                    firstName:"{{ user.first_name }}",
+                    userName:"{{user.username}}",
+                    userIsAuthenticated:"{{ user.is_authenticated }}",
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -275,7 +282,7 @@ crossorigin="anonymous"></script>
                 },
                 methods: {
                     getdata: function() {
-                        this.base_url = 'https://127.0.0.1:8000'
+                        this.base_url = 'https://localhost:8000'
                         console.log('data getting')
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -312,7 +319,7 @@ crossorigin="anonymous"></script>
                                                     }
                                                 },
                                                 auteur{
-                                                    username,firstName,email,isStaff,isActive,image,description,lastName
+                                                    firstName,firstName,email,isStaff,isActive,image,description,lastName
                                                     social{
                                                     edges{
                                                         node{
@@ -360,7 +367,7 @@ crossorigin="anonymous"></script>
                                                     }
                                                 },
                                                 auteur{
-                                                    lastName,username,firstName,email,isStaff,isActive,image,description
+                                                    lastName,firstName,firstName,email,isStaff,isActive,image,description
                                                     social{
                                                     edges{
                                                         node{
@@ -405,7 +412,7 @@ crossorigin="anonymous"></script>
                                                 edges{
                                                     node{
                                                     user{
-                                                        id,username,image,lastName,firstName
+                                                        id,firstName,image,lastName,firstName
                                                     },
                                                       response{
                                                         edgeCount
@@ -422,7 +429,7 @@ crossorigin="anonymous"></script>
                                                 }
                                     },
                                                 auteur{
-                                                username,firstName,email,isStaff,isActive,image,description,lastName
+                                                firstName,firstName,email,isStaff,isActive,image,description,lastName
                                                 social{
                                                     edges{
                                                     node{
@@ -469,7 +476,7 @@ crossorigin="anonymous"></script>
                                             edges{
                                             node{
                                                 user{
-                                                    id,username,lastName,firstName,image
+                                                    id,firstName,lastName,firstName,image
                                                 },
                                                   response{
                                                     edgeCount
@@ -503,13 +510,13 @@ crossorigin="anonymous"></script>
                                             edges{
                                               node{
                                                 user{
-                                                  lastName,id,username,
+                                                  lastName,id,firstName,
                                                 }
                                               }
                                             }
                                           },
                                         auteur{
-                                            lastName,username,firstName,email,isStaff,isActive,image,description,
+                                            lastName,firstName,firstName,email,isStaff,isActive,image,description,
                                             social{
                                             edges{
                                                 node{
@@ -547,6 +554,42 @@ crossorigin="anonymous"></script>
                             //console.log(this.idcat)
                             //console.log(this.idart)
                             // console.log(this.categoryId)
+                            if (this.singleAtircle !=null){
+                                this.like=this.singleAtircle.articleLike.edges.length
+                                this.disLike=this.singleAtircle.Dislike.edgeCount
+                            }
+                            if (this.singleAtircle !=null) {
+                                this.singleAtircle.dateAdd=new Date(this.singleAtircle.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                for (let index = 0; index < this.singleAtircle.articleCommentaire.edges.length; index++) {
+                                    const element = this.singleAtircle.articleCommentaire.edges[index];
+                                    this.singleAtircle.articleCommentaire.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                    
+                                }
+                            }
+                           
+                            if (this.dataAllarticle !=null) {
+                                for (let index = 0; index < this.dataAllarticle.length; index++) {
+                                    console.log("date")
+                                    const element = this.dataAllarticle[index];
+                                    this.dataAllarticle[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                
+                                }
+                            }
+                            if(this.userIsAuthenticated =="True"){
+                                this.userIsAuthenticated=true
+                            }
+                            else{
+                                this.userIsAuthenticated=false
+                            }
+                            if (this.categoryId !=null) {
+                                for (let index = 0; index < this.categoryId.articleCategorie.edges.length; index++) {
+                                    console.log("date 2")
+                                    const element = this.categoryId.articleCategorie.edges[index];
+                                    console.log(this.categoryId.articleCategorie.edges[index].node.dateAdd)
+                                    this.categoryId.articleCategorie.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                
+                                }
+                            }
                             console.log(this.paginator)
                             
             
@@ -563,7 +606,7 @@ crossorigin="anonymous"></script>
                         formData.append('sujet', '' + this.sujet);
                         formData.append('email', '' + this.email);
                         formData.append('message', '' + this.message);
-                        axios.post('https://127.0.0.1:8000/contacts/message',formData,
+                        axios.post('https://localhost:8000/contacts/message',formData,
                         {
                         } ).then(response => {
                                 console.log(response)
@@ -590,7 +633,7 @@ crossorigin="anonymous"></script>
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
                         let formData = new FormData();
                         formData.append('suscribe', '' + this.suscribe);
-                        axios.post('https://127.0.0.1:8000/contacts/souscription',formData,
+                        axios.post('https://localhost:8000/contacts/souscription',formData,
                         {
                         } ).then(response => {
                                 
@@ -609,7 +652,7 @@ crossorigin="anonymous"></script>
                             })
                     },
                     postcomment: function() {
-                        this.base_url = 'https://127.0.0.1:8000'
+                        this.base_url = 'https://localhost:8000'
                         let formData = new FormData();
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -632,7 +675,6 @@ crossorigin="anonymous"></script>
                             }
                         })
                         .then(response => {
-                        console.log(response)
                                 if (response.data.data.relayCreateComment != null) {
                                     new Toast({
                                         message: 'Commentaire envoyer avec success',
@@ -647,7 +689,7 @@ crossorigin="anonymous"></script>
                         })
                     },
                     searchpost:function(){
-                        this.base_url = 'https://127.0.0.1:8000'
+                        this.base_url = 'https://localhost:8000'
                         console.log('data getting')
                         let formData = new FormData();
                         axios.defaults.xsrfCookieName = 'csrftoken'
@@ -677,7 +719,7 @@ crossorigin="anonymous"></script>
                                                                                   edges{
                                                                                       node{
                                                                                       user{
-                                                                                          id,username,image,lastName,firstName
+                                                                                          id,firstName,image,lastName,firstName
                                                                                       },
                                                                                         response{
                                                                                           edges{
@@ -693,7 +735,7 @@ crossorigin="anonymous"></script>
                                                                                   }
                                                                       },
                                                                                   auteur{
-                                                                                  username,firstName,email,isStaff,isActive,image,description,lastName
+                                                                                  firstName,firstName,email,isStaff,isActive,image,description,lastName
                                                                                   social{
                                                                                       edges{
                                                                                       node{
@@ -740,44 +782,92 @@ crossorigin="anonymous"></script>
                         })
                     },
                     postDislike:function(){
-                        this.base_url = 'https://127.0.0.1:8000'
-                        console.log('data getting')
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios({
-                            url: this.base_url + '/graphql',
-                            method: 'post',
-                            data: {
-                                query: `
-                                    mutation{
-                                        relayCreateDislike(input:{article:"${ this.idart }",status:true}){
-                                            disLike {
-                                            status
-                                        }
-                                    }
+                        let isDisLiked=false
+                        let isLiked=false
+                        
+                        if (this.nbrDisLike < 1) {
+                            
+                            for (let index = 0; index < this.singleAtircle.Dislike.edges.length; index++) {
+                                
+                                const element = this.singleAtircle.Dislike.edges[index];
+                                
+                                if (this.firstName == element.node.user.firstName ){
+                                    console.log("bonjour")
+                                    console.log(this.firstName)
+                                    console.log(element.node.user.firstName)
+                                    //console.log(element.node.user.firstName)
+                                    isDisLiked=true
+                                    break
                                 }
-                                `
+                            
                             }
-                        })
-                        .then(response => {
-                         if (response.data.data.relayCreateComment != null) {
-                                    new Toast({
-                                        message: 'Article Dislike',
-                                        type: 'success'
-                                    });
-                                }else{
-                                    new Toast({
-                                        message: 'Article Dislike',
-                                        type: 'success'
-                                    });
+                            for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
+                                const element = this.singleAtircle.articleLike.edges[index];
+                                console.log("in boucle")
+                                if (this.firstName == element.node.user.firstName ){
+                                    isLiked=true
+                                    break
                                 }
-                        })  
-                        .catch((err) => {
-                            console.log(err);
-                        })
+                            
+                            }
+                            if ((!isDisLiked) && (!isLiked) && (this.nbrLike < 1)) {
+                                console.log("ok c'est n'est pas encor disiker  ")
+                                this.base_url = 'https://localhost:8000'
+                                console.log('data getting')
+                                axios.defaults.xsrfCookieName = 'csrftoken'
+                                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                                axios({
+                                    url: this.base_url + '/graphql',
+                                    method: 'post',
+                                    data: {
+                                        query: `
+                                        mutation{
+                                                relayCreateDislike(input:{article:"${ this.idart }",status:true}){
+                                                    disLike {
+                                                    status
+                                                }
+                                            }
+                                        }
+                                        `
+                                    }
+                                })
+                                .then(response => {
+                                if (response.data.data.relayCreateComment != null) {
+                                    console.log("post dislike")
+                                    console.log(response.data)
+                                            new Toast({
+                                                message: 'Article Disliker',
+                                                type: 'success'
+                                            });
+                                    
+                                        }else{
+                                            new Toast({
+                                                message: 'Article Disliker',
+                                                type: 'success'
+                                            });
+                                            this.disLike+=1
+                                            this.nbrDisLike+=1
+                                        }
+                                })  
+                                .catch((err) => {
+                                    console.log(err);
+                                })
+                            }
+                            else{
+                                new Toast({
+                                    message: 'Vous avez dejat Disliker ;-( ce article ;-]',
+                                    type: 'error'
+                                });
+                            }
+                        }else{
+                            new Toast({
+                                message: 'Vous avez dejat Disliker ce article ;-]',
+                                type: 'error'
+                            });
+                        }
                     },
                     postreponse: function() {
-                        this.base_url = 'https://127.0.0.1:8000'
+                        this.base_url = 'https://localhost:8000'
                         console.log('data getting')
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -817,41 +907,89 @@ crossorigin="anonymous"></script>
                         this.reponseform = true;
                     }, 
                     postlike:function(){
-                        this.base_url = 'https://127.0.0.1:8000'
-                        console.log('data getting')
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios({
-                            url: this.base_url + '/graphql',
-                            method: 'post',
-                            data: {
-                                query: `
-                                    mutation{
-                                    relayCreatLike(input:{article:"${ this.idart }",status:true}){
-                                            like {
-                                            status
-                                        }
-                                    }
+                        let isLiked=false
+                        let isDisLiked=false
+                        if (this.nbrLike < 1) {
+                            for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
+                                const element = this.singleAtircle.articleLike.edges[index];
+                                console.log("in boucle")
+                                if (this.firstName == element.node.user.firstName ){
+                                    isLiked=true
+                                    break
                                 }
-                                `
+                            
                             }
-                        })
-                        .then(response => {
-                         if (response.data.data.relayCreateComment != null) {
-                                    new Toast({
-                                        message: 'Article like',
-                                        type: 'success'
-                                    });
-                                }else{
-                                    new Toast({
-                                        message: 'Article like',
-                                        type: 'success'
-                                    });
+                            for (let index = 0; index < this.singleAtircle.Dislike.edges.length; index++) {
+                                
+                                const element = this.singleAtircle.Dislike.edges[index];
+                                
+                                if (this.firstName == element.node.user.firstName ){
+                                    console.log("bonjour")
+                                    console.log(this.firstName)
+                                    console.log(element.node.user.firstName)
+                                    //console.log(element.node.user.firstName)
+                                    isDisLiked=true
+                                    break
                                 }
-                        })  
-                        .catch((err) => {
-                            console.log(err);
-                        })
+                            
+                            }
+                            console.log("++++++++++++++++++++++")
+                            console.log("ok test  is Dsilikee=>",isDisLiked)
+                            console.log("ok test  is silikee=>",isLiked)
+                            if ((!isLiked) && (!isDisLiked)  && (this.nbrDisLike < 1)) {
+                                console.log("ok test  is Dsilikee=>",isDisLiked)
+                                console.log("ok test  is silikee=>",isLiked)
+                                this.base_url = 'https://localhost:8000'
+                                console.log('data getting')
+                                axios.defaults.xsrfCookieName = 'csrftoken'
+                                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                                axios({
+                                    url: this.base_url + '/graphql',
+                                    method: 'post',
+                                    data: {
+                                        query: `
+                                            mutation{
+                                            relayCreatLike(input:{article:"${ this.idart }",status:true}){
+                                                    like {
+                                                    status
+                                                }
+                                            }
+                                        }
+                                        `
+                                    }
+                                })
+                                .then(response => {
+                                if (response.data.data.relayCreateComment != null) {
+                                            new Toast({
+                                                message: 'Article like',
+                                                type: 'success'
+                                            });
+                                    
+                                        }else{
+                                            new Toast({
+                                                message: 'Article like',
+                                                type: 'success'
+                                            });
+                                            this.like+=1
+                                            this.nbrLike+=1
+                                        }
+                                })  
+                                .catch((err) => {
+                                    console.log(err);
+                                })
+                            }
+                            else{
+                                new Toast({
+                                    message: 'Vous avez dejat liker ce article ;-]',
+                                    type: 'error'
+                                });
+                            }
+                        }else{
+                            new Toast({
+                                message: 'Vous avez dejat liker ce article ;-]',
+                                type: 'error'
+                            });
+                        }
                     },
 
                 
