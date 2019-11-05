@@ -1,7 +1,7 @@
 {% extends 'bases/indexBase.html' %}
-    
+{% load social_share %}  
 {% block content %}
-{% load social_share %}
+
 <!-- start banner Area -->
 <section class="banner-area relative">
     <div class="overlay overlay-bg"></div>
@@ -13,7 +13,8 @@
                 </h1>
                 <p class="text-white link-nav"><a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span>
                     <a href="blog-details.html">
-                        Blog Details</a></p>
+                        Blog Details</a>
+                </p>
             </div>
         </div>
     </div>
@@ -177,7 +178,6 @@
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                         </div>
                         <a v-if="{{ user.is_authenticated}}" v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
-                        <div v-else="{{ user.is_authenticated }}">Merci de vous connectez pour commenter <a href="" class=" text-uppercase" target="_blank">Login</a></div>
                     </form>
                 </div>
             </div>
