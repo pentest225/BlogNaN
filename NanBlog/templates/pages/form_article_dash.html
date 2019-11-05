@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script>
+    <title>NaN Blog </title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="/static/admin/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/static/admin/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/static/admin/vendors/nprogress/nprogress.css" rel="stylesheet">
+    
+    <!-- Custom Theme Style -->
+    <link href="/static/admin/build/css/custom.min.css" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+            <a href="{% url 'index_dash' %}" class="site_title"><i class="fa fa-paw"></i> <span>Admin Membre</span></a>
+            </div>
+
+            {% for pro in profil %}
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+            <div class="profile_pic">
+                <img src="{{pro.image.url}}" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>{{pro.user}}</h2>
+            </div>
+            </div>
+            <!-- /menu profile quick info -->
+            {% endfor %}
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    <li><a href="{% url 'index_dash' %}">Dashboard</a></li>
+                    </ul>
+                </li>
+                <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                    <li><a href="{% url 'form_article_dash' %}">Ajouter un Article</a></li>
+                    <li><a href="{% url 'form_profil_dash' %}">Profile</a></li>
+                    </ul>
+                </li>
+                  
+                </ul>
+            </div>
+              
+
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+            </div>
+            <!-- /menu footer buttons -->
+        </div>
+        </div>
+
+
+        <!-- top navigation -->
+        <div class="top_nav">
+        <div class="nav_menu">
+            <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+            <nav class="nav navbar-nav">
+            <ul class=" navbar-right">
+                <li class="nav-item dropdown open" style="padding-left: 15px;">
+                {% for pro in profil %}
+                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                    <img src="{{pro.image.url}}" alt="">{{pro.user}}
+                </a>
+                
+                    <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item"  href="{% url 'form_profil_dash' %}"> Profile</a>
+                        <a class="dropdown-item"  href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Settings</span>
+                        </a>
+                    <a class="dropdown-item"  href="javascript:;">Help</a>
+                    <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    </div>
+                </li>
+                {% endfor %}
+
+                <li role="presentation" class="nav-item dropdown open">
+                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">{{ commente.count }}</span>
+                </a>
+                <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                    {% for com in commente %}
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{% url 'project_detail_dash' com.pk %}">
+                        <span class="image"><img src="{{com.photo.url}}" alt="Profile Image" /></span>
+                        <span>
+                            <span>{{com.sujet}}</span>
+                            <span class="time">{{com.article.user_id}}</span>
+                        </span>
+                        <span class="message">
+                            {{com.message}}
+                        </span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                </li>
+            </ul>
+            </nav>
+        </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+            <div class="title_left">
+                <h3>Ajouter un Article</h3>
+            </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="x_panel">
+                <div class="x_title">
+                    <h2>Form Article  </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Settings 1</a>
+                            <a class="dropdown-item" href="#">Settings 2</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <p>La publication de cette article devra attendre la validation de l'admin
+                    </p>
+                    <span class="section">Veuillez remplir les differents champs</span>
+
+                    
+
+                    <!-- Default form contact -->
+        <div class="text-center border border-light p-5" action="#!">
+            <div>
+                {{ message}}
+            </div>
+            
+
+            <h1 class=" mb-4">Ecrire un article</h1>
+        <form method="POST" action="{% url 'form_article_dash' %}" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <!-- Name -->
+            <input type="text" id="defaultContactFormName" name="titre" class="form-control mb-4" placeholder="Titre" aria-required="true" >
+
+            <label>Username</label>
+            <select name="username" class="browser-default custom-select mb-4">
+                <option value="" selected>Choose option</option>
+                {% for pro in prof %}
+                    <option value="{{pro.id}}" >{{pro.user}}</option>
+                {% endfor %}
+            </select>
+
+            <label>Categorie</label>
+            <select name="categorie" class="browser-default custom-select mb-4">
+                <option value="" selected>Choose option</option>
+                {% for cat in catego %}
+                <option value="{{ cat.id }}">{{ cat.nom }}</option>
+                {% endfor %}
+            </select>
+
+
+            <label>Image</label>
+            <input name="image" type="file"  class="form-control mb-4" placeholder="Image Article">
+            <!-- Email -->
+            
+
+            <!-- Subject -->
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" class="form-control rounded-0" rows="3" placeholder="Description..." ></textarea>
+            </div>
+
+            <!-- Message -->
+            <div class="form-group">
+                <label>Contenu de l'article</label>
+                <textarea name="content" class="form-control rounded-0"  id="exampleFormControlTextarea2" rows="3" placeholder="Message..." ></textarea>
+            </div>
+
+            <!-- Copy -->
+
+            <!-- Send button -->
+            <br>
+            <button class="btn btn-info btn-block" type="submit">Send</button>
+
+        </div>
+
+        </form>
+            
+<!-- Default form contact -->
+
+
+                    
+
+                    
+
+                    
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+        <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+        </div>
+        <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/static/admin/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+<script src="/static/admin/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="/static/admin/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/static/admin/vendors/nprogress/nprogress.js"></script>
+    <!-- validator -->
+    <script src="/static/admin/vendors/validator/validator.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="/static/admin/build/js/custom.min.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/static/newsletter.js"></script>
+   
+	
+</body>
+</html>
