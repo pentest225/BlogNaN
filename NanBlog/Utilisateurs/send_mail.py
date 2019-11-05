@@ -1,5 +1,6 @@
 # using SendGrid's Python Library
 # https://github.com/sendgrid/sendgrid-python
+import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
@@ -16,3 +17,4 @@ try:
     print(response.headers)
 except Exception as e:
     print(e.message)
+    print((e.message))

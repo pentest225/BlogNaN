@@ -12,6 +12,9 @@ class MyUserAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'image',
+        'username',
+        'first_name',
+        'last_name',
         'status',
         'date_add',
         'date_upd',
