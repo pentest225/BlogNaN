@@ -113,7 +113,7 @@
                         <div class="post-btn">
                             <a href="#" class="primary-btn text-uppercase">Read More</a>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="post-box mb-30">
                             <div class="d-flex">
                                 <div>
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="post-meta">
                                     <div class="meta-head">
-                                        <a href="#">Marvel Maison</a>
+                                        <a href="#">Marvel Pentest</a>
                                     </div>
                                     <div class="meta-details">
                                         <ul>
@@ -160,7 +160,7 @@
                             <div class="post-btn">
                                 <a href="#" class="primary-btn text-uppercase">Read More</a>
                             </div>
-                    </div> -->
+                    </div>
                     
                 </div>
             </div>
@@ -177,7 +177,7 @@
                 <!-- Start Post Area -->
                 <section class="post-area">
                         
-                    <div v-for="article in dataAllarticle" class="single-post-item">
+                    <div v-for="article in dataAllarticle.edges" class="single-post-item">
                         <figure>
                             <img class="post-img img-fluid" :src=`${base_url}/`+`media/`+`${article.node.imageSingle}` alt="">
                         </figure>
@@ -202,6 +202,7 @@
                                             <li>
                                                 <a href="#">
                                                     <span class="lnr lnr-calendar-full"></span>
+                                                    
                                                     ${ article.node.dateAdd}
                                                 </a>
                                             </li>
@@ -254,7 +255,7 @@
                         </ul>
                     </nav>
                 </section>
-                <!-- Start Post Area -->
+                <!-- End Start Post Area -->
             </div>
 
             <div class="col-lg-4 sidebar">

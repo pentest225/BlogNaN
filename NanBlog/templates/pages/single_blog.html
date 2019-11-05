@@ -46,9 +46,9 @@
                         </div>
                     </div>
                     <!-- <p>${ singleAtircle.contenu }</p> -->
-                    <span v-html="singleAtircle.contenu"></span>
+                    <span v-html="singleAtircle.contenu"></span><!--${ singleAtircle.articleLike.edges.length}-->
                     <div class="news_d_footer">
-                        <a href="#"  v-on:click.prevent="postlike" ><i class="lnr lnr lnr-heart"></i>${ singleAtircle.articleLike.edges.length}   Like</a>
+                        <a href="#"  v-on:click.prevent="postlike" ><i class="lnr lnr lnr-heart"></i>${like}   Like</a>
                         <a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>${ singleAtircle.articleCommentaire.edges.length} Commentaire</a>
                         <div class="news_socail ml-auto">
                             <!-- <p>partager</p> -->
@@ -158,8 +158,8 @@
                             <textarea class="form-control mb-10" rows="5" name="message" placeholder="Commentaire"
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                         </div>
-                        <a v-if="{{ user.is_authenticated}}" v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
-                        <div v-else="{{ user.is_authenticated}}">Merci de vous connectez pour commenter <a href="" class=" text-uppercase" target="_blank">Login</a></div>
+                        <a v-if="userIsAuthenticated" v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
+                        <div v-else="userIsAuthenticated">Merci de vous connectez pour commenter <a href="" class=" text-uppercase" target="_blank">Login</a></div>
                     </form>
                 </div>
             </div>

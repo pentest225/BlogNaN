@@ -259,6 +259,11 @@
                     reponse:'',
                     commentform:true,
                     reponseform:false,
+                    like:0,
+                    nbrLike:0,
+                    username:"{{ user.first_name }}",
+                    userIsAuthenticated:"{{ user.is_authenticated }}",
+
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -506,14 +511,53 @@
                         })
                         .then(response => {
                             result = response.data.data
-                            // console.log(response.data)
+                            //console.log(result.category)
                             this.dataAllCategory = result.allCategories.edges
-                            this.categoryId=result.category
-                            this.dataAllarticle = result.allArticles.edges
+                            this.categoryId=result
+                            this.dataAllarticle = result.allArticles
+                            console.log(result)
                             this.categoryId=result.category
                             this.singleAtircle  = result.article
-                            this.CarouselAll = this.dataAllarticle.slice(1, 4)
-                            console.log(this.dataAllarticle)
+                            if (this.singleAtircle !=null){
+                                this.like=this.singleAtircle.articleLike.edges.length
+                            }
+                            this.CarouselAll = this.dataAllarticle.edges.slice(1, 4)
+                            //console.log(this.categoryId.articleCategorie.edges)
+                            //console.log(this.dataAllarticle.edges)
+                            //console.log(this.singleAtircle.dateAdd)
+                            if (this.singleAtircle !=null) {
+                                this.singleAtircle.dateAdd=new Date(this.singleAtircle.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                for (let index = 0; index < this.singleAtircle.articleCommentaire.edges.length; index++) {
+                                    const element = this.singleAtircle.articleCommentaire.edges[index];
+                                    this.singleAtircle.articleCommentaire.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                    
+                                }
+                            }
+                           
+                            if (this.dataAllarticle !=null) {
+                                for (let index = 0; index < this.dataAllarticle.edges.length; index++) {
+                                    console.log("date")
+                                    const element = this.dataAllarticle.edges[index];
+                                    this.dataAllarticle.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                
+                                }
+                            }
+                            if(this.userIsAuthenticated =="True"){
+                                this.userIsAuthenticated=true
+                            }
+                            else{
+                                this.userIsAuthenticated=false
+                            }
+                            if (this.categoryId !=null) {
+                                for (let index = 0; index < this.categoryId.articleCategorie.edges.length; index++) {
+                                    console.log("date 2")
+                                    const element = this.categoryId.articleCategorie.edges[index];
+                                    console.log(this.categoryId.articleCategorie.edges[index].node.dateAdd)
+                                    this.categoryId.articleCategorie.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                
+                                }
+                            }
+                            
                             this.Popular = result.allArticles.edges.node
                             //console.log(this.idcat)
                             //console.log(this.idart)
@@ -609,6 +653,7 @@
                                         message: 'Commentaire envoyer avec success',
                                         type: 'success'
                                     });
+                                    
                                 }else{
                                     swal("Entrer Votre Commentaire ");
                                 }
@@ -709,41 +754,71 @@
                         })
                     },
                     postlike:function(){
-                        this.base_url = 'https://127.0.0.1:8000'
-                        console.log('data getting')
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios({
-                            url: this.base_url + '/graphql',
-                            method: 'post',
-                            data: {
-                                query: `
-                                    mutation{
-                                    relayCreatLike(input:{article:"${ this.idart }",status:true}){
-                                            like {
-                                            status
-                                        }
-                                    }
+                        let isLiked=false
+                        if (this.nbrLike < 1) {
+                            for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
+                                const element = this.singleAtircle.articleLike.edges[index];
+                                if (this.username == element.node.user.firstName ){
+                                    isLiked=true
+
+                                    break
                                 }
-                                `
+                            
                             }
-                        })
-                        .then(response => {
-                         if (response.data.data.relayCreateComment != null) {
-                                    new Toast({
-                                        message: 'Article like',
-                                        type: 'success'
-                                    });
-                                }else{
-                                    new Toast({
-                                        message: 'Article like',
-                                        type: 'success'
-                                    });
-                                }
-                        })  
-                        .catch((err) => {
-                            console.log(err);
-                        })
+                            if (!isLiked) {
+                                this.base_url = 'https://127.0.0.1:8000'
+                                console.log('data getting')
+                                axios.defaults.xsrfCookieName = 'csrftoken'
+                                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                                axios({
+                                    url: this.base_url + '/graphql',
+                                    method: 'post',
+                                    data: {
+                                        query: `
+                                            mutation{
+                                            relayCreatLike(input:{article:"${ this.idart }",status:true}){
+                                                    like {
+                                                    status
+                                                }
+                                            }
+                                        }
+                                        `
+                                    }
+                                })
+                                .then(response => {
+                                if (response.data.data.relayCreateComment != null) {
+                                            new Toast({
+                                                message: 'Article like',
+                                                type: 'success'
+                                            });
+                                    
+                                        }else{
+                                            new Toast({
+                                                message: 'Article like',
+                                                type: 'success'
+                                            });
+                                            this.like+=1
+                                            this.nbrLike+=1
+                                        }
+                                })  
+                                .catch((err) => {
+                                    console.log(err);
+                                })
+                            }
+                            else{
+                                new Toast({
+                                    message: 'Vous avez dejat liker ce article ;-]',
+                                    type: 'error'
+                                });
+                            }
+                        }else{
+                            new Toast({
+                                message: 'Vous avez dejat liker ce article ;-]',
+                                type: 'error'
+                            });
+                        }
+                        
+                        
                     },
                     postreponse: function() {
                         this.base_url = 'https://127.0.0.1:8000'
