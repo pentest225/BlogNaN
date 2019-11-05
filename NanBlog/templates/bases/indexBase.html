@@ -272,6 +272,9 @@ crossorigin="anonymous"></script>
                     firstName:"{{ user.first_name }}",
                     userName:"{{user.username}}",
                     userIsAuthenticated:"{{ user.is_authenticated }}",
+                    activeColorLike:'',
+                    activeColorDisLike:'',
+
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -565,6 +568,21 @@ crossorigin="anonymous"></script>
                                     this.singleAtircle.articleCommentaire.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
                                     
                                 }
+                                for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
+                                    const element = this.singleAtircle.articleLike.edges[index];
+                                    if (this.firstName == element.node.user.firstName ){
+                                        this.activeColorLike='blue'
+                                        break
+                                    }
+                                }
+                                for (let index = 0; index < this.singleAtircle.Dislike.edges.length; index++) {
+                                    const element = this.singleAtircle.Dislike.edges[index];
+                                    if (this.firstName == element.node.user.firstName ){
+                                        //console.log(element.node.user.firstName)
+                                        this.activeColorDisLike='red'
+                                        break
+                                    }
+                                }
                             }
                            
                             if (this.dataAllarticle !=null) {
@@ -788,23 +806,22 @@ crossorigin="anonymous"></script>
                         if (this.nbrDisLike < 1) {
                             
                             for (let index = 0; index < this.singleAtircle.Dislike.edges.length; index++) {
-                                
                                 const element = this.singleAtircle.Dislike.edges[index];
-                                
                                 if (this.firstName == element.node.user.firstName ){
                                     console.log("bonjour")
                                     console.log(this.firstName)
                                     console.log(element.node.user.firstName)
                                     //console.log(element.node.user.firstName)
+                                    this.activeColorDisLike='red'
                                     isDisLiked=true
                                     break
                                 }
-                            
                             }
                             for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
                                 const element = this.singleAtircle.articleLike.edges[index];
                                 console.log("in boucle")
                                 if (this.firstName == element.node.user.firstName ){
+                                    this.activeColorLike='blue'
                                     isLiked=true
                                     break
                                 }
@@ -847,6 +864,7 @@ crossorigin="anonymous"></script>
                                             });
                                             this.disLike+=1
                                             this.nbrDisLike+=1
+                                            this.activeColorDisLike='red'
                                         }
                                 })  
                                 .catch((err) => {
@@ -915,6 +933,7 @@ crossorigin="anonymous"></script>
                                 console.log("in boucle")
                                 if (this.firstName == element.node.user.firstName ){
                                     isLiked=true
+                                    this.activeColorLike='blue'
                                     break
                                 }
                             
@@ -928,6 +947,7 @@ crossorigin="anonymous"></script>
                                     console.log(this.firstName)
                                     console.log(element.node.user.firstName)
                                     //console.log(element.node.user.firstName)
+                                    this.activeColorDisLike='red'
                                     isDisLiked=true
                                     break
                                 }
@@ -970,6 +990,7 @@ crossorigin="anonymous"></script>
                                                 message: 'Article like',
                                                 type: 'success'
                                             });
+                                            this.activeColorLike='blue'
                                             this.like+=1
                                             this.nbrLike+=1
                                         }
