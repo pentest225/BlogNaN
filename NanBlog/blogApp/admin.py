@@ -32,6 +32,7 @@ class ArticleAdmin(admin.ModelAdmin):
         'titre',
         'afficheImage',
         'affiche',
+        'vue',
         'status',
         'date_add',
         'date_upd',
@@ -105,7 +106,9 @@ class LikeAdmin(admin.ModelAdmin):
         'date_add',
         'date_upd',
     )
+    
 class DisLikeAdmin(admin.ModelAdmin):
+
     list_display = (
         'article',
         'user',
@@ -114,12 +117,27 @@ class DisLikeAdmin(admin.ModelAdmin):
         'date_upd',
     )
     list_filter = (
-        'article',
         'user',
         'status',
         'date_add',
         'date_upd',
     )
+    
+class DemandeAdesionAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'user_id',
+        'status',
+        'date_add',
+        'date_upd',
+    )
+    list_filter = (
+        'user_id',
+        'status',
+        'date_add',
+        'date_upd',
+    )
+
 
 
 def _register(model, admin_class):
@@ -133,3 +151,4 @@ _register(models.Commentaire, CommentaireAdmin)
 _register(models.ResponseCommentaire, ResponseCommentaireAdmin)
 _register(models.Like, LikeAdmin)
 _register(models.DisLike, DisLikeAdmin)
+_register(models.DemandeAdesion, DemandeAdesionAdmin)

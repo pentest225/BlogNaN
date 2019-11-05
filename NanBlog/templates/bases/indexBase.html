@@ -15,7 +15,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Ruft Blog</title>
+    <title>Nan Blog</title>
 
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700|Roboto:400,500" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -130,8 +130,8 @@
                         
                         <li><a href="{% url 'contact' %}">Contact</a></li>
                         {% if not user.is_authenticated %}
-                        <li><a href="{% url 'account_login' %}" class="btn btn-success circle" style="font-size: 15px;">Connexion<span class="lnr lnr-arrow-right"></a></li>
-                        <li><a href="{% url 'account_signup' %}" class="btn btn-warning circle" style="font-size: 15px;">Inscription<span class="lnr lnr-arrow-right"></a></li>
+                        <li><a href="{% url 'account_login' %}" class="btn btn-success circle" style="font-size: 15px;">Connexion</a></li>
+                        <li><a href="{% url 'inscription' %}" class="btn btn-warning circle" style="font-size: 15px;">Inscription</a></li>
                         {% endif %}
                         {% if user.is_authenticated %}
                         <li class="menu-has-children">
@@ -215,26 +215,29 @@
     </footer>
     <!-- End footer Area -->
 </div>
-    <script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-    <script src="/static/js/vendor/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-    <script src="/static/js/easing.min.js"></script>
-    <script src="/static/js/hoverIntent.js"></script>
-    <script src="/static/js/superfish.min.js"></script>
-    <script src="/static/js/jquery.ajaxchimp.min.js"></script>
-    <script src="/static/js/jquery.magnific-popup.min.js"></script>
-    <script src="/static/js/owl.carousel.min.js"></script>
-    <script src="/static/js/jquery.nice-select.min.js"></script>
-    <script src="/static/js/waypoints.min.js"></script>
-    <script src="/static/js/mail-script.js"></script>
-    <script src="/static/js/main.js"></script>
-    <!-- Vue js -->
-    <script src="/static/js/toas.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"></script>
+<script src="/static/js/vendor/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+<script src="/static/js/easing.min.js"></script>
+<script src="/static/js/hoverIntent.js"></script>
+<script src="/static/js/superfish.min.js"></script>
+<script src="/static/js/jquery.ajaxchimp.min.js"></script>
+<script src="/static/js/jquery.magnific-popup.min.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/jquery.nice-select.min.js"></script>
+<script src="/static/js/waypoints.min.js"></script>
+<script src="/static/js/mail-script.js"></script>
+<script src="/static/js/main.js"></script>
+<!-- Vue js -->
+<script src="/static/js/toas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!-- <script src="//unpkg.com/vue"></script>
+<script src="//unpkg.com/vue-plain-pagination"></script> -->
     <script>
+            Vue.component('v-pagination', window['vue-plain-pagination'])
             var app = new Vue({
                 el: '#app',
                 data: {
@@ -259,11 +262,9 @@
                     reponse:'',
                     commentform:true,
                     reponseform:false,
-                    like:0,
-                    nbrLike:0,
-                    username:"{{ user.first_name }}",
-                    userIsAuthenticated:"{{ user.is_authenticated }}",
-
+                    searchdiv:false,
+                    searchmessage:'',
+                    trouver:'',
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -349,6 +350,7 @@
                                                     nom
                                                 },description,contenu,dateAdd,dateUpd,
                                                 articleCommentaire{
+
                                                     edges{
                                                     node{
                                                         user {
@@ -379,6 +381,12 @@
                                         },
                                     },
                                     allArticles(status:true){
+                                        pageInfo{
+                                            hasNextPage,
+                                            hasPreviousPage,
+                                            startCursor,
+                                            endCursor,
+                                          },
                                         edges{
                                             node{
                                                 id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
@@ -393,12 +401,14 @@
                                                 nom
                                                 },
                                                 articleCommentaire{
+                                                edgeCount
                                                 edges{
                                                     node{
                                                     user{
                                                         id,username,image,lastName,firstName
                                                     },
                                                       response{
+                                                        edgeCount
                                                         edges{
                                                           node{
                                                             user{
@@ -455,12 +465,14 @@
                                             nom,id
                                         },
                                         articleCommentaire{
+                                            edgeCount
                                             edges{
                                             node{
                                                 user{
                                                     id,username,lastName,firstName,image
                                                 },
                                                   response{
+                                                    edgeCount
                                                   edges{
                                                     node{
                                                       user{
@@ -477,6 +489,7 @@
                                             }
                                     },
                                         articleLike{
+                                            edgeCount
                                           edges{
                                             node{
                                               user{
@@ -484,7 +497,17 @@
                                               }
                                             }
                                           }
-                                        }
+                                        },
+                                        Dislike{
+                                            edgeCount
+                                            edges{
+                                              node{
+                                                user{
+                                                  lastName,id,username,
+                                                }
+                                              }
+                                            }
+                                          },
                                         auteur{
                                             lastName,username,firstName,email,isStaff,isActive,image,description,
                                             social{
@@ -511,58 +534,20 @@
                         })
                         .then(response => {
                             result = response.data.data
-                            //console.log(result.category)
+                            // console.log(response.data)
+                            this.paginator = result.allArticles
                             this.dataAllCategory = result.allCategories.edges
-                            this.categoryId=result
-                            this.dataAllarticle = result.allArticles
-                            console.log(result)
+                            this.categoryId=result.category
+                            this.dataAllarticle = result.allArticles.edges
                             this.categoryId=result.category
                             this.singleAtircle  = result.article
-                            if (this.singleAtircle !=null){
-                                this.like=this.singleAtircle.articleLike.edges.length
-                            }
-                            this.CarouselAll = this.dataAllarticle.edges.slice(1, 4)
-                            //console.log(this.categoryId.articleCategorie.edges)
-                            //console.log(this.dataAllarticle.edges)
-                            //console.log(this.singleAtircle.dateAdd)
-                            if (this.singleAtircle !=null) {
-                                this.singleAtircle.dateAdd=new Date(this.singleAtircle.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
-                                for (let index = 0; index < this.singleAtircle.articleCommentaire.edges.length; index++) {
-                                    const element = this.singleAtircle.articleCommentaire.edges[index];
-                                    this.singleAtircle.articleCommentaire.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
-                                    
-                                }
-                            }
-                           
-                            if (this.dataAllarticle !=null) {
-                                for (let index = 0; index < this.dataAllarticle.edges.length; index++) {
-                                    console.log("date")
-                                    const element = this.dataAllarticle.edges[index];
-                                    this.dataAllarticle.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
-                                
-                                }
-                            }
-                            if(this.userIsAuthenticated =="True"){
-                                this.userIsAuthenticated=true
-                            }
-                            else{
-                                this.userIsAuthenticated=false
-                            }
-                            if (this.categoryId !=null) {
-                                for (let index = 0; index < this.categoryId.articleCategorie.edges.length; index++) {
-                                    console.log("date 2")
-                                    const element = this.categoryId.articleCategorie.edges[index];
-                                    console.log(this.categoryId.articleCategorie.edges[index].node.dateAdd)
-                                    this.categoryId.articleCategorie.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
-                                
-                                }
-                            }
-                            
-                            this.Popular = result.allArticles.edges.node
+                            this.CarouselAll = this.dataAllarticle.slice(1, 4)
+                            console.log(this.dataAllarticle)
+                            //this.Popular = result.allArticles.edges.node
                             //console.log(this.idcat)
                             //console.log(this.idart)
                             // console.log(this.categoryId)
-                            //console.log(this.singleAtircle)
+                            console.log(this.paginator)
                             
             
                         })  
@@ -653,7 +638,6 @@
                                         message: 'Commentaire envoyer avec success',
                                         type: 'success'
                                     });
-                                    
                                 }else{
                                     swal("Entrer Votre Commentaire ");
                                 }
@@ -747,78 +731,50 @@
                         .then(response => {
                             result = response.data.data
                             this.dataAllarticle = result.allArticles.edges
-                            console.log(this.dataAllarticle)
+                            this.trouver = this.dataAllarticle.length
+                            this.searchmessage = ( this.trouver + ' Resultat Trouver Pour la Recherche ' +this.search)
+                            this.searchdiv = true
                         })  
                         .catch((err) => {
                             console.log(err);
                         })
                     },
-                    postlike:function(){
-                        let isLiked=false
-                        if (this.nbrLike < 1) {
-                            for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
-                                const element = this.singleAtircle.articleLike.edges[index];
-                                if (this.username == element.node.user.firstName ){
-                                    isLiked=true
-
-                                    break
-                                }
-                            
-                            }
-                            if (!isLiked) {
-                                this.base_url = 'https://127.0.0.1:8000'
-                                console.log('data getting')
-                                axios.defaults.xsrfCookieName = 'csrftoken'
-                                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                                axios({
-                                    url: this.base_url + '/graphql',
-                                    method: 'post',
-                                    data: {
-                                        query: `
-                                            mutation{
-                                            relayCreatLike(input:{article:"${ this.idart }",status:true}){
-                                                    like {
-                                                    status
-                                                }
-                                            }
+                    postDislike:function(){
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                    mutation{
+                                        relayCreateDislike(input:{article:"${ this.idart }",status:true}){
+                                            disLike {
+                                            status
                                         }
-                                        `
                                     }
-                                })
-                                .then(response => {
-                                if (response.data.data.relayCreateComment != null) {
-                                            new Toast({
-                                                message: 'Article like',
-                                                type: 'success'
-                                            });
-                                    
-                                        }else{
-                                            new Toast({
-                                                message: 'Article like',
-                                                type: 'success'
-                                            });
-                                            this.like+=1
-                                            this.nbrLike+=1
-                                        }
-                                })  
-                                .catch((err) => {
-                                    console.log(err);
-                                })
+                                }
+                                `
                             }
-                            else{
-                                new Toast({
-                                    message: 'Vous avez dejat liker ce article ;-]',
-                                    type: 'error'
-                                });
-                            }
-                        }else{
-                            new Toast({
-                                message: 'Vous avez dejat liker ce article ;-]',
-                                type: 'error'
-                            });
-                        }
-                        
-                        
+                        })
+                        .then(response => {
+                         if (response.data.data.relayCreateComment != null) {
+                                    new Toast({
+                                        message: 'Article Dislike',
+                                        type: 'success'
+                                    });
+                                }else{
+                                    new Toast({
+                                        message: 'Article Dislike',
+                                        type: 'success'
+                                    });
+                                }
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
                     },
                     postreponse: function() {
                         this.base_url = 'https://127.0.0.1:8000'

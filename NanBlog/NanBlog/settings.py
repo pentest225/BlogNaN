@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'django_admin_generator',
     'social_django',
     'django_social_share',
+    'drf_yasg',
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL ="https"
@@ -139,7 +140,7 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 LOGIN_REDIRECT_URL = 'index' 
-ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
 ACCOUNT_FORMS = {'signup': 'Utilisateurs.forms.RegistrationForm'}
 
 # redirects to /accounts/profile by default
@@ -161,16 +162,7 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'groupebdb',
-#         'USER': 'groupeb',
-#         'PASSWORD': 'nan0980',
-#         'HOST': '51.77.197.177',
-#         'PORT': '5432',
-#     }
-# }
+
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -266,13 +258,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
 STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIT_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = 'E)H@McQfTjWnZr4u7x!A%D*G-JaNdRgU'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIT_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = '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'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
