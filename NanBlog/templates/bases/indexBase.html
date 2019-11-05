@@ -261,7 +261,9 @@
                     reponseform:false,
                     like:0,
                     nbrLike:0,
-                    username:"{{ user.first_name }}"
+                    username:"{{ user.first_name }}",
+                    userIsAuthenticated:"{{ user.is_authenticated }}",
+
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -525,6 +527,11 @@
                             //console.log(this.singleAtircle.dateAdd)
                             if (this.singleAtircle !=null) {
                                 this.singleAtircle.dateAdd=new Date(this.singleAtircle.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                for (let index = 0; index < this.singleAtircle.articleCommentaire.edges.length; index++) {
+                                    const element = this.singleAtircle.articleCommentaire.edges[index];
+                                    this.singleAtircle.articleCommentaire.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                                    
+                                }
                             }
                            
                             if (this.dataAllarticle !=null) {
@@ -535,7 +542,12 @@
                                 
                                 }
                             }
-                            
+                            if(this.userIsAuthenticated =="True"){
+                                this.userIsAuthenticated=true
+                            }
+                            else{
+                                this.userIsAuthenticated=false
+                            }
                             if (this.categoryId !=null) {
                                 for (let index = 0; index < this.categoryId.articleCategorie.edges.length; index++) {
                                     console.log("date 2")
