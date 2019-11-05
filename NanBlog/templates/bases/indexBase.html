@@ -259,10 +259,7 @@
                     reponse:'',
                     commentform:true,
                     reponseform:false,
-                    like:0,
-                    nbrLike:0,
-                    username:"{{ user.first_name }}",
-                    userIsAuthenticated:"{{ user.is_authenticated }}",
+                   
 
                 },
                 delimiters:["${","}"],
@@ -518,9 +515,7 @@
                             console.log(result)
                             this.categoryId=result.category
                             this.singleAtircle  = result.article
-                            if (this.singleAtircle !=null){
-                                this.like=this.singleAtircle.articleLike.edges.length
-                            }
+                         
                             this.CarouselAll = this.dataAllarticle.edges.slice(1, 4)
                             //console.log(this.categoryId.articleCategorie.edges)
                             //console.log(this.dataAllarticle.edges)
