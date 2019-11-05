@@ -15,7 +15,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Nan Blog</title>
+    <title>Ruft Blog</title>
 
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700|Roboto:400,500" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -215,29 +215,26 @@
     </footer>
     <!-- End footer Area -->
 </div>
-<script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-crossorigin="anonymous"></script>
-<script src="/static/js/vendor/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-<script src="/static/js/easing.min.js"></script>
-<script src="/static/js/hoverIntent.js"></script>
-<script src="/static/js/superfish.min.js"></script>
-<script src="/static/js/jquery.ajaxchimp.min.js"></script>
-<script src="/static/js/jquery.magnific-popup.min.js"></script>
-<script src="/static/js/owl.carousel.min.js"></script>
-<script src="/static/js/jquery.nice-select.min.js"></script>
-<script src="/static/js/waypoints.min.js"></script>
-<script src="/static/js/mail-script.js"></script>
-<script src="/static/js/main.js"></script>
-<!-- Vue js -->
-<script src="/static/js/toas.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<!-- <script src="//unpkg.com/vue"></script>
-<script src="//unpkg.com/vue-plain-pagination"></script> -->
+    <script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+    <script src="/static/js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+    <script src="/static/js/easing.min.js"></script>
+    <script src="/static/js/hoverIntent.js"></script>
+    <script src="/static/js/superfish.min.js"></script>
+    <script src="/static/js/jquery.ajaxchimp.min.js"></script>
+    <script src="/static/js/jquery.magnific-popup.min.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/waypoints.min.js"></script>
+    <script src="/static/js/mail-script.js"></script>
+    <script src="/static/js/main.js"></script>
+    <!-- Vue js -->
+    <script src="/static/js/toas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-            Vue.component('v-pagination', window['vue-plain-pagination'])
             var app = new Vue({
                 el: '#app',
                 data: {
@@ -262,9 +259,11 @@ crossorigin="anonymous"></script>
                     reponse:'',
                     commentform:true,
                     reponseform:false,
-                    searchdiv:false,
-                    searchmessage:'',
-                    trouver:'',
+                    like:0,
+                    nbrLike:0,
+                    username:"{{ user.first_name }}",
+                    userIsAuthenticated:"{{ user.is_authenticated }}",
+
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -350,7 +349,6 @@ crossorigin="anonymous"></script>
                                                     nom
                                                 },description,contenu,dateAdd,dateUpd,
                                                 articleCommentaire{
-
                                                     edges{
                                                     node{
                                                         user {
@@ -381,12 +379,6 @@ crossorigin="anonymous"></script>
                                         },
                                     },
                                     allArticles(status:true){
-                                        pageInfo{
-                                            hasNextPage,
-                                            hasPreviousPage,
-                                            startCursor,
-                                            endCursor,
-                                          },
                                         edges{
                                             node{
                                                 id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
@@ -401,14 +393,12 @@ crossorigin="anonymous"></script>
                                                 nom
                                                 },
                                                 articleCommentaire{
-                                                edgeCount
                                                 edges{
                                                     node{
                                                     user{
                                                         id,username,image,lastName,firstName
                                                     },
                                                       response{
-                                                        edgeCount
                                                         edges{
                                                           node{
                                                             user{
@@ -465,14 +455,12 @@ crossorigin="anonymous"></script>
                                             nom,id
                                         },
                                         articleCommentaire{
-                                            edgeCount
                                             edges{
                                             node{
                                                 user{
                                                     id,username,lastName,firstName,image
                                                 },
                                                   response{
-                                                    edgeCount
                                                   edges{
                                                     node{
                                                       user{
@@ -489,7 +477,6 @@ crossorigin="anonymous"></script>
                                             }
                                     },
                                         articleLike{
-                                            edgeCount
                                           edges{
                                             node{
                                               user{
@@ -497,17 +484,7 @@ crossorigin="anonymous"></script>
                                               }
                                             }
                                           }
-                                        },
-                                        Dislike{
-                                            edgeCount
-                                            edges{
-                                              node{
-                                                user{
-                                                  lastName,id,username,
-                                                }
-                                              }
-                                            }
-                                          },
+                                        }
                                         auteur{
                                             lastName,username,firstName,email,isStaff,isActive,image,description,
                                             social{
@@ -534,20 +511,26 @@ crossorigin="anonymous"></script>
                         })
                         .then(response => {
                             result = response.data.data
-                            // console.log(response.data)
-                            this.paginator = result.allArticles
+                            //console.log(result.category)
                             this.dataAllCategory = result.allCategories.edges
-                            this.categoryId=result.category
-                            this.dataAllarticle = result.allArticles.edges
+                            this.categoryId=result
+                            this.dataAllarticle = result.allArticles
+                            console.log(result)
                             this.categoryId=result.category
                             this.singleAtircle  = result.article
-                            this.CarouselAll = this.dataAllarticle.slice(1, 4)
-                            console.log(this.dataAllarticle)
-                            //this.Popular = result.allArticles.edges.node
+                            if (this.singleAtircle !=null){
+                                this.like=this.singleAtircle.articleLike.edges.length
+                            }
+                            this.CarouselAll = this.dataAllarticle.edges.slice(1, 4)
+                            //console.log(this.categoryId.articleCategorie.edges)
+                            //console.log(this.dataAllarticle.edges)
+                            //console.log(this.singleAtircle.dateAdd)
+                     
+                            this.Popular = result.allArticles.edges.node
                             //console.log(this.idcat)
                             //console.log(this.idart)
                             // console.log(this.categoryId)
-                            console.log(this.paginator)
+                            //console.log(this.singleAtircle)
                             
             
                         })  
@@ -638,6 +621,7 @@ crossorigin="anonymous"></script>
                                         message: 'Commentaire envoyer avec success',
                                         type: 'success'
                                     });
+                                    
                                 }else{
                                     swal("Entrer Votre Commentaire ");
                                 }
@@ -731,50 +715,78 @@ crossorigin="anonymous"></script>
                         .then(response => {
                             result = response.data.data
                             this.dataAllarticle = result.allArticles.edges
-                            this.trouver = this.dataAllarticle.length
-                            this.searchmessage = ( this.trouver + ' Resultat Trouver Pour la Recherche ' +this.search)
-                            this.searchdiv = true
+                            console.log(this.dataAllarticle)
                         })  
                         .catch((err) => {
                             console.log(err);
                         })
                     },
-                    postDislike:function(){
-                        this.base_url = 'https://127.0.0.1:8000'
-                        console.log('data getting')
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios({
-                            url: this.base_url + '/graphql',
-                            method: 'post',
-                            data: {
-                                query: `
-                                    mutation{
-                                        relayCreateDislike(input:{article:"${ this.idart }",status:true}){
-                                            disLike {
-                                            status
-                                        }
-                                    }
+                    postlike:function(){
+                        let isLiked=false
+                        if (this.nbrLike < 1) {
+                            for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
+                                const element = this.singleAtircle.articleLike.edges[index];
+                                if (this.username == element.node.user.firstName ){
+                                    isLiked=true
+
+                                    break
                                 }
-                                `
+                            
                             }
-                        })
-                        .then(response => {
-                         if (response.data.data.relayCreateComment != null) {
-                                    new Toast({
-                                        message: 'Article Dislike',
-                                        type: 'success'
-                                    });
-                                }else{
-                                    new Toast({
-                                        message: 'Article Dislike',
-                                        type: 'success'
-                                    });
-                                }
-                        })  
-                        .catch((err) => {
-                            console.log(err);
-                        })
+                            if (!isLiked) {
+                                this.base_url = 'https://127.0.0.1:8000'
+                                console.log('data getting')
+                                axios.defaults.xsrfCookieName = 'csrftoken'
+                                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                                axios({
+                                    url: this.base_url + '/graphql',
+                                    method: 'post',
+                                    data: {
+                                        query: `
+                                            mutation{
+                                            relayCreatLike(input:{article:"${ this.idart }",status:true}){
+                                                    like {
+                                                    status
+                                                }
+                                            }
+                                        }
+                                        `
+                                    }
+                                })
+                                .then(response => {
+                                if (response.data.data.relayCreateComment != null) {
+                                            new Toast({
+                                                message: 'Article like',
+                                                type: 'success'
+                                            });
+                                    
+                                        }else{
+                                            new Toast({
+                                                message: 'Article like',
+                                                type: 'success'
+                                            });
+                                            this.like+=1
+                                            this.nbrLike+=1
+                                        }
+                                })  
+                                .catch((err) => {
+                                    console.log(err);
+                                })
+                            }
+                            else{
+                                new Toast({
+                                    message: 'Vous avez dejat liker ce article ;-]',
+                                    type: 'error'
+                                });
+                            }
+                        }else{
+                            new Toast({
+                                message: 'Vous avez dejat liker ce article ;-]',
+                                type: 'error'
+                            });
+                        }
+                        
+                        
                     },
                     postreponse: function() {
                         this.base_url = 'https://127.0.0.1:8000'
@@ -815,45 +827,7 @@ crossorigin="anonymous"></script>
                     reponsebutton:function(){
                         this.commentform = false;
                         this.reponseform = true;
-                    }, 
-                    postlike:function(){
-                        this.base_url = 'https://127.0.0.1:8000'
-                        console.log('data getting')
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios({
-                            url: this.base_url + '/graphql',
-                            method: 'post',
-                            data: {
-                                query: `
-                                    mutation{
-                                    relayCreatLike(input:{article:"${ this.idart }",status:true}){
-                                            like {
-                                            status
-                                        }
-                                    }
-                                }
-                                `
-                            }
-                        })
-                        .then(response => {
-                         if (response.data.data.relayCreateComment != null) {
-                                    new Toast({
-                                        message: 'Article like',
-                                        type: 'success'
-                                    });
-                                }else{
-                                    new Toast({
-                                        message: 'Article like',
-                                        type: 'success'
-                                    });
-                                }
-                        })  
-                        .catch((err) => {
-                            console.log(err);
-                        })
                     },
-
                 
                 
                 },
