@@ -161,6 +161,9 @@
                         <a v-if="userIsAuthenticated" v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
                         <div v-else="userIsAuthenticated">Merci de vous connectez pour commenter <a href="" class="text-uppercase" target="_blank">Login</a></div>
                     </form>
+                    <form method="post">
+                        <textarea id="mytextarea" name="mytextarea" ></textarea>
+                    </form>
                 </div>
             </div>
                 <div v-if="reponseform" class="comment-form">
@@ -258,4 +261,10 @@
     </div>
 </section>
 <!-- Blog Area -->
+<script src='https://cdn.tiny.cloud/1/wd0kkg01km606uh9s3qq16hryr9w7d1kb1qflihtgvxe9zs7/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+<script>
+tinymce.init({
+    selector: '#mytextarea'
+});
+</script>
 {% endblock content %}
