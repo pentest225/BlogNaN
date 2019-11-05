@@ -159,7 +159,7 @@
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                         </div>
                         <a v-if="userIsAuthenticated" v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
-                        <div v-else="userIsAuthenticated">Merci de vous connectez pour commenter <a href="" class=" text-uppercase" target="_blank">Login</a></div>
+                        <div v-else="userIsAuthenticated">Merci de vous connectez pour commenter <a href="" class="text-uppercase" target="_blank">Login</a></div>
                     </form>
                 </div>
             </div>
