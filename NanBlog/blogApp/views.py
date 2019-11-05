@@ -405,6 +405,7 @@ def detail_visiteur_dash(request, id):
 def page_dash(request):
     return render(request, 'pages/page_dash.html')
 
+
 def post_attend_dash(request):
     # profil= Profile.objects.all()[:1]
     # commente= Commentaire.objects.filter(statut=True, article__valider=True)
