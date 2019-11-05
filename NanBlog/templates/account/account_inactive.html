@@ -1,0 +1,24 @@
+{% extends 'bases/otherBase.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+<div class="wrapper">
+
+  
+        <div class="profile-card js-profile-card">
+          <div style="margin-top: 100px">
+          </div>
+      
+          <div class="profile-card__cnt js-profile-cnt">
+            <div class="profile-card__txt"> <h2 class="text-dark title">{% trans "Account Inactive" %}</h2><hr>
+                <p>{% trans "This account is inactive." %}</p>
+            </div>    
+            
+          </div>
+            
+        </div>
+      
+      </div>
+{% endblock %}

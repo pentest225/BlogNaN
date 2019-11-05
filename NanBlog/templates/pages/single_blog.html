@@ -1,0 +1,279 @@
+{% extends 'bases/indexBase.html' %}
+    
+{% block content %}
+{% load social_share %}
+<!-- start banner Area -->
+<section class="banner-area relative">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+                <h1>
+                    {{ header.blog_title}}
+                </h1>
+                <p class="text-white link-nav"><a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span>
+                    <a href="blog-details.html">
+                        Blog Details</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End banner Area -->
+
+<!-- Blog Area -->
+<section class="blog_area section-gap single-post-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="main_blog_details">
+                    <img class="img-fluid" :src=`${base_url}/`+`media/`+`${singleAtircle.imageSingle}` alt="">
+                    <h4>${ singleAtircle.titre }</h4>
+                    <div class="user_details">
+                        <div class="float-left">
+                            
+                            <a v-for="tags in singleAtircle.tag.edges" href="#">${ tags.node.nom }</a>
+                        </div>
+                        <div class="float-right">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5>${ singleAtircle.auteur.lastName } ${ singleAtircle.auteur.firstName }</h5>
+                                    <p>${ singleAtircle.dateAdd }</p>
+                                </div>
+                                <div class="d-flex">
+                                    <img :src=`${base_url}/`+`media/`+`${singleAtircle.auteur.image}` alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <p>${ singleAtircle.contenu }</p> -->
+                    <span v-html="singleAtircle.contenu"></span>
+                    <div class="news_d_footer">
+                        
+                        <div>
+                                <!-- <div v-for="like in singleAtircle.articleLike.edges"  v-if=" singleAtircle.articleLike.edgeCount == 0 || like.node.user.username == admin">
+                                        <a> <i style="color: blue; font-size:19px;" class="fa fa-thumbs-up "></i>${singleAtircle.articleLike.edgeCount}</a>
+                                        <a style=" margin-left: 16px;"><i  style="font-size:19px" class="fa fa-thumbs-down "></i>${ singleAtircle.Dislike.edgeCount}</a>
+                                </div>  -->
+
+                                    <!-- <div v-if ="dislike in singleAtircle.Dislike.edges" v-if="dislike.node.user.username == admin ">
+                                        <a><i style="font-size:19px;" class="fa fa-thumbs-up "></i>${singleAtircle.articleLike.edgeCount}</a>
+                                        <a style=" margin-left: 16px;"><i  style="font-size:19px;color: red;"  class="fa fa-thumbs-down "></i>${ singleAtircle.Dislike.edgeCount}</a>
+                                    </div> -->
+            
+                                <div>
+                                    <a href="#" v-on:click.prevent="postlike" ><i style="font-size:19px;" class="fa fa-thumbs-up "></i>${singleAtircle.articleLike.edgeCount}</a>
+                                    <a href="#" style=" margin-left: 16px;"  v-on:click.prevent="postDislike" ><i  style="font-size:19px" class="fa fa-thumbs-down "></i>${ singleAtircle.Dislike.edgeCount }</a>
+                                </div>
+                        </div>
+                        
+                        
+                        <a class="justify-content-center ml-auto" href="#"><i class="lnr lnr lnr-bubble"></i>${ singleAtircle.articleCommentaire.edges.length} Commentaire</a>
+                        <div class="news_socail ml-auto">
+                            <!-- <p>partager</p> -->
+                            {% post_to_facebook object_or_url  %}
+                            {% post_to_gplus object_or_url %}
+                            {% post_to_linkedin  object_or_url %}
+                            {% post_to_twitter "New Song: {{object.title}}. Check it out!" object_or_url %}
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="navigation-area">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                            <div class="thumb">
+                                <a href="#"><img class="img-fluid" src="/static/img/blog/prev.jpg" alt=""></a>
+                            </div>
+                            <div class="arrow">
+                                <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+                            </div>
+                            <div class="detials">
+                                <p>Prev Post</p>
+                                <a href="#">
+                                    <h4>A Discount Toner</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                            <div class="detials">
+                                <p>Next Post</p>
+                                <a href="#">
+                                    <h4>Cartridge Is Better</h4>
+                                </a>
+                            </div>
+                            <div class="arrow">
+                                <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
+                            </div>
+                            <div class="thumb">
+                                <a href="#"><img class="img-fluid" src="/static/img/blog/next.jpg" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="comments-area">
+                    <h4>${ singleAtircle.articleCommentaire.edgeCount} Commentaire</h4>
+                    <br>
+                    <br>
+                    <div  v-for="comment in singleAtircle.articleCommentaire.edges" >
+                    <div class="comment-list">
+                        <div class="single-comment justify-content-between d-flex">
+                            <div class="user justify-content-between d-flex">
+                                <div class="thumb">
+                                    <img :src=`${base_url}/`+`media/`+`${comment.node.user.image}` alt="">
+                                </div>
+                                <div class="desc">
+                                    <h5><a href="#">${ comment.node.user.lastName } ${ comment.node.user.firstName}</a></h5>
+                                    <p class="date">${ comment.node.dateAdd } </p>
+                                    <p class="comment">
+                                        <span v-html="comment.node.message"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="reply-btn">
+                                <a href=""   v-if="singleAtircle.isArchive == false"  v-on:click.prevent="reponsebutton" class="btn-reply text-uppercase">repondre</a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div  v-for="response  in comment.node.response.edges " class="comment-list left-padding">
+                        <div class="single-comment justify-content-between d-flex">
+                            <div class="user justify-content-between d-flex">
+                                <div class="thumb">
+                                    <img :src=`${base_url}/`+`media/`+`${response.node.user.image}` alt="">
+                                </div>
+                                <div class="desc">
+                                    <h5><a href="#">${ response.node.user.lastName } ${ response.node.user.firstName}</a></h5>
+                                    <p class="date">${ response.node.dateAdd } </p>
+                                    <p class="comment">
+                                            <span v-html="response.node.message"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- <div class="reply-btn">
+                                <a href="" class="btn-reply text-uppercase">repondre</a>
+                            </div> -->
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+                <div  v-if="singleAtircle.isArchive"  class="comment-form">
+                        <h4> Article Fermer Au commentaire</h4>
+                        <form>
+                            <div class="form-group">
+                                <textarea class="form-control mb-10" rows="5" name="message" placeholder="Cet article est fermer au commentaire car il éte achiver par le webmaster du du blog"
+                                    onfocus="this.placeholder = ''" disabled  onblur="this.placeholder = 'Commentaire'" required=""></textarea>
+                            </div>
+                        </form>
+                </div>
+
+            <div v-else="" >
+                <div v-if="commentform" class="comment-form">
+                    <h4>Laisser Un Commentaire</h4>
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control mb-10" rows="5" name="message" placeholder="Commentaire"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
+                        </div>
+                        <a v-if="{{ user.is_authenticated}}" v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
+                        <div v-else="{{ user.is_authenticated }}">Merci de vous connectez pour commenter <a href="" class=" text-uppercase" target="_blank">Login</a></div>
+                    </form>
+                </div>
+            </div>
+                <div v-if="reponseform" class="comment-form">
+                    <h4>Repondre à Un Commentaire</h4>
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control mb-10"  v-model="commentaire"  rows="5" name="message" placeholder="Commentaire" required=""></textarea>
+                        </div>
+                        <a href="#"  v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">repondre</a>
+                    </form>
+                </div>
+                
+            </div>
+
+            <div  class="col-lg-4 sidebar">
+                <div class="single-widget search-widget">
+                    <form class="example"  style="margin:auto;max-width:300px">
+                        <input type="text" v-model="search" placeholder="Search Posts" name="search2">
+                        <button v-on:click.prevent="searchpost" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+
+                <div class="single-widget protfolio-widget">
+                    <img class="img-fluid" :src=`${base_url}/`+`media/`+`${singleAtircle.auteur.image}` alt="">
+                    <a href="#">
+                        <h4>${ singleAtircle.auteur.lastName } ${ singleAtircle.auteur.firstName }</h4>
+                    </a>
+                    <div class="desigmation">
+                        <p v-for="special in singleAtircle.auteur.specialite.edges">${ special.node.specialiste }</p>
+                    </div>
+                    <p>
+                        ${ singleAtircle.auteur.description } 
+                    </p>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                    </ul>
+                </div>
+
+                <div class="single-widget popular-posts-widget">
+                        <h4 class="title">Article Populaire</h4>
+                        <div class="blog-list ">
+    
+                            <div class="single-popular-post d-flex flex-row">
+                                <div class="popular-thumb">
+                                    <img class="img-fluid" src="/static/img/blog/r1.jpg" alt="">
+                                </div>
+                                <div class="popular-details">
+                                    <a href="blog-details.html">
+                                        <h4>Space Final Frontier</h4>
+                                    </a>
+                                    <p class="text-uppercase">02 hours ago</p>
+                                </div>
+                            </div>
+    
+                    
+                        </div>
+                    </div>
+    
+                    <div class="single-widget category-widget">
+                            <h4 class="title">Article Par Categorie</h4>
+                            <ul>
+                                <li v-for="item in dataAllCategory"><a  :href=``+`${base_url}`+`/category/`+`${item.node.id}`+`` class="justify-content-between align-items-center d-flex">
+                                        <p>${ item.node.nom}</p> <span>${ item.node.articleCategorie.edges.length }</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                    </div>
+
+                <div class="single-widget newsletter-widget">
+                        <h4 class="title">Newsletter</h4>
+                        <div id="mc_embed_signup">
+                            <form target="_blank" novalidate="true"  class="">
+                                <div class="form-group" style="width: 100%">
+                                    <input name="EMAIL" placeholder="Email Address" v-model="suscribe" required="" type="email">
+                                    <div style="position: absolute; left: -5000px;">
+                                        <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+                                    </div>
+    
+                                    <button v-on:click.prevent="suscription" class="primary-btn text-uppercase">
+                                        Subscribe Now
+                                        <span class="lnr lnr-arrow-right"></span>
+                                    </button>
+                                </div>
+                                <div class="info"></div>
+                            </form>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Area -->
+{% endblock content %}

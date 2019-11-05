@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png">
+    <!-- Author Meta -->
+    <meta name="author" content="codepixer">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Ruft Blog</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700|Roboto:400,500" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!--
+            CSS
+            ============================================= -->
+    <link rel="stylesheet" href="/static/css/linearicons.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/magnific-popup.css">
+    <link rel="stylesheet" href="/static/css/nice-select.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/toas.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/util.css">
+    <style>
+            .lds-dual-ring {
+            display: inline-block;
+            width: 64px;
+            height: 64px;
+            }
+            .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 46px;
+            height: 46px;
+            margin: 1px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            border-color: #631515 transparent rgb(46, 23, 23) transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+            }
+            @keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+            }
+            .btn-primary.focus, .btn-primary:focus,.btn-primary:active,
+            textarea:focus, 
+            textarea.form-control:focus,
+            select.selectmultiple:focus,
+            select:focus, 
+            input.form-control:focus, 
+            input[type=text]:focus, 
+            input[type=password]:focus, 
+            input[type=email]:focus, 
+            input[type=number]:focus, 
+            [type=text].form-control:focus, 
+            [type=password].form-control:focus, 
+            [type=email].form-control:focus, 
+            [type=tel].form-control:focus, 
+            [contenteditable].form-control:focus {
+            box-shadow: inset 0 -1px 0 #ddd;
+            }
+            .lds-hourglass {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+            }
+            .lds-hourglass:after {
+            content: " ";
+            display: block;
+            border-radius: 50%;
+            width: 0;
+            height: 0;
+            margin: 6px;
+            box-sizing: border-box;
+            border: 26px solid #dfc;
+            border-color: #dfc transparent #dfc transparent;
+            animation: lds-hourglass 1.2s infinite;
+            }
+            @keyframes lds-hourglass {
+            0% {
+                transform: rotate(0);
+                animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+            }
+            50% {
+                transform: rotate(900deg);
+                animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            }
+            100% {
+                transform: rotate(1800deg);
+            }
+            }
+
+        </style>
+</head>
+
+<body>
+    <div id="app">
+    <!-- Start header Area -->
+    <header id="header">
+        <div class="container box_1170 main-menu">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div id="logo">
+                    <a href="{% url 'index' %}"><img src="{{ header.logo.url }}" alt="" title="" /></a>
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
+                        <li class="menu-has-children"><a href="">Categorie</a>
+                            <ul>
+                                <li v-for="item in dataAllCategory"><a  :href=`${base_url}/`+`category/`+`${item.node.id}`>${ item.node.nom }</a></li>
+                                
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'archive' %}">Archive</a></li>
+                        
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                        {% if not user.is_authenticated %}
+                        <li><a href="{% url 'account_login' %}" class="btn btn-success circle" style="font-size: 15px;" >Connexion<span class="lnr lnr-arrow-right"></a></li>
+                        <li><a href="{% url 'account_signup' %}" class="btn btn-warning circle" style="font-size: 15px;">Inscription<span class="lnr lnr-arrow-right"></a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <li class="menu-has-children">
+                        <a href="#">
+                            <img src="{{user.image.url}}" alt="" height=40 width=40 class="rounded-circle">
+                        </a>
+                            <ul>
+                                <li><a href="">{{ user.username }}</a></li>
+                                <li><hr><hr></li>
+                                <li><a href="{% url 'dash' %}">Tableaux de bord</a></li>
+                                <li><hr><hr></li>
+                                <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- End header Area -->
+
+    {% block content %}
+
+    {% endblock %}
+
+
+    <!-- start footer Area -->
+    <footer class="footer-area section-gap">
+        <div class="container box_1170">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6 class="footer_title">{{ foot.titre }}</h6>
+                        <p>{{ foot.about_text }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6 class="footer_title">Newsletter</h6>
+                        <p>Stay updated with our latest trends</p>
+                        <div id="mc_embed_signup">
+                            <form target="_blank"  class="subscribe_form relative">
+                                <div class="input-group d-flex flex-row">
+                                    <input name="EMAIL" v-model="suscribe" placeholder="Email Address" required="" type="email">
+                                    <button v-on:click.prevent="suscription" class="btn sub-btn"><span class="lnr lnr-arrow-right"></span></button>
+                                </div>
+                                <div class="mt-10 info"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="single-footer-widget instafeed">
+                        <h6 class="footer_title">Instagram Feed</h6>
+                        <ul class="list instafeed d-flex flex-wrap">
+                            {% for i in instagram %}
+                            <li><img src="{{ i.image.url }}" alt=""></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-6">
+                    <div class="single-footer-widget f_social_wd">
+                        <h6 class="footer_title">{{ foot.folow_text }}</h6>
+                        <p>{{ foot.description }}</p>
+                        <div class="f_social">
+                            {% for s in social %}
+							<a href="{{ s.lien }}"><i class="{{ s.font }}"></i></a>
+							{% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row footer-bottom d-flex justify-content-between align-items-center">
+                <p class="col-lg-12 footer-text text-center">
+                    {{  copy.titre|safe }}
+                </p>
+            </div>
+        </div>
+    </footer>
+    <!-- End footer Area -->
+</div>
+    <script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+    <script src="/static/js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+    <script src="/static/js/easing.min.js"></script>
+    <script src="/static/js/hoverIntent.js"></script>
+    <script src="/static/js/superfish.min.js"></script>
+    <script src="/static/js/jquery.ajaxchimp.min.js"></script>
+    <script src="/static/js/jquery.magnific-popup.min.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/jquery.nice-select.min.js"></script>
+    <script src="/static/js/waypoints.min.js"></script>
+    <script src="/static/js/mail-script.js"></script>
+    <script src="/static/js/main.js"></script>
+    <!-- Vue js -->
+    <script src="/static/js/toas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+		function openCity(evt, cityName) {
+		    var i, tabcontent, tablinks;
+		    tabcontent = document.getElementsByClassName("tabcontent");
+		    for (i = 0; i < tabcontent.length; i++) {
+		        tabcontent[i].style.display = "none";
+		    }
+		    tablinks = document.getElementsByClassName("tablinks");
+		    for (i = 0; i < tablinks.length; i++) {
+		        tablinks[i].className = tablinks[i].className.replace(" active", "");
+		    }
+		    document.getElementById(cityName).style.display = "block";
+		    evt.currentTarget.className += " active";
+		}
+
+		// Get the element with id="defaultOpen" and click on it
+		document.getElementById("defaultOpen").click();
+    </script>
+    <script type="text/javascript">
+        (function() {
+          var message = 'Do you really want to remove the selected e-mail address?';
+          var actions = document.getElementsByName('action_remove');
+          if (actions.length) {
+            actions[0].addEventListener("click", function(e) {
+              if (! confirm(message)) {
+                e.preventDefault();
+              }
+            });
+          }
+        })();
+    </script>
+    <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    base_url:'',
+                    dataAllCategory:[],
+                    dataAllarticle:[],
+                    datAllIngredientesByCategoriy:[],
+                    datSingleCategory:[],
+                    singleAtircle:[],
+                    categoryId:'',
+                    CarouselAll:[],
+                    Popular:[],
+                    idcat :'',
+                    idart:'',
+                    nom: '',
+                    sujet: '',
+                    email: '',
+                    message: '',
+                    suscribe:'',
+                    base_url:'',
+                },
+                delimiters:["${","}"],
+                mounted(){
+                    this.idcat="{{idcat}}";
+                    this.idart="{{idart}}";
+                    this.getdata()
+                },
+                methods: {
+                    getdata: function() {
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                query{
+                                    allCategories{
+                                        edges{
+                                        node{
+                                            id,nom,
+                                            articleCategorie{
+                                            edges{
+                                                node{
+                                                titre,image,imageSingle,tag {
+                                                    edges {
+                                                    node {
+                                                        id
+                                                    }
+                                                    }
+                                                },
+                                                categorie{
+                                                    nom
+                                                },description,contenu,dateAdd,dateUpd,
+                                                articleCommentaire{
+                                                    edges{
+                                                    node{
+                                                        user {
+                                                        id
+                                                        },message,sujet,dateAdd,dateUpd
+                                                    }
+                                                    }
+                                                },
+                                                auteur{
+                                                    username,firstName,email,isStaff,isActive,image,description,lastName
+                                                    social{
+                                                    edges{
+                                                        node{
+                                                        id,name,lien
+                                                        }
+                                                    }
+                                                    },
+                                                    specialite{
+                                                    edges{
+                                                        node{
+                                                        id,specialiste
+                                                        }
+                                                    }
+                                                    }
+                                                }
+                                                }	
+                                            }
+                                            }
+                                        }
+                                        }
+                                    },
+                                    category(id:"${ this.idcat }"){
+                                        id,nom, 
+                                        articleCategorie{
+                                            edges{
+                                                node{
+                                                id,titre,image,imageSingle,tag {
+                                                    edges {
+                                                    node {
+                                                        id
+                                                    }
+                                                    }
+                                                },
+                                                categorie{
+                                                    nom
+                                                },description,contenu,dateAdd,dateUpd,
+                                                articleCommentaire{
+                                                    edges{
+                                                    node{
+                                                        user {
+                                                        id,image,lastName,firstName
+                                                        },message,sujet,dateAdd,dateUpd
+                                                    }
+                                                    }
+                                                },
+                                                auteur{
+                                                    lastName,username,firstName,email,isStaff,isActive,image,description
+                                                    social{
+                                                    edges{
+                                                        node{
+                                                        id,name,lien
+                                                        }
+                                                    }
+                                                    },
+                                                    specialite{
+                                                    edges{
+                                                        node{
+                                                        id,specialiste
+                                                        }
+                                                    }
+                                                    }
+                                                }
+                                                }	
+                                            }
+                                        },
+                                    },
+                                    allArticles(status:true){
+                                        edges{
+                                            node{
+                                                id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
+                                                tag{
+                                                edges{
+                                                    node{
+                                                    id,nom
+                                                    }
+                                                }
+                                                            },
+                                                categorie{
+                                                nom
+                                                },
+                                                articleCommentaire{
+                                                edges{
+                                                    node{
+                                                    user{
+                                                        id,username,image,lastName,firstName
+                                                    },
+                                                      response{
+                                                        edges{
+                                                          node{
+                                                            user{
+                                                              id,firstName,lastName,image
+                                                            }
+                                                          }
+                                                        }
+                                                      },
+                                                    ,message,sujet,dateAdd,dateUpd
+                                                    }
+                                                }
+                                    },
+                                                auteur{
+                                                username,firstName,email,isStaff,isActive,image,description,lastName
+                                                social{
+                                                    edges{
+                                                    node{
+                                                        id,name,lien
+                                                    }
+                                                    }
+                                                },
+                                                specialite{
+                                                    edges{
+                                                    node{
+                                                        id,specialiste
+                                                    }
+                                                    }
+                                                }
+                                    },
+                                                  articleLike{
+                                                    edgeCount
+                                                  edges{
+                                                    node{
+                                                      user{
+                                                        id,lastName,firstName,image
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                              contenu,isArchive
+                                            }	
+                                            }
+                                    },
+                                    article(id:"${ this.idart }"){
+                                        id,titre,image,imageSingle,description,dateAdd,dateUpd,
+                                        tag{
+                                            edges{
+                                            node{
+                                                id,nom
+                                            }
+                                            }
+                                        },
+                                        categorie{
+                                            nom,id
+                                        },
+                                        articleCommentaire{
+                                            edges{
+                                            node{
+                                                user{
+                                                    id,username,lastName,firstName,image
+                                                },
+                                                  response{
+                                                  edges{
+                                                    node{
+                                                      user{
+                                                        lastName,firstName,id,image,
+                                                      }
+                                                      message,
+                                                    }
+                                                    
+                                                  }
+                                                }
+                                                message,sujet,dateAdd,dateUpd
+                                              
+                                            }
+                                            }
+                                    },
+                                        articleLike{
+                                          edges{
+                                            node{
+                                              user{
+                                                id,lastName,firstName,
+                                              }
+                                            }
+                                          }
+                                        }
+                                        auteur{
+                                            lastName,username,firstName,email,isStaff,isActive,image,description,
+                                            social{
+                                            edges{
+                                                node{
+                                                id,name,lien
+                                                }
+                                            }
+                                            },
+                                            specialite{
+                                            edges{
+                                                node{
+                                                id,specialiste
+                                                }
+                                            }
+                                            
+                                            }
+                                    },contenu,isArchive
+                                    }
+                                        }
+                                    
+                                `
+                            }
+                        })
+                        .then(response => {
+                            result = response.data.data
+                            // console.log(response.data)
+                            this.dataAllCategory = result.allCategories.edges
+                            this.categoryId=result.category
+                            this.dataAllarticle = result.allArticles.edges
+                            this.categoryId=result.category
+                            this.singleAtircle  = result.article
+                            this.CarouselAll = this.dataAllarticle.slice(1, 4)
+                            console.log(this.dataAllarticle)
+                            this.Popular = result.allArticles.edges.node
+                            //console.log(this.idcat)
+                            //console.log(this.idart)
+                            // console.log(this.categoryId)
+                            //console.log(this.singleAtircle)
+                            
+            
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                    },
+                    sendmessage: function () {
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        let formData = new FormData();
+                        formData.append('nom', '' + this.nom);
+                        formData.append('sujet', '' + this.sujet);
+                        formData.append('email', '' + this.email);
+                        formData.append('message', '' + this.message);
+                        axios.post('https://127.0.0.1:8000/contacts/message',formData,
+                        {
+                        } ).then(response => {
+                                console.log(response)
+                                if (response.data.succes == true) {
+                                    new Toast({
+                                        message: 'Votre Message a été envoyé avec Success',
+                                        type: 'success'
+                                    });
+                                    this.nom = ''
+                                    this.message = ''
+                                    this.email = ''
+                                    this.sujet = ''
+                                }else{
+                                    swal("Tous les champs Sont requis", "", "error");
+                                }
+                                
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                    },
+                    suscription: function () {
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        let formData = new FormData();
+                        formData.append('suscribe', '' + this.suscribe);
+                        axios.post('https://127.0.0.1:8000/contacts/souscription',formData,
+                        {
+                        } ).then(response => {
+                                
+                                console.log(response)
+                                if (response.data.succes == true) {
+                                    swal("Merci d'avoir Souscrire au Service Newlestter", "", "success");
+                                    this.email = ''
+            
+                                }else{
+                                    swal("Entrer Votre adresse Mail pour Souscrire Au service Newlestter de nan blog", "", "error");
+                                }
+                                
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                    },
+                },
+            
+            
+                })
+    </script>
+</body>
+
+</html>
