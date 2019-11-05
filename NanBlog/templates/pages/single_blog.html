@@ -176,8 +176,7 @@
                             <textarea class="form-control mb-10" rows="5" name="message" placeholder="Commentaire"
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                         </div>
-                        <a v-if="{{ user.is_authenticated}}" v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
-                        <div v-else="{{ user.is_authenticated }}">Merci de vous connectez pour commenter <a href="" class=" text-uppercase" target="_blank">Login</a></div>
+                        <a v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
                     </form>
                 </div>
             </div>
