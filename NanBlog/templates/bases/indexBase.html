@@ -815,7 +815,45 @@ crossorigin="anonymous"></script>
                     reponsebutton:function(){
                         this.commentform = false;
                         this.reponseform = true;
+                    }, 
+                    postlike:function(){
+                        this.base_url = 'https://127.0.0.1:8000'
+                        console.log('data getting')
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                    mutation{
+                                    relayCreatLike(input:{article:"${ this.idart }",status:true}){
+                                            like {
+                                            status
+                                        }
+                                    }
+                                }
+                                `
+                            }
+                        })
+                        .then(response => {
+                         if (response.data.data.relayCreateComment != null) {
+                                    new Toast({
+                                        message: 'Article like',
+                                        type: 'success'
+                                    });
+                                }else{
+                                    new Toast({
+                                        message: 'Article like',
+                                        type: 'success'
+                                    });
+                                }
+                        })  
+                        .catch((err) => {
+                            console.log(err);
+                        })
                     },
+
                 
                 
                 },
