@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Categorie, Article, Tag, Commentaire, ResponseCommentaire, Like
+from .models import Categorie, Article, Tag, Commentaire, ResponseCommentaire, Like, DisLike, DemandeAdesion
 from rest_framework import viewsets
-from .serializer import CategorieSerializer, ArticleSerializer, TagSerializer, CommentaireSerializer, ResponseCommentaireSerializer, LikeSerializer
+from .serializer import CategorieSerializer, ArticleSerializer, DisLikeSerializer, DemandeAdesionSerializer, TagSerializer, CommentaireSerializer, ResponseCommentaireSerializer, LikeSerializer
 from django.contrib.auth.decorators import login_required
 from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.permissions import IsAuthenticated
@@ -23,6 +23,18 @@ class LikeViewset(viewsets.ModelViewSet):
     permission_classes = [HasAPIKey | IsAuthenticated]
     serializer_class = LikeSerializer
     queryset = Like.objects.all()
+    
+class DisLikeViewset(viewsets.ModelViewSet):
+    filter_backends = (DynamicSearchFilter,)
+    permission_classes = [HasAPIKey | IsAuthenticated]
+    serializer_class = DisLikeSerializer
+    queryset = DisLike.objects.all()
+    
+class DemandeAdesionViewset(viewsets.ModelViewSet):
+    filter_backends = (DynamicSearchFilter,)
+    permission_classes = [HasAPIKey | IsAuthenticated]
+    serializer_class = DemandeAdesionSerializer
+    queryset = DemandeAdesion.objects.all()
     
 class ResponseCommentaireViewset(viewsets.ModelViewSet):
     filter_backends = (DynamicSearchFilter,)
@@ -95,65 +107,83 @@ def archive(request):
 def dash(request):
     if request.user.is_authenticated:
         myUser=request.user
+        
         allCat=Categorie.objects.filter(status=True)
         allArticle=Article.objects.filter(auteur=request.user,status=True)[:1]
         # j'ai enlever le get car quand il n'y pas d'article il retourne une erreur 
-        print("#####################################ALL ARTICLES #########################")
-        myForm=ArticleFrom()
-        
-        data={
-            'allArticle':allArticle,
-            'allCat':allCat,
-            'myFrom':myForm
-        }
-    return render(request,'pages/dashM_index.html',data)
+        print("#####################################GROUPE USER  #########################")
+        groupeUser=myUser.groups.filter(name='Membre').exists()
+        print(groupeUser)
+        if groupeUser:
+            myForm=ArticleFrom()
+            data={
+                'allArticle':allArticle,
+                'allCat':allCat,
+                'myFrom':myForm
+            }
+            return render(request,'pages/dashM_index.html',data)
+        else:
+            myForm=ArticleFrom()
+            data={
+                'allArticle':allArticle,
+                'allCat':allCat,
+                'myFrom':myForm
+            }
+            return render(request,'pages/v_index.html',data)
+            
 
 def moreInfo(request,id):
     if request.user.is_authenticated:
         myUser=request.user
         allCat=Categorie.objects.filter(status=True)
-        allArticle=Article.objects.get(pk=id)
+        allArticle=Article.objects.get(pk=13)
         myForm=ArticleFrom()
 
         print(allArticle)
         data={
             'allArticle':allArticle,
             'allCat':allCat,
-            'myFrom':myForm
-
+            'myFrom':myForm,
+            'id':id
         }
-        
-        
     return render(request,'pages/dashM_moreInfo.html',data)
 
 def dashCategory(request,id):
     allCat=Categorie.objects.filter(status=True)  
     print(allCat)
-    myCat=Categorie.objects.get(pk=id)
+    myCat=Categorie.objects.get(pk=3)
     allArticle=Article.objects.filter(categorie=myCat,auteur=request.user,status=True)
     data={
         'allArticle':allArticle,
         'cat':myCat,
-        'allCat':allCat
+        'allCat':allCat,
+        'idCat':id,
     }
-    print(allArticle)
-    return render(request,'pages/dashM_category.html',data)
+    groupeUser=request.user.groups.filter(name='Membre').exists()
+    print(groupeUser)
+    if groupeUser:
+        return render(request,'pages/dashM_category.html',data)
+    else:
+        return render(request,'pages/v_cat.html',data)
 
 @login_required
 def dashProfil(request):
     
     return render(request,'pages/dashM_profil.html')
     
-def singleArticleDash(request,id):
-    allCat=Categorie.objects.filter(status=True)
-    allArticle=Article.objects.get(pk=id)
-    data={
-        'allArticle':allArticle,
-        'allCat':allCat
-    }
-    print(allArticle)
     
-    return render(request,'pages/dashM_single_article.html',data)
+def singleArticleDash(request,id):
+    
+    data={
+        'id':id
+    }
+    groupeUser=request.user.groups.filter(name='Membre').exists()
+    print(groupeUser)
+    if groupeUser:
+        return render(request,'pages/dashM_single_article.html',data)
+    else:
+        return render(request,'pages/v_single_article.html',data)
+
 @login_required
 def deleteArticle(request,id):
     
@@ -162,13 +192,18 @@ def deleteArticle(request,id):
 
 @login_required
 def editArticleDash(request):
-    allCat=Categorie.objects.filter(status=True)
-    myFrom=ArticleFrom()
-    data={
-        'allCat':allCat,
-        'myFrom':myFrom
-    }
-    return render(request,'pages/dashM_edit_article.html',data)
+    groupeUser=request.user.groups.filter(name='Membre').exists()
+    print(groupeUser)
+    if groupeUser:
+        allCat=Categorie.objects.filter(status=True)
+        myFrom=ArticleFrom()
+        data={
+            'allCat':allCat,
+            'myFrom':myFrom
+        }
+        return render(request,'pages/dashM_edit_article.html',data)
+    else:
+        return redirect('index')
 
 @login_required
 def updateArticle(request):
@@ -206,5 +241,32 @@ def updateArticle(request):
         result={
             'addCommentOk':True
         }
-     
+
     return JsonResponse(result, safe=False)
+
+def addarticle(request):
+    cat = request.POST.get('cat')
+    title = request.POST.get('title')
+    description = request.POST.get('email')
+    contenu = request.POST.get('contenu')
+    user= request.user.id
+    
+    issucces = False
+    
+    if cat !='' and title != '' and description != ''  and  contenu != '' :
+        image = request.FILES['file']
+        issucces = True
+        h = Article(categorie=cat,auteur=user,titre=title,description=description, image=image, contenu=contenu)
+        h.save()
+        print(cat, title, description, contenu)
+    else:
+        issucces = False
+    datas = {
+        'succes': issucces,
+        'name': title,
+    }
+    return JsonResponse(datas, safe=False)
+################################################
+#              PAGE VISITEUR                   #
+#                                              #
+################################################

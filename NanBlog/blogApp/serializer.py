@@ -1,11 +1,21 @@
 from rest_framework import serializers
 from drf_dynamic_fields import DynamicFieldsMixin
-from .models import Categorie, Article, Tag, Commentaire, ResponseCommentaire, Like
+from .models import Categorie, Article, Tag, Commentaire, ResponseCommentaire, Like, DisLike, DemandeAdesion
 from Utilisateurs.models import MyUser
 
 class LikeSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
     class Meta:
         model = Like
+        fields= '__all__'
+        
+class DisLikeSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
+    class Meta:
+        model = DisLike
+        fields= '__all__'
+        
+class DemandeAdesionSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
+    class Meta:
+        model = DemandeAdesion
         fields= '__all__'
         
 class ResponseCommentaireSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
@@ -29,6 +39,7 @@ class ArticleSerializer(DynamicFieldsMixin,serializers.ModelSerializer):
     article_commentaire = CommentaireSerializer(many=True, required=False)
     # archive_article = ArchiveSerializer(many=True, required=False)
     article_like = LikeSerializer(many=True, required=False)
+    Dislike = DisLikeSerializer(many=True, required=False)    
     class Meta:
         model = Article
         fields= '__all__'
@@ -46,6 +57,8 @@ class UserSerializer(serializers.ModelSerializer):
     user_comment = CommentaireSerializer(many=True, required=False)
     user_response_comment = ResponseCommentaireSerializer(many=True, required=False)
     user_like = LikeSerializer(many=True, required=False)
+    user_dislike = DisLikeSerializer(many=True, required=False)
+    user_demande = DemandeAdesionSerializer(many=True, required=False)
     class Meta:
         model = MyUser
         fields = ('username', 'email', 'password')
