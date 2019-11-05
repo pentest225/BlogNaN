@@ -260,6 +260,7 @@
                     commentform:true,
                     reponseform:false,
                     like:0,
+                    username:"{{ user.first_name }}"
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -511,12 +512,15 @@
                             this.dataAllCategory = result.allCategories.edges
                             this.categoryId=result
                             this.dataAllarticle = result.allArticles
+                            console.log(result)
                             this.categoryId=result.category
                             this.singleAtircle  = result.article
-                            // this.like=this.singleAtircle.articleLike.edges.length
+                            if (this.singleAtircle !=null){
+                                this.like=this.singleAtircle.articleLike.edges.length
+                            }
                             this.CarouselAll = this.dataAllarticle.edges.slice(1, 4)
                             //console.log(this.categoryId.articleCategorie.edges)
-                            console.log(this.dataAllarticle.edges)
+                            //console.log(this.dataAllarticle.edges)
                             //console.log(this.singleAtircle.dateAdd)
                             if (this.singleAtircle !=null) {
                                 this.singleAtircle.dateAdd=new Date(this.singleAtircle.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
@@ -737,43 +741,61 @@
                         })
                     },
                     postlike:function(){
-                        this.base_url = 'https://127.0.0.1:8000'
-                        console.log('data getting')
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios({
-                            url: this.base_url + '/graphql',
-                            method: 'post',
-                            data: {
-                                query: `
-                                    mutation{
-                                    relayCreatLike(input:{article:"${ this.idart }",status:true}){
-                                            like {
-                                            status
+                        let isLiked=false
+                        for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
+                            const element = this.singleAtircle.articleLike.edges[index];
+                            if (this.username == element.node.user.firstName){
+                                isLiked=true
+
+                                break
+                            }
+                            
+                        }
+                        if (!isLiked) {
+                            this.base_url = 'https://127.0.0.1:8000'
+                            console.log('data getting')
+                            axios.defaults.xsrfCookieName = 'csrftoken'
+                            axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                            axios({
+                                url: this.base_url + '/graphql',
+                                method: 'post',
+                                data: {
+                                    query: `
+                                        mutation{
+                                        relayCreatLike(input:{article:"${ this.idart }",status:true}){
+                                                like {
+                                                status
+                                            }
                                         }
                                     }
+                                    `
                                 }
-                                `
-                            }
-                        })
-                        .then(response => {
-                         if (response.data.data.relayCreateComment != null) {
-                                    new Toast({
-                                        message: 'Article like',
-                                        type: 'success'
-                                    });
+                            })
+                            .then(response => {
+                            if (response.data.data.relayCreateComment != null) {
+                                        new Toast({
+                                            message: 'Article like',
+                                            type: 'success'
+                                        });
                                     
-                                }else{
-                                    new Toast({
-                                        message: 'Article like',
-                                        type: 'success'
-                                    });
-                                    this.like+=1
-                                }
-                        })  
-                        .catch((err) => {
-                            console.log(err);
-                        })
+                                    }else{
+                                        new Toast({
+                                            message: 'Article like',
+                                            type: 'success'
+                                        });
+                                        this.like+=1
+                                    }
+                            })  
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                        }
+                        else{
+                            new Toast({
+                                message: 'Vous avez dejat liker ce article ;-]',
+                                type: 'error'
+                            });
+                        }
                     },
                     postreponse: function() {
                         this.base_url = 'https://127.0.0.1:8000'
