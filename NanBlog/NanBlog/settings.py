@@ -45,8 +45,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.linkedin_oauth2',
     'allauth.socialaccount.providers.discord',
     'django.contrib.sites',
+    'django.contrib.flatpages',
     'widget_tweaks',
+    'crispy_forms',
     'django_extensions',
+    'django_twilio',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -54,6 +57,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_seed',
     'rest_framework.authtoken',
+    'rest_framework_api_key',
     'django.contrib.staticfiles',
     'graphene_django',
     'blogApp.apps.BlogappConfig',
@@ -63,6 +67,7 @@ INSTALLED_APPS = [
     'allConfig.apps.AllconfigConfig',
     'django_admin_generator',
     'social_django',
+    'django_social_share',
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL ="https"
@@ -111,6 +116,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends', 
+                'allConfig.context_processors.get_config',
+                'Statistique.context_processors.visitor_ip_address',
             ],
         },
     },
@@ -132,7 +139,14 @@ ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 LOGIN_REDIRECT_URL = 'index' 
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_FORMS = {'signup': 'Utilisateurs.forms.RegistrationForm'}
+
 # redirects to /accounts/profile by default
+
+# TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
+# TWILIO_AUTH_TOKEN =  os.environ["TWILIO_AUTH_TOKEN"]
+# TWILIO_DEFAULT_CALLERID =  os.environ["TWILIO_DEFAULT_CALLERID"]
 
 WSGI_APPLICATION = 'NanBlog.wsgi.application'
 
@@ -180,7 +194,7 @@ GRAPHENE = {
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 360,
-    'width': 900,
+    'width': 800,
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',
@@ -210,6 +224,12 @@ TINYMCE_DEFAULT_CONFIG = {
 FILEBROWSER_DIRECTORY='../media_cdn'
 FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100
 
+REST_FRAMEWORK  =  { 
+    "DEFAULT_PERMISSION_CLASSES" :  [ 
+        "rest_framework_api_key.permissions.HasAPIKey",
+    ] 
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -229,15 +249,22 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
 STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIT_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+FILEBROWSER_MAX_UPLOAD_SIZE=10485760 *100

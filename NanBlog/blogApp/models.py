@@ -46,7 +46,7 @@ class Article(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='blog/')
     contenu = HTMLField('contenu')
-    is_archive=models.BooleanField(default=False,null=True)
+    is_archive=models.BooleanField(default=False, blank=True, null=True)
     image_single = models.ImageField(upload_to='blog/single')
     status = models.BooleanField(default=False,null=True)
     date_add = models.DateTimeField(auto_now_add=True)
@@ -89,3 +89,15 @@ class Like(models.Model):
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
     
+# class DisLike(models.Model):
+#     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_like')
+#     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='user_like')
+#     status = models.BooleanField(default=True)
+#     date_add = models.DateTimeField(auto_now_add=True)
+#     date_upd = models.DateTimeField(auto_now=True)
+    
+# class DamandeAdesion(models.Model):
+#     user_id=models.ForeignKey(MyUser,on_delete=models.CASCADE,related_name='user_demande')
+#     status = models.BooleanField(default=False)
+#     date_add = models.DateTimeField(auto_now_add=True)
+#     date_upd = models.DateTimeField(auto_now=True)

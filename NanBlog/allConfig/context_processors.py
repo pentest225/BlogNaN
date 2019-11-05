@@ -9,6 +9,6 @@ def get_config(request):
 		'foot':config.FooterFront.objects.filter(status=True)[:1].get(),
 		'social':config.Social.objects.filter(status=True),
         # 'location': config.LocationMap.objects.filter(status=True)[:1].get(),
-        # 'copy': config.Copyright.objects.filter(status=True)[:1].get(),
+        'copy': config.Copyright.objects.filter(status=True)[:1].get(),
 	}
 	return data

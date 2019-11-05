@@ -7,8 +7,11 @@ router = DefaultRouter()
 router.register(r'user', UsersViewset, basename='user')
 router.register(r'special', SpecialiteViewset, basename='special')
 
-from . import views
+from . import view
 
 urlpatterns = [
+    path('inscription/', view.inscription, name='inscription'),
+    path('verification/', view.signup_sendmail, name='sign_send_verif'),
+    path('activate/<slug:uidb64>/<slug:token>)/', view.activate, name='activate'),
 ]
 urlpatterns += router.urls

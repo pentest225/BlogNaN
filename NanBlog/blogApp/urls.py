@@ -19,12 +19,20 @@ from . import views
 
 urlpatterns = [
     path('',views.index,name='index'),
-    path('category',views.category,name='category'),
-    path('single_blog',views.single_blog,name='single_blog'),
-    # path('archive',views.archive,name='archive'),
-    path('login',views.login,name='login'),
-    path('register',views.register,name='register'),
+    path('category/<str:idcat>',views.category,name='category'),
+    path('single_blog/<str:idart>',views.single_blog,name='single_blog'),
+    path('archive',views.archive,name='archive'),
+    path('dashboard',views.dash,name='dash'),
+    path('moreInfo/<int:id>',views.moreInfo,name='moreInfo'),
+    path('allCatallCat/<int:id>',views.dashCategory,name='dashCategory'),
+    path('dashProfil',views.dashProfil,name='dashProfil'),
+    path('dashSingleArticle/<int:id>',views.singleArticleDash,name='dashSingleArticle'),
+    path('editArticleDash',views.editArticleDash,name='editArticleDash'),
+    path('updateArticle',views.updateArticle,name='updateArticle'),
+    path('deleteArticle/<int:id>',views.deleteArticle,name='deleteArticle'),
+
     re_path(r'^accounts/', include('allauth.urls')),
+
     ]
 urlpatterns += router.urls
 

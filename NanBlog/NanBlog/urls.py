@@ -28,11 +28,11 @@ urlpatterns = [
     path('admin/filebrowser/', site.urls),
     path('',include('blogApp.urls')),
     path('contacts/',include('Contacts.urls')),
+    path('user/',include('Utilisateurs.urls')),
     path('tinymce/', include('tinymce.urls')),
     path("graphql", GraphQLView.as_view(graphiql=True,schema=schema)),
 
 ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
