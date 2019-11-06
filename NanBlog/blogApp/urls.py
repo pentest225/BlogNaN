@@ -26,21 +26,11 @@ urlpatterns = [
     path('category/<str:idcat>',views.category,name='category'),
     path('single_blog/<str:idart>',views.single_blog,name='single_blog'),
     path('archive',views.archive,name='archive'),
-    # path('dashboard',views.dash,name='dash'),
-    path('moreInfo/<str:id>',views.moreInfo,name='moreInfo'),
-    path('allCat/<str:id>',views.dashCategory,name='dashCategory'),
-    # path('dashProfil',views.dashProfil,name='dashProfil'),
-    # path('dashSingleArticle/<str:id>',views.singleArticleDash,name='dashSingleArticle'),
-    # path('editArticleDash',views.editArticleDash,name='editArticleDash'),
-    path('updateArticle',views.updateArticle,name='updateArticle'),
-    # path('v_index',views.v_index,name='v_index'),
-    # path('v_cat/<int:id>',views.v_cat,name='v_cat'),
-    # path('v_single/<int:id>',views.v_single,name='v_single'),
-    path('deleteArticle/<int:id>',views.deleteArticle,name='deleteArticle'),
-    path('darticle', views.addarticle, name='addarticle'),
-    
-    
-    
+    # path('moreInfo/<str:id>',views.moreInfo,name='moreInfo'),
+    # path('allCat/<str:id>',views.dashCategory,name='dashCategory'),
+    # path('updateArticle',views.updateArticle,name='updateArticle'),
+    # path('deleteArticle/<int:id>',views.deleteArticle,name='deleteArticle'),
+    # path('darticle', views.addarticle, name='addarticle'),
     path('dashboard', views.index_dash, name='index_dash'),
     path('tables_dash/', views.tables_dash, name='tables_dash'),
     path('<int:pk>/project_detail_dash/', views.project_detail_dash, name='project_detail_dash'),
@@ -53,15 +43,11 @@ urlpatterns = [
     path('form_article_dash/', views.form_article_dash, name='form_article_dash'),
     path('form_profil_dash/', views.form_profil_dash, name='form_profil_dash'),
     path('profil_visiteur_dash/', views.profil_visiteur_dash, name='profil_visiteur_dash'),
-    path('login/', views.connect, name='login'),
-    path('connect/', views.connecter, name='connecter'),
-    path('deconnect/', views.deconection, name='deconnecte'),
-    path('deconnexion/', views.deconection, name='deconnect'),
-    
+    # path('login/', views.connect, name='login'),
+    # path('connect/', views.connecter, name='connecter'),
+    # path('deconnect/', views.deconection, name='deconnecte'),
+    # path('deconnexion/', views.deconection, name='deconnect'),
     path('tables_visiteur_dash/', views.tables_visiteur_dash, name='tables_visiteur_dash'),
-    
-    
-
     re_path(r'^accounts/', include('allauth.urls')),
 
     ]

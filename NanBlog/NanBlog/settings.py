@@ -258,13 +258,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../media_cdn')
 STATIC_ROOT = os.path.join(BASE_DIR, '../static_cdn')
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIT_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = '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'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

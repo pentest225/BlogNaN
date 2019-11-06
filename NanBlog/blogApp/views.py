@@ -19,13 +19,11 @@ from .form import ArticleFrom
 
 
 
-from django.shortcuts import render, redirect
-# from blogger.models import *
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
+# from django.contrib.auth.models import User
+# from django.contrib.auth.decorators import login_required
+# from django.contrib.auth import authenticate, login, logout
 
 
 
@@ -126,175 +124,174 @@ def archive(request):
 ################################################
 #               Dashbord root                  #
 ################################################
-# /accounts/logout/
-@login_required
-def dash(request):
-    if request.user.is_authenticated:
-        myUser=request.user
+# # /accounts/logout/
+# @login_required
+# def dash(request):
+#     if request.user.is_authenticated:
+#         myUser=request.user
         
-        allCat=Categorie.objects.filter(status=True)
-        allArticle=Article.objects.filter(auteur=request.user,status=True)[:1]
-        # j'ai enlever le get car quand il n'y pas d'article il retourne une erreur 
-        print("#####################################GROUPE USER  #########################")
-        groupeUser=myUser.groups.filter(name='Membre').exists()
-        print(groupeUser)
-        if groupeUser:
-            myForm=ArticleFrom()
-            data={
-                'allArticle':allArticle,
-                'allCat':allCat,
-                'myFrom':myForm
-            }
-            return render(request,'pages/dashM_index.html',data)
-        else:
-            myForm=ArticleFrom()
-            data={
-                'allArticle':allArticle,
-                'allCat':allCat,
-                'myFrom':myForm
-            }
-            return render(request,'pages/v_index.html',data)
+#         allCat=Categorie.objects.filter(status=True)
+#         allArticle=Article.objects.filter(auteur=request.user,status=True)[:1]
+#         # j'ai enlever le get car quand il n'y pas d'article il retourne une erreur 
+#         print("#####################################GROUPE USER  #########################")
+#         groupeUser=myUser.groups.filter(name='Membre').exists()
+#         print(groupeUser)
+#         if groupeUser:
+#             myForm=ArticleFrom()
+#             data={
+#                 'allArticle':allArticle,
+#                 'allCat':allCat,
+#                 'myFrom':myForm
+#             }
+#             return render(request,'pages/dashM_index.html',data)
+#         else:
+#             myForm=ArticleFrom()
+#             data={
+#                 'allArticle':allArticle,
+#                 'allCat':allCat,
+#                 'myFrom':myForm
+#             }
+#             return render(request,'pages/v_index.html',data)
             
 
-def moreInfo(request,id):
-    if request.user.is_authenticated:
-        myUser=request.user
-        allCat=Categorie.objects.filter(status=True)
-        allArticle=Article.objects.get(pk=13)
-        myForm=ArticleFrom()
+# def moreInfo(request,id):
+#     if request.user.is_authenticated:
+#         myUser=request.user
+#         allCat=Categorie.objects.filter(status=True)
+#         allArticle=Article.objects.get(pk=13)
+#         myForm=ArticleFrom()
 
-        print(allArticle)
-        data={
-            'allArticle':allArticle,
-            'allCat':allCat,
-            'myFrom':myForm,
-            'id':id
-        }
-    return render(request,'pages/dashM_moreInfo.html',data)
+#         print(allArticle)
+#         data={
+#             'allArticle':allArticle,
+#             'allCat':allCat,
+#             'myFrom':myForm,
+#             'id':id
+#         }
+#     return render(request,'pages/dashM_moreInfo.html',data)
 
-def dashCategory(request,id):
-    allCat=Categorie.objects.filter(status=True)  
-    print(allCat)
-    myCat=Categorie.objects.get(pk=3)
-    allArticle=Article.objects.filter(categorie=myCat,auteur=request.user,status=True)
-    data={
-        'allArticle':allArticle,
-        'cat':myCat,
-        'allCat':allCat,
-        'idCat':id,
-    }
-    groupeUser=request.user.groups.filter(name='Membre').exists()
-    print(groupeUser)
-    if groupeUser:
-        return render(request,'pages/dashM_category.html',data)
-    else:
-        return render(request,'pages/v_cat.html',data)
+# def dashCategory(request,id):
+#     allCat=Categorie.objects.filter(status=True)  
+#     print(allCat)
+#     myCat=Categorie.objects.get(pk=3)
+#     allArticle=Article.objects.filter(categorie=myCat,auteur=request.user,status=True)
+#     data={
+#         'allArticle':allArticle,
+#         'cat':myCat,
+#         'allCat':allCat,
+#         'idCat':id,
+#     }
+#     groupeUser=request.user.groups.filter(name='Membre').exists()
+#     print(groupeUser)
+#     if groupeUser:
+#         return render(request,'pages/dashM_category.html',data)
+#     else:
+#         return render(request,'pages/v_cat.html',data)
 
-@login_required
-def dashProfil(request):
+# @login_required
+# def dashProfil(request):
     
-    return render(request,'pages/dashM_profil.html')
+#     return render(request,'pages/dashM_profil.html')
     
     
-def singleArticleDash(request,id):
+# def singleArticleDash(request,id):
     
-    data={
-        'id':id
-    }
-    groupeUser=request.user.groups.filter(name='Membre').exists()
-    print(groupeUser)
-    if groupeUser:
-        return render(request,'pages/dashM_single_article.html',data)
-    else:
-        return render(request,'pages/v_single_article.html',data)
+#     data={
+#         'id':id
+#     }
+#     groupeUser=request.user.groups.filter(name='Membre').exists()
+#     print(groupeUser)
+#     if groupeUser:
+#         return render(request,'pages/dashM_single_article.html',data)
+#     else:
+#         return render(request,'pages/v_single_article.html',data)
 
-@login_required
-def deleteArticle(request,id):
+# @login_required
+# def deleteArticle(request,id):
     
-    Article.objects.filter(pk=id).delete()
-    return redirect('dash')
+#     Article.objects.filter(pk=id).delete()
+#     return redirect('dash')
 
-@login_required
-def editArticleDash(request):
-    groupeUser=request.user.groups.filter(name='Membre').exists()
-    print(groupeUser)
-    if groupeUser:
-        allCat=Categorie.objects.filter(status=True)
-        myFrom=ArticleFrom()
-        data={
-            'allCat':allCat,
-            'myFrom':myFrom
-        }
-        return render(request,'pages/dashM_edit_article.html',data)
-    else:
-        return redirect('index')
+# @login_required
+# def editArticleDash(request):
+#     groupeUser=request.user.groups.filter(name='Membre').exists()
+#     print(groupeUser)
+#     if groupeUser:
+#         allCat=Categorie.objects.filter(status=True)
+#         myFrom=ArticleFrom()
+#         data={
+#             'allCat':allCat,
+#             'myFrom':myFrom
+#         }
+#         return render(request,'pages/dashM_edit_article.html',data)
+#     else:
+#         return redirect('index')
 
-@login_required
-def updateArticle(request):
-    postdata = json.loads(request.body.decode('utf-8'))
+# @login_required
+# def updateArticle(request):
+#     postdata = json.loads(request.body.decode('utf-8'))
     
-    # name = request.POST['name']
-    isSuccess=False
-    compt=1
-    while compt < 10000000:
-        compt+=1
+#     # name = request.POST['name']
+#     isSuccess=False
+#     compt=1
+#     while compt < 10000000:
+#         compt+=1
     
-    action=postdata['action']
-    idArcticle=postdata['idArticle']
+#     action=postdata['action']
+#     idArcticle=postdata['idArticle']
 
-    if action =="modifStatus":
-        myArticle=Article.objects.get(pk=idArcticle)
-        myArticle.status= not myArticle.status
-        print("++++++++++++++++++")
-        print(myArticle)
-        myArticle.save()
-        print(idArcticle)
-        result={
-            'updateOk':True
-        }
-    if action=='addContent':
-        comment=postdata['comment']
-        idUser=postdata['idUser']
-        myArticle=Article.objects.get(pk=idArcticle)
-        myU=MyUser.objects.get(pk=idUser)
-        newComment=Commentaire(article=myArticle,user=myU,sujet="pas obliger",message=comment)
-        newComment.save()
-        print("#################################Add comment #######################")
-        print(newComment)
+#     if action =="modifStatus":
+#         myArticle=Article.objects.get(pk=idArcticle)
+#         myArticle.status= not myArticle.status
+#         print("++++++++++++++++++")
+#         print(myArticle)
+#         myArticle.save()
+#         print(idArcticle)
+#         result={
+#             'updateOk':True
+#         }
+#     if action=='addContent':
+#         comment=postdata['comment']
+#         idUser=postdata['idUser']
+#         myArticle=Article.objects.get(pk=idArcticle)
+#         myU=MyUser.objects.get(pk=idUser)
+#         newComment=Commentaire(article=myArticle,user=myU,sujet="pas obliger",message=comment)
+#         newComment.save()
+#         print("#################################Add comment #######################")
+#         print(newComment)
         
-        result={
-            'addCommentOk':True
-        }
+#         result={
+#             'addCommentOk':True
+#         }
 
-    return JsonResponse(result, safe=False)
+#     return JsonResponse(result, safe=False)
 
-def addarticle(request):
-    cat = request.POST.get('cat')
-    title = request.POST.get('title')
-    description = request.POST.get('email')
-    contenu = request.POST.get('contenu')
-    user= request.user.id
+# def addarticle(request):
+#     cat = request.POST.get('cat')
+#     title = request.POST.get('title')
+#     description = request.POST.get('email')
+#     contenu = request.POST.get('contenu')
+#     user= request.user.id
     
-    issucces = False
+#     issucces = False
     
-    if cat !='' and title != '' and description != ''  and  contenu != '' :
-        image = request.FILES['file']
-        issucces = True
-        h = Article(categorie=cat,auteur=user,titre=title,description=description, image=image, contenu=contenu)
-        h.save()
-        print(cat, title, description, contenu)
-    else:
-        issucces = False
-    datas = {
-        'succes': issucces,
-        'name': title,
-    }
-    return JsonResponse(datas, safe=False)
-################################################
-#              PAGE VISITEUR                   #
-#                                              #
-################################################
-
+#     if cat !='' and title != '' and description != ''  and  contenu != '' :
+#         image = request.FILES['file']
+#         issucces = True
+#         h = Article(categorie=cat,auteur=user,titre=title,description=description, image=image, contenu=contenu)
+#         h.save()
+#         print(cat, title, description, contenu)
+#     else:
+#         issucces = False
+#     datas = {
+#         'succes': issucces,
+#         'name': title,
+#     }
+#     return JsonResponse(datas, safe=False)
+# ################################################
+# #              PAGE VISITEUR                   #
+# #                                              #
+# ################################################
 
 
 
@@ -309,7 +306,7 @@ def addarticle(request):
 ############################################# Dashboard groupe 1 ###########################################
 
 
-@login_required(login_url='login')
+@login_required
 def index_dash(request):
     # catego= Article.objects.filter(categorie__pk = pk ).order_by('-id')
     # categorie__id = pk
@@ -324,7 +321,7 @@ def index_dash(request):
     
     return render(request, 'pages/index_dash.html')
 
-@login_required(login_url='connecter')
+@login_required
 def admin_visiteur_dash(request):
     # article = Article.objects.filter(statut=True, valider=True)
     # commentaires = Commentaire.objects.filter(statut=True, article__valider=True)
@@ -335,58 +332,58 @@ def admin_visiteur_dash(request):
     return render(request, 'pages/admin_visiteur_dash.html')
 
 
-def connect(request):
-    if request.method == "POST":
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-        print(username,password)
-        _next = request.GET.get('next', False)
-        user = authenticate(username=username, password=password)
-        print(user)
-        if user is not None and user.is_active:
+# def connect(request):
+#     if request.method == "POST":
+#         username=request.POST.get('username')
+#         password=request.POST.get('password')
+#         print(username,password)
+#         _next = request.GET.get('next', False)
+#         user = authenticate(username=username, password=password)
+#         print(user)
+#         if user is not None and user.is_active:
             
-            print("user is login")
+#             print("user is login")
 
-            login(request, user)
-            if _next: 
-                return redirect(_next)
-            else:
-                return redirect('index_dash')
-        else:
-            return render(request, 'pages/connexion.html')
-    return render(request, 'pages/connexion.html')
+#             login(request, user)
+#             if _next: 
+#                 return redirect(_next)
+#             else:
+#                 return redirect('index_dash')
+#         else:
+#             return render(request, 'pages/connexion.html')
+#     return render(request, 'pages/connexion.html')
 
-def connecter(request):
-    if request.method == "POST":
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-        print(username,password)
-        _next = request.GET.get('next', False)
-        user = authenticate(username=username, password=password)
-        print(user)
-        if user is not None and user.is_active:
+# def connecter(request):
+#     if request.method == "POST":
+#         username=request.POST.get('username')
+#         password=request.POST.get('password')
+#         print(username,password)
+#         _next = request.GET.get('next', False)
+#         user = authenticate(username=username, password=password)
+#         print(user)
+#         if user is not None and user.is_active:
             
-            print("user is login")
+#             print("user is login")
 
-            login(request, user)
-            if _next: 
-                return redirect(_next)
-            else:
-                return redirect('admin_visiteur_dash')
-        else:
-            return render(request, 'pages/connexion.html')
-    return render(request, 'pages/connexion.html')
-
-
+#             login(request, user)
+#             if _next: 
+#                 return redirect(_next)
+#             else:
+#                 return redirect('admin_visiteur_dash')
+#         else:
+#             return render(request, 'pages/connexion.html')
+#     return render(request, 'pages/connexion.html')
 
 
-def deconection(request):
-    logout(request)
-    return redirect('connect')
 
-def deconexion(request):
-    logout(request)
-    return redirect('connecter')
+
+# def deconection(request):
+#     logout(request)
+#     return redirect('connect')
+
+# def deconexion(request):
+#     logout(request)
+#     return redirect('connecter')
 
 
 

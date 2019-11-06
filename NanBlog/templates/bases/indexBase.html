@@ -1,3 +1,4 @@
+{% load user_tags %}
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -135,17 +136,24 @@
                         {% endif %}
                         {% if user.is_authenticated %}
                         <li class="menu-has-children">
-                        <a href="#">
+                             <a href="#">
                             <img src="{{user.image.url}}" alt="" height=40 width=40 class="rounded-circle">
-                        </a>
+                            </a>
                             <ul>
                                 <li><a href="">{{ user.username }}</a></li>
                                 <li><hr><hr></li>
-                                <li><a href="{% url 'dash' %}">Tableaux de bord</a></li>
+                                
+                                
+                                {% if request.user|has_group:"Membre" %}
+                                    <li><a href="{% url 'index_dash' %}">Tableaux de bord</a></li>
+                                {% elif request.user|has_group:"Visiteur" %}
+                                    <li><a href="{% url 'admin_visiteur_dash' %}">Tableaux de bord</a></li>
+                                {% endif %}
                                 <li><hr><hr></li>
                                 <li><a href="{% url 'account_logout' %}">Logout</a></li>
                             </ul>
                         </li>
+
                         {% endif %}
                     </ul>
                 </nav>
@@ -215,10 +223,9 @@
     </footer>
     <!-- End footer Area -->
     </div>
-<script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-crossorigin="anonymous"></script>
 <script src="/static/js/vendor/bootstrap.min.js"></script>
+<script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
 <script src="/static/js/easing.min.js"></script>
 <script src="/static/js/hoverIntent.js"></script>

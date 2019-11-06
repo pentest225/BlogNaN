@@ -143,7 +143,11 @@
                             <ul>
                                 <li><a href="">{{ user.username }}</a></li>
                                 <li><hr><hr></li>
-                                <li><a href="{% url 'dash' %}">Tableaux de bord</a></li>
+                                {% if user.groups == Membre %}
+                                <li><a href="{% url 'index_dash' %}">Tableaux de bord</a></li>
+                                {% elif user.groups == Visiteur %}
+                                <li><a href="{% url 'admin_visiteur_dash' %}">Tableaux de bord</a></li>
+                                {% endif %}
                                 <li><hr><hr></li>
                                 <li><a href="{% url 'account_logout' %}">Logout</a></li>
                             </ul>
