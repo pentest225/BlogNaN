@@ -279,6 +279,7 @@ referrerpolicy="origin"
                     message: '',
                     suscribe:'',
                     search:'',
+                    commentaire:'',
                     base_url:'',
                     reponse:'',
                     commentform:true,
@@ -710,7 +711,7 @@ referrerpolicy="origin"
                             data: {
                                 query: `
                                 mutation{
-                                    relayCreateComment(input:{sujet:"testgraph",message:"${ this.commentaire }",article:"${ this.idart }",status:true}){
+                                    relayCreateComment(input:{sujet:"Commentaire d'article",message:"${ this.commentaire }",article:"${ this.idart }",status:true}){
                                       comment{
                                         message
                                       }
@@ -720,13 +721,13 @@ referrerpolicy="origin"
                             }
                         })
                         .then(response => {
-                                if (response.data.data.relayCreateComment != null) {
-                                    new Toast({
-                                        message: 'Commentaire envoyer avec success',
-                                        type: 'success'
-                                    });
+                                if (response.data.data.relayCreateComment == null) {
+                                    swal("Connecter Pour laisser Un commentaire");
                                 }else{
-                                    swal("Entrer Votre Commentaire ");
+                                   
+                                    this.commentaire = ""
+                                    toastr.success("Votre Commentaire a été Posté avec Success")
+                                    
                                 }
                         })  
                         .catch((err) => {

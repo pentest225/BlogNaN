@@ -175,8 +175,7 @@
                     <form>
 
                         <div class="form-group">
-                            <textarea class="form-control mb-10" rows="5" name="message" placeholder="Commentaire"
-                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
+                            <textarea  v-model="commentaire" class="form-control mb-10" rows="5" name="message" placeholder="Commentaire" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                         </div>
                         
                         <a v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
@@ -187,9 +186,9 @@
                     <h4>Repondre à Un Commentaire</h4>
                     <form>
                         <div class="form-group">
-                            <textarea class="form-control mb-10"  v-model="commentaire"  rows="5" name="message" placeholder="Commentaire" required=""></textarea>
+                            <textarea class="form-control mb-10"  v-model="reponse"  rows="5" name="message" placeholder="Commentaire" required=""></textarea>
                         </div>
-                        <a href="#"  v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">repondre</a>
+                        <a href="#"  v-on:click.prevent="postreponse" class="primary-btn submit_btn text-uppercase">repondre</a>
                     </form>
                 </div>
                 
