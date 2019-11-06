@@ -297,6 +297,7 @@ referrerpolicy="origin"
                     activeColorLike:'',
                     activeColorDisLike:'',
                     contenue: '',
+                    idComment:'',
 
                 },
                 delimiters:["${","}"],
@@ -516,12 +517,12 @@ referrerpolicy="origin"
                                                       user{
                                                         lastName,firstName,id,image,
                                                       }
-                                                      message,
+                                                      message,id,dateAdd
                                                     }
                                                     
                                                   }
                                                 }
-                                                message,sujet,dateAdd,dateUpd
+                                                message,sujet,dateAdd,id
                                               
                                             }
                                             }
@@ -594,6 +595,13 @@ referrerpolicy="origin"
                                 for (let index = 0; index < this.singleAtircle.articleCommentaire.edges.length; index++) {
                                     const element = this.singleAtircle.articleCommentaire.edges[index];
                                     this.singleAtircle.articleCommentaire.edges[index].node.dateAdd=new Date(element.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+
+                                    for (let index = 0; index < element.node.response.edges.length; index++) {
+                                        const el = element.node.response.edges[index];
+                                        element.node.response.edges[index].node.dateAdd = new Date(el.node.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+ 
+                                        
+                                    }
                                     
                                 }
                                 for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
@@ -705,6 +713,8 @@ referrerpolicy="origin"
                         formData.append('commentaire', '' + this.commentaire);
                        // console.log(this.commentaire);
                        // console.log (this.idart);
+
+                       //mutation du commentaire 
                         axios({
                             url: this.base_url + '/graphql',
                             method: 'post',
@@ -721,14 +731,59 @@ referrerpolicy="origin"
                             }
                         })
                         .then(response => {
-                                if (response.data.data.relayCreateComment == null) {
-                                    swal("Connecter Pour laisser Un commentaire");
-                                }else{
-                                   
-                                    this.commentaire = ""
+                            //ok mutations 
+                            //ok on a send le commentaire 
+                            if (response.data.data.relayCreateComment == null) {
+                                swal("Connecter Pour laisser Un commentaire");
+                            }else{
+                                this.commentaire = ""
+                                
+                                axios({
+                                    url:this.base_url+'/graphql',
+                                    method:'post',
+                                    data:{
+                                        query:`
+                                        query{
+                                            article(id:"${ this.idart }"){
+                                            articleCommentaire{
+                                            edges{
+                                                node{
+                                                id,
+                                                user{
+                                                    id,username,firstName,lastName,image
+                                                },
+                                                message,dateAdd,dateUpd
+                                                response{
+                                                    edges{
+                                                    node{
+                                                        id,
+                                                        user{
+                                                        id,username,firstName,lastName,image
+                                                        },
+                                                        message
+                                                    }
+                                                    }
+                                                }
+                                                }
+                                            }
+                                            }
+                                        }
+                                        }
+
+                                        `
+                                    }
+                                }).then(response=>{
+                                    console.log("get des commentaire de l'aritcle ")
+                                    console.log(response.data)
+                                    this.singleAtircle.articleCommentaire.edges=response.data.data.article.articleCommentaire.edges
+                                    console.log(this.singleAtircle.articleCommentaire.edges)
                                     toastr.success("Votre Commentaire a été Posté avec Success")
+                                }).catch((err)=>{
+                                    console.log(err)
+                                })
                                     
-                                }
+                            }
+                           
                         })  
                         .catch((err) => {
                             console.log(err);
@@ -901,41 +956,97 @@ referrerpolicy="origin"
                     },
                     postreponse: function() {
                         this.base_url = 'https://localhost:8000'
-                        console.log('data getting')
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        formData.append('reponse', '' + this.reponse);
-                        axios({
-                            url: this.base_url + '/graphql',
-                            method: 'post',
-                            data: {
-                                query: `
+                            let formData = new FormData();
+                            axios.defaults.xsrfCookieName = 'csrftoken'
+                            axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                            formData.append('commentaire', '' + this.response);
+                        // console.log(this.commentaire);
+                        // console.log (this.idart);
+
+                        //mutation du commentaire 
+                            axios({
+                                url: this.base_url + '/graphql',
+                                method: 'post',
+                                data: {
+                                    query: `
                                     mutation{
-                              relayCreateResponseComment(input:{commentaire:"",message:"${ this.idart }",status:true}){
-                                response{
-                                  message
+                                relayCreateResponseComment(input:{commentaire:"${this.idComment}",message:"${this.reponse}",status:true}){
+                                    response{
+                                        message,comment{
+                                        user{
+                                        username
+                                        },dateAdd
                                     }
-                                  }
-                                }
+                                    }
+                                    }
+                                    }
                                 `
-                            }
-                        })
-                        .then(response => {
-                        console.log(response)
-                                if (response.data.data.relayCreateResponseComment != null) {
-                                    new Toast({
-                                        message: 'Commentaire envoyer avec success',
-                                        type: 'success'
-                                    });
-                                }else{
-                                    swal("Entrer Votre Commentaire ");
                                 }
-                        })  
-                        .catch((err) => {
-                            console.log(err);
-                        })
+                            })
+                            .then(response => {
+                                //ok mutations 
+                                //ok on a send le commentaire 
+                                this.reponse=""
+                                console.log(response)
+                                if (response.data.data.relayCreateResponseComment == null) {
+                                    swal("Connecter Pour laisser Un commentaire");
+
+                                }else{
+                                    this.commentaire = ""
+                                
+                                    axios({
+                                        url:this.base_url+'/graphql',
+                                        method:'post',
+                                        data:{
+                                            query:`
+                                            query{
+                                                article(id:"${ this.idart }"){
+                                                articleCommentaire{
+                                                edges{
+                                                    node{
+                                                    id,
+                                                    user{
+                                                        id,username,firstName,lastName,image
+                                                    },
+                                                    message,dateAdd,dateUpd
+                                                    response{
+                                                        edges{
+                                                        node{
+                                                            id,
+                                                            user{
+                                                            id,username,firstName,lastName,image
+                                                            },
+                                                            message
+                                                        }
+                                                        }
+                                                    }
+                                                    }
+                                                }
+                                                }
+                                            }
+                                            }
+
+                                            `
+                                        }
+                                    }).then(response=>{
+                                        console.log("get des commentaire de l'aritcle ")
+                                        console.log(response.data)
+                                        this.singleAtircle.articleCommentaire.edges=response.data.data.article.articleCommentaire.edges
+                                        console.log(this.singleAtircle.articleCommentaire.edges)
+                                        toastr.success("Votre Commentaire a été Posté avec Success")
+                                    }).catch((err)=>{
+                                        console.log(err)
+                                    })
+                                    
+                                }
+                           
+                            })  
+                            .catch((err) => {
+                                console.log(err);
+                            })
                     },
-                    reponsebutton:function(){
+                    reponsebutton:function(myId){
+                        this.idComment=myId
                         this.commentform = false;
                         this.reponseform = true;
                     }, 

@@ -130,13 +130,12 @@
                                 </div>
                             </div>
                             <div class="reply-btn">
-                                <a href=""   v-if="singleAtircle.isArchive == false"  v-on:click.prevent="reponsebutton" class="btn-reply text-uppercase">repondre</a>
+                                
+                                <a href="#myComment"   v-if="singleAtircle.isArchive == false"   v-on:click.prevent="reponsebutton(comment.node.id)" class="btn-reply text-uppercase">repondre</a>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <br>
-                    <div  v-for="response  in comment.node.response.edges " class="comment-list left-padding">
+                    <div  v-for="response  in comment.node.response.edges " class="comment-list left-padding ml-50" >
                         <div class="single-comment justify-content-between d-flex">
                             <div class="user justify-content-between d-flex">
                                 <div class="thumb">
@@ -155,6 +154,7 @@
                             </div> -->
                         </div>
                     </div>
+                    <br>
 
                 </div>
                 </div>
@@ -182,7 +182,7 @@
                     </form>
                 </div>
             </div>
-                <div v-if="reponseform" class="comment-form">
+                <div v-if="reponseform" class="comment-form" id="myComment">
                     <h4>Repondre à Un Commentaire</h4>
                     <form>
                         <div class="form-group">
