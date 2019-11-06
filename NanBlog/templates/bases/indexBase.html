@@ -19,9 +19,8 @@
 
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700|Roboto:400,500" rel="stylesheet">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <!--
-            CSS
-            ============================================= -->
+    
+    <!--    CSS    ============================================= -->
     <link rel="stylesheet" href="/static/css/linearicons.css">
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/bootstrap.css">
@@ -31,6 +30,7 @@
     <link rel="stylesheet" href="/static/css/owl.carousel.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <link rel="stylesheet" href="/static/css/toas.css">
+   
     <style>
             .lds-dual-ring {
             display: inline-block;
@@ -230,6 +230,15 @@ crossorigin="anonymous"></script>
 <script src="/static/js/waypoints.min.js"></script>
 <script src="/static/js/mail-script.js"></script>
 <script src="/static/js/main.js"></script>
+<!--  tinyMCE  -->
+<!-- <script type="text/javascript"  src="/static/tinymce/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript"  src="/static/tinymce/js/prism.js"></script>
+<script type="text/javascript"  src="/static/tinymce/css/prism.css"></script>
+
+<script src="{% url 'tinymce-css' %} "></script>
+<script src="{% url 'tinymce-spellcheck-callback' %} "></script>
+{{ myFrom.media }} -->
+
 <!-- Vue js -->
 <script src="/static/js/toas.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -274,6 +283,7 @@ crossorigin="anonymous"></script>
                     userIsAuthenticated:"{{ user.is_authenticated }}",
                     activeColorLike:'',
                     activeColorDisLike:'',
+                    contenue: '',
 
                 },
                 delimiters:["${","}"],
@@ -503,7 +513,7 @@ crossorigin="anonymous"></script>
                                           edges{
                                             node{
                                               user{
-                                                id,lastName,firstName,
+                                                id,lastName,firstName,username
                                               }
                                             }
                                           }
@@ -513,7 +523,7 @@ crossorigin="anonymous"></script>
                                             edges{
                                               node{
                                                 user{
-                                                  lastName,id,firstName,
+                                                  lastName,id,firstName,username
                                                 }
                                               }
                                             }
@@ -570,14 +580,14 @@ crossorigin="anonymous"></script>
                                 }
                                 for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
                                     const element = this.singleAtircle.articleLike.edges[index];
-                                    if (this.firstName == element.node.user.firstName ){
+                                    if (this.userName == element.node.user.username ){
                                         this.activeColorLike='blue'
                                         break
                                     }
                                 }
                                 for (let index = 0; index < this.singleAtircle.Dislike.edges.length; index++) {
                                     const element = this.singleAtircle.Dislike.edges[index];
-                                    if (this.firstName == element.node.user.firstName ){
+                                    if (this.userName == element.node.user.username ){
                                         //console.log(element.node.user.firstName)
                                         this.activeColorDisLike='red'
                                         break
@@ -807,10 +817,8 @@ crossorigin="anonymous"></script>
                             
                             for (let index = 0; index < this.singleAtircle.Dislike.edges.length; index++) {
                                 const element = this.singleAtircle.Dislike.edges[index];
-                                if (this.firstName == element.node.user.firstName ){
+                                if (this.userName == element.node.user.username ){
                                     console.log("bonjour")
-                                    console.log(this.firstName)
-                                    console.log(element.node.user.firstName)
                                     //console.log(element.node.user.firstName)
                                     this.activeColorDisLike='red'
                                     isDisLiked=true
@@ -820,7 +828,7 @@ crossorigin="anonymous"></script>
                             for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
                                 const element = this.singleAtircle.articleLike.edges[index];
                                 console.log("in boucle")
-                                if (this.firstName == element.node.user.firstName ){
+                                if (this.userName == element.node.user.username ){
                                     this.activeColorLike='blue'
                                     isLiked=true
                                     break
@@ -931,7 +939,7 @@ crossorigin="anonymous"></script>
                             for (let index = 0; index < this.singleAtircle.articleLike.edges.length; index++) {
                                 const element = this.singleAtircle.articleLike.edges[index];
                                 console.log("in boucle")
-                                if (this.firstName == element.node.user.firstName ){
+                                if (this.userName == element.node.user.username ){
                                     isLiked=true
                                     this.activeColorLike='blue'
                                     break
@@ -942,7 +950,7 @@ crossorigin="anonymous"></script>
                                 
                                 const element = this.singleAtircle.Dislike.edges[index];
                                 
-                                if (this.firstName == element.node.user.firstName ){
+                                if (this.userName == element.node.user.username ){
                                     console.log("bonjour")
                                     console.log(this.firstName)
                                     console.log(element.node.user.firstName)

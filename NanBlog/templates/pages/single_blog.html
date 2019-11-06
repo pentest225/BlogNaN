@@ -166,6 +166,7 @@
                                     onfocus="this.placeholder = ''" disabled  onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                             </div>
                         </form>
+                        
                 </div>
 
             <div v-else="" >
@@ -176,6 +177,7 @@
                             <textarea class="form-control mb-10" rows="5" name="message" placeholder="Commentaire"
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                         </div>
+                        
                         <a v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
                     </form>
                 </div>

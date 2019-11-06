@@ -86,9 +86,11 @@ def category(request, idcat):
 def single_blog(request,idart):
     connect = request.user.username
     print(connect)
+    myFrom=ArticleFrom()
     data = {
         'idart':idart,
-        'connect':connect
+        'connect':connect,
+        'myFrom':myFrom,
     }
     return render(request,'pages/single_blog.html',data)
 
