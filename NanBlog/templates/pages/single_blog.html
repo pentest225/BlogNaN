@@ -16,7 +16,7 @@
                         Blog Details</a></p>
             </div>
         </div>
-    </d
+    </div>
 </section>
 <!-- End banner Area -->
 
@@ -172,7 +172,13 @@
             <div v-else="" >
                 <div v-if="commentform" class="comment-form">
                     <h4>Laisser Un Commentaire</h4>
+                    <!--MARC END  -->
+                    <form method="post" >
+                        <textarea id="mytextarea" name="mytextarea"></textarea>
+                    </form>
+                    <!--END MARC -->
                     <form>
+
                         <div class="form-group">
                             <textarea  v-model="commentaire" class="form-control mb-10" rows="5" name="message" placeholder="Commentaire" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                         </div>
