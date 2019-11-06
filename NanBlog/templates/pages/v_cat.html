@@ -1,0 +1,65 @@
+{% extends 'bases/dashBase.html' %}
+
+{% block content %}
+
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                        <h2 class="title-1">Category name : ${categorieName}</h2>
+                        <a href="" class="au-btn au-btn-icon au-btn--blue">
+                        <i class="zmdi zmdi-plus"></i>Devenir membre </a>
+                    </div>
+                </div>
+            </div>
+                        
+            <div class="row mt-4">
+                    <div class="col-lg-6" v-for="item in ArticleLikeByCat ">
+                            <div class="card">
+                                            
+                                <img class="card-img-top" :src="base_url_image + item.node.article.image "  alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title mb-3">${item.node.article.titre}</h4>
+                                    <p class="card-text">
+                                            ${item.node.article.description}
+                                    </p>
+        
+                                </div>
+                                <div class="table-data-feature">
+                                    <a :href=``+`${base_url}`+`/dashSingleArticle/`+`${item.node.article.id}`+`` class="item" data-toggle="tooltip" data-placement="top" title="sohw">
+                                        <i class="zmdi zmdi-mail-show"></i>
+                                    </a>
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </button>
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                    <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                        <i class="zmdi zmdi-more"></i>
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                <!-- <article_user
+                v-for="user in userArticesByCat"
+                v-bind:item="user"
+                v-bind:key="user.id"
+                ></article_user>    -->
+                
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright">
+                        <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
