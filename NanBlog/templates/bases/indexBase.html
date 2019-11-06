@@ -20,10 +20,7 @@
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700|Roboto:400,500" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script
-    src="https://cdn.tiny.cloud/1/wd0kkg01km606uh9s3qq16hryr9w7d1kb1qflihtgvxe9zs7/tinymce/5/tinymce.min.js"
-    referrerpolicy="origin"
-    ></script>
+   
     
     <!--    CSS    ============================================= -->
     <link rel="stylesheet" href="/static/css/linearicons.css">
@@ -38,6 +35,15 @@
     
    
     <style>
+            #toast-container {
+                top: auto !important;
+                right: auto !important;
+                bottom: 15%;
+                left:1%;  
+
+            }
+
+
             .lds-dual-ring {
             display: inline-block;
             width: 64px;
@@ -221,7 +227,6 @@
     </footer>
     <!-- End footer Area -->
 </div>
-<script src='https://cdn.tiny.cloud/1/wd0kkg01km606uh9s3qq16hryr9w7d1kb1qflihtgvxe9zs7/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
 <script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
 crossorigin="anonymous"></script>
@@ -237,20 +242,8 @@ crossorigin="anonymous"></script>
 <script src="/static/js/waypoints.min.js"></script>
 <script src="/static/js/mail-script.js"></script>
 <script src="/static/js/main.js"></script>
-<!--  tinyMCE  -->
-<!-- <script type="text/javascript"  src="/static/tinymce/js/tinymce/tinymce.min.js"></script>
-<script type="text/javascript"  src="/static/tinymce/js/prism.js"></script>
-<script type="text/javascript"  src="/static/tinymce/css/prism.css"></script>
 
-<script src="{% url 'tinymce-css' %} "></script>
-<script src="{% url 'tinymce-spellcheck-callback' %} "></script>
-{{ myFrom.media }} -->
 
-<!-- Vue js -->
-<script
-src="https://cdn.tiny.cloud/1/wd0kkg01km606uh9s3qq16hryr9w7d1kb1qflihtgvxe9zs7/tinymce/5/tinymce.min.js"
-referrerpolicy="origin"
-></script>
 <script src="/static/js/toas.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -279,7 +272,7 @@ referrerpolicy="origin"
                     message: '',
                     suscribe:'',
                     search:'',
-                    commentaire:'',
+                    commentaire:document.getElementById("id_contenu").value,
                     base_url:'',
                     reponse:'',
                     commentform:true,
@@ -305,11 +298,6 @@ referrerpolicy="origin"
                     this.idcat="{{idcat}}"
                     this.idart="{{idart}}"
                     this.getdata()
-    
-                    tinymce.init({
-                        selector: '#mytextarea'
-                    });
-
                     //this.reponsebutton()
                 },
                 methods: {
@@ -706,6 +694,8 @@ referrerpolicy="origin"
                             })
                     },
                     postcomment: function() {
+                        this.commentaire=document.getElementById("id_contenu").value
+                        console.log(this.commentaire)
                         this.base_url = 'https://localhost:8000'
                         let formData = new FormData();
                         axios.defaults.xsrfCookieName = 'csrftoken'
@@ -934,6 +924,7 @@ referrerpolicy="origin"
                                     console.log(response.data)
                                     toastr.warning('Connecter Pour Dislike cet article ')
                                     
+                                    
                                         }else{
                                             toastr.success(" Vous n'ai Aimer par cet Article ")
                                             this.disLike+=1
@@ -1135,7 +1126,19 @@ referrerpolicy="origin"
 
                 
                 })
+            
     </script>
+    <script type="text/javascript"  src="/static/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript"  src="/static/tinymce/js/prism.js"></script>
+    <script type="text/javascript"  src="/static/tinymce/css/prism.css"></script>
+
+    <script src="{% url 'tinymce-css' %} "></script>
+    <script src="{% url 'tinymce-spellcheck-callback' %} "></script>
+    {{ myFrom.media }}
+    <script type="text/javascript">(function($){function tinymce4_init(selector){var tinymce4_config={'file_browser_callback':djangoFileBrowser,setup:function(editor){editor.on('change',function(){editor.save();});},"height":220,"width":700,"cleanup_on_startup":true,"custom_undo_redo_levels":20,"selector":"textarea#id_contenu","theme":"modern","plugins":"\n            textcolor save link image media preview codesample contextmenu\n            table code lists fullscreen  insertdatetime  nonbreaking\n            contextmenu directionality searchreplace wordcount visualblocks\n            visualchars code fullscreen autolink lists  charmap print  hr\n            anchor pagebreak\n            ","toolbar1":"\n            fullscreen preview bold italic underline | fontselect,\n            fontsizeselect  | forecolor backcolor | alignleft alignright |\n            aligncenter alignjustify | indent outdent | bullist numlist table |\n            | link image media | codesample |\n            ","toolbar2":"\n            visualblocks visualchars |\n            charmap hr pagebreak nonbreaking anchor |  code |\n            ","contextmenu":"formats | link image","menubar":true,"statusbar":true,"language":"fr_FR","directionality":"ltr"};if(typeof selector!='undefined'){tinymce4_config['selector']=selector;}
+        tinymce.init(tinymce4_config);}
+        tinymce4_init();})();</script>
+    
 </body>
 
 </html>
