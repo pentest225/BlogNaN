@@ -38,6 +38,15 @@
     
    
     <style>
+            #toast-container {
+                top: auto !important;
+                right: auto !important;
+                bottom: 15%;
+                left:1%;  
+
+            }
+
+
             .lds-dual-ring {
             display: inline-block;
             width: 64px;
@@ -879,6 +888,7 @@ referrerpolicy="origin"
                                     console.log(response.data)
                                     toastr.warning('Connecter Pour Dislike cet article ')
                                     
+                                    
                                         }else{
                                             toastr.success(" Vous n'ai Aimer par cet Article ")
                                             this.disLike+=1
@@ -911,7 +921,7 @@ referrerpolicy="origin"
                             data: {
                                 query: `
                                     mutation{
-                              relayCreateResponseComment(input:{commentaire:"",message:"${ this.idart }",status:true}){
+                              relayCreateResponseComment(input:{commentaire:"",message:"${ this.reponse }",status:true}){
                                 response{
                                   message
                                     }
