@@ -1,0 +1,254 @@
+{% extends 'bases/mdbase.html' %}
+
+{% block content %}
+        <!-- page content -->
+        <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+            <div class="title_left">
+                <h3>Mes Articles<small> Validés</small> </h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                <div class="x_title">
+                    <h2>Liste des articles</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">modifier</a>
+                            <a class="dropdown-item" href="#">Supprimer</a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div class="row">
+                    {% for artic in articles %}
+                        <div class="col-md-55">
+                        <div class="thumbnail">
+                        <a href="{% url 'project_detail_dash' artic.pk  %}">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="{{ artic.image.url }}" alt="image" />
+                            <div class="mask">
+                            <p>{{ artic.titre }}</p>
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' artic.pk  %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                       
+                        <div class="caption">
+                            <p>{{ artic.description }}</p>
+                        </div>
+                        </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    {% comment %} <div class="col-md-55">
+                        <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="/static/admin/images/media.jpg" alt="image" />
+                            <div class="mask">
+                            <p>Detail</p>
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p>Snow and Ice Incoming for the South</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-55">
+                        <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="/static/admin/images/media.jpg" alt="image" />
+                            <div class="mask">
+                            <p>Detail</p>
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p>Snow and Ice Incoming for the South</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-55">
+                        <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="/static/admin/images/media.jpg" alt="image" />
+                            <div class="mask">
+                            <p>Detail</p>
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p>Snow and Ice Incoming for the South</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-55">
+                        <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="/static/admin/images/media.jpg" alt="image" />
+                            <div class="mask">
+                            <p>Detail</p>
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p>Snow and Ice Incoming for the South</p>
+                        </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-55">
+                        <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="/static/admin/images/media.jpg" alt="image" />
+                            <div class="mask no-caption">
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p><strong>Image Name</strong>
+                            </p>
+                            <p>Snow and Ice Incoming</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-55">
+                        <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="/static/admin/images/media.jpg" alt="image" />
+                            <div class="mask no-caption">
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p><strong>Image Name</strong>
+                            </p>
+                            <p>Snow and Ice Incoming</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-55">
+                        <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="/static/admin/images/media.jpg" alt="image" />
+                            <div class="mask no-caption">
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p><strong>Image Name</strong>
+                            </p>
+                            <p>Snow and Ice Incoming</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-55">
+                        <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="/static/admin/images/media.jpg" alt="image" />
+                            <div class="mask no-caption">
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p><strong>Image Name</strong>
+                            </p>
+                            <p>Snow and Ice Incoming</p>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-55">
+                        <div class="thumbnail">
+                        <div class="image view view-first">
+                            <img style="width: 100%; display: block;" src="/static/admin/images/media.jpg" alt="image" />
+                            <div class="mask no-caption">
+                            <div class="tools tools-bottom">
+                                <a href="{% url 'project_detail_dash' %}"><i class="fa fa-link"></i></a>
+                                <a href="{% url 'form_article_dash' %}"><i class="fa fa-pencil"></i></a>
+                                <a href="#"><i class="fa fa-times"></i></a>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <p><strong>Image Name</strong>
+                            </p>
+                            <p>Snow and Ice Incoming</p>
+                        </div>
+                        </div>
+                    </div> {% endcomment %}
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            
+        </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        {% endblock content %}

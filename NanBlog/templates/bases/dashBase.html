@@ -1,687 +1,698 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
+    <title>Gentelella Alela! |</title>
 
-    <!-- Title Page-->
-    <title>Dashboard</title>
+    <!-- Bootstrap -->
+    <link
+      href="/static/admin/vendors/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="/static/admin/vendors/font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <!-- NProgress -->
+    <link
+      href="/static/admin/vendors/nprogress/nprogress.css"
+      rel="stylesheet"
+    />
+    <!-- iCheck -->
+    <link
+      href="/static/admin/vendors/iCheck/skins/flat/green.css"
+      rel="stylesheet"
+    />
 
-    <!-- Fontfaces CSS-->
-    <link href="/static/Dash/css/font-face.css" rel="stylesheet" media="all">
-    <link href="/static/Dash/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <link href="/static/Dash/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
-    <link href="/static/Dash/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <!-- Custom Theme Style -->
+    <link href="/static/admin/build/css/custom.min.css" rel="stylesheet" />
+  </head>
 
-    <!-- Bootstrap CSS-->
-    <link href="/static/Dash/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
-
-    <!-- Vendor CSS-->
-    <link href="/static/Dash/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
-    <link href="/static/Dash/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
-    <link href="/static/Dash/vendor/wow/animate.css" rel="stylesheet" media="all">
-    <link href="/static/Dash/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
-    <link href="/static/Dash/vendor/slick/slick.css" rel="stylesheet" media="all">
-    <link href="/static/Dash/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="/static/Dash/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
-    <!-- Main CSS-->
-    <link href="/static/Dash/css/theme.css" rel="stylesheet" media="all"> 
-    <!--  tinyMCE  -->
-    <script type="text/javascript"  src="/static/tinymce/js/tinymce/tinymce.min.js"></script>
-    <script type="text/javascript"  src="/static/tinymce/js/prism.js"></script>
-    <script type="text/javascript"  src="/static/tinymce/css/prism.css"></script>
-
-    <script src="{% url 'tinymce-css' %} "></script>
-    <script src="{% url 'tinymce-spellcheck-callback' %} "></script>
-    {{ myFrom.media }}
-</head>
-
-<body class="animsition" >
-    <div class="page-wrapper" id="app">
-        <!-- HEADER MOBILE-->
-        <header class="header-mobile d-block d-lg-none">
-            <div class="header-mobile__bar">
-                <div class="container-fluid">
-                    <div class="header-mobile-inner">
-                        <a class="logo" href="{% url 'dash' %}">
-                            <img src="/static/Dash/images/icon/logo.png" alt="CoolAdmin" />
-                        </a>
-                        <button class="hamburger hamburger--slider" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
+  <body class="nav-md">
+    <div id="app">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="{% url 'admin_visiteur_dash' %}" class="site_title"><i class="fa fa-paw"></i> <span>Admin
+                            Visiteur</span></a>
+                </div>
+        
+                <div class="clearfix"></div>
+        
+                <!-- menu profile quick info -->
+                <div class="profile clearfix">
+                    <div class="profile_pic">
+                        <img src="{{user.image.url}}" alt="..." class="img-circle profile_img">
+                    </div>
+                    <div class="profile_info">
+                        <span>Welcome,</span>
+                        <h2>{{user.username}}</h2>
                     </div>
                 </div>
-            </div>
-            <nav class="navbar-mobile">
-                    <div class="container-fluid">
-                        <ul class="navbar-mobile__list list-unstyled">
-                                <li><a href="{% url 'dash' %}">Dashboard</a></li>
-                            <li class="active has-sub" v-for="item in dataAllCategory">
-                                    <a class="js-arrow" :href=``+`${base_url}`+`/allCat/`+`${item.node.id}`+``>
-                                        <i class="fas fa-tachometer-alt"></i>${item.node.nom} </a>
-                                </li>
-                            <li><a href="{% url 'index' %}">Home page </a></li>
-                        </ul>
-                    </div>
-                </nav>
-        </header>
-        <!-- END HEADER MOBILE-->
-
-        <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo">
-                <a href="#">
-                    <img src="/static/Dash/images/icon/logo.png" alt="Cool Admin" />
-                </a>
-            </div>
-            <div class="menu-sidebar__content js-scrollbar1">
-                <nav class="navbar-sidebar">
-                        <ul class="list-unstyled navbar__list">
-                            <li><a href="{% url 'dash' %}">Dashboard</a></li>
-                                
-                            <li class="active has-sub" v-for="item in dataAllCategory">
-                                <a class="js-arrow" :href=``+`${base_url}`+`/allCat/`+`${item.node.id}`+``>
-                                    <i class="fas fa-tachometer-alt"></i>${item.node.nom} </a>
+                <!-- /menu profile quick info -->
+        
+                <br />
+        
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <h3>General</h3>
+                        <ul class="nav side-menu">
+                            <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{% url 'admin_visiteur_dash' %}">Dashboard</a></li>
+                                    <li><a href="{% url 'admin_visiteur_dash' %}">Devenir Membre</a></li>
+                                </ul>
                             </li>
-                            <li><a href="{% url 'index' %}">Home page </a></li>
+                            <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{% url 'tables_visiteur_dash' %}">Mes Commentaires</a></li>
+                                    <li><a href="{% url 'profil_visiteur_dash' %}">Profile</a></li>
+                                </ul>
+                            </li>
+                            <li><a><i class="fa fa-edit"></i> Catégorie <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li v-for="item in dataAllCategory"><a :href=`${base_url}/`+`category/`+`${item.node.id}`>${ item.node.nom }</a> </li>
+                                </ul>
+                            </li>
+        
                         </ul>
-                    </nav>
-            </div>
-        </aside>
-        <!-- END MENU SIDEBAR-->
-
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
-            <!-- HEADER DESKTOP-->
-            <header class="header-desktop">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                                <button class="au-btn--submit" type="submit">
-                                    <i class="zmdi zmdi-search"></i>
-                                </button>
-                            </form>
-                            <div class="header-button">
-                                <div class="noti-wrap">
-                                    <div class="noti__item js-item-menu">
-                                        <i class="zmdi zmdi-comment-more"></i>
-                                        <span class="quantity">1</span>
-                                        <div class="mess-dropdown js-dropdown">
-                                            <div class="mess__title">
-                                                <p>You have 2 news message</p>
-                                            </div>
-                                            <div class="mess__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="/static/Dash/images/icon/avatar-06.jpg" alt="Michelle Moreno" />
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Michelle Moreno</h6>
-                                                    <p>Have sent a photo</p>
-                                                    <span class="time">3 min ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="mess__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="/static/Dash/images/icon/avatar-04.jpg" alt="Diane Myers" />
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Diane Myers</h6>
-                                                    <p>You are now connected on message</p>
-                                                    <span class="time">Yesterday</span>
-                                                </div>
-                                            </div>
-                                            <div class="mess__footer">
-                                                <a href="#">View all messages</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="noti__item js-item-menu">
-                                        <i class="zmdi zmdi-email"></i>
-                                        <span class="quantity">1</span>
-                                        <div class="email-dropdown js-dropdown">
-                                            <div class="email__title">
-                                                <p>You have 3 New Emails</p>
-                                            </div>
-                                            <div class="email__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="/static/Dash/images/icon/avatar-06.jpg" alt="Cynthia Harvey" />
-                                                </div>
-                                                <div class="content">
-                                                    <p>Meeting about new dashboard...</p>
-                                                    <span>Cynthia Harvey, 3 min ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="email__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="/static/Dash/images/icon/avatar-05.jpg" alt="Cynthia Harvey" />
-                                                </div>
-                                                <div class="content">
-                                                    <p>Meeting about new dashboard...</p>
-                                                    <span>Cynthia Harvey, Yesterday</span>
-                                                </div>
-                                            </div>
-                                            <div class="email__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="/static/Dash/images/icon/avatar-04.jpg" alt="Cynthia Harvey" />
-                                                </div>
-                                                <div class="content">
-                                                    <p>Meeting about new dashboard...</p>
-                                                    <span>Cynthia Harvey, April 12,,2018</span>
-                                                </div>
-                                            </div>
-                                            <div class="email__footer">
-                                                <a href="#">See all emails</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="noti__item js-item-menu">
-                                        <i class="zmdi zmdi-notifications"></i>
-                                        <span class="quantity">3</span>
-                                        <div class="notifi-dropdown js-dropdown">
-                                            <div class="notifi__title">
-                                                <p>You have 3 Notifications</p>
-                                            </div>
-                                            <div class="notifi__item">
-                                                <div class="bg-c1 img-cir img-40">
-                                                    <i class="zmdi zmdi-email-open"></i>
-                                                </div>
-                                                <div class="content">
-                                                    <p>You got a email notification</p>
-                                                    <span class="date">April 12, 2018 06:50</span>
-                                                </div>
-                                            </div>
-                                            <div class="notifi__item">
-                                                <div class="bg-c2 img-cir img-40">
-                                                    <i class="zmdi zmdi-account-box"></i>
-                                                </div>
-                                                <div class="content">
-                                                    <p>Your account has been blocked</p>
-                                                    <span class="date">April 12, 2018 06:50</span>
-                                                </div>
-                                            </div>
-                                            <div class="notifi__item">
-                                                <div class="bg-c3 img-cir img-40">
-                                                    <i class="zmdi zmdi-file-text"></i>
-                                                </div>
-                                                <div class="content">
-                                                    <p>You got a new file</p>
-                                                    <span class="date">April 12, 2018 06:50</span>
-                                                </div>
-                                            </div>
-                                            <div class="notifi__footer">
-                                                <a href="#">All notifications</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="account-wrap">
-                                    <div class="account-item clearfix js-item-menu dropdown">
-                                        <div  class=" row dropdown-toggle"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  >
-                                            <div class="image">
-                                                    <img src="{{user.image.url}}" alt="" height=40 width=40 class="rounded-circle">
-                                                </div>
-                                                
-                                        </div>
-
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <div class="info clearfix dropdown-item">
-                                                <div class="image">
-                                                    <a href="#">
-                                                        <img src="{{user.image.url}}" alt="" height=60 width=60 class="rounded-circle">
-                                                    </a>
-                                                </div>
-                                                <div class="content">
-                                                    <h5 class="name">
-                                                        <a href="#">{{user.username}}</a>
-                                                    </h5>
-                                                    <span class="email">{{user.laste_name}} {{user.first_name}} </span>
-                                                </div>
-                                            </div>
-                                            <div class="account-dropdown__body dropdown-item">
-                                                <div class="account-dropdown__item">
-                                                    <a href="{% url 'dashProfil' %}">
-                                                        <i class="zmdi zmdi-account"></i>Account</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
-                                                </div>
-                                            </div>
-                                            <div class="account-dropdown__footer dropdown-item">
-                                                <a href="{% url 'account_logout' %}">
-                                                    <i class="zmdi zmdi-power"></i>Logout</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+        
+        
                 </div>
-            </header>
-            <!-- HEADER DESKTOP-->
-
-            <!-- MAIN CONTENT-->
-            {% block content %}
-
-            {% endblock content %}
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
-           
+                <!-- /sidebar menu -->
+        
+                <!-- /menu footer buttons -->
+                <div class="sidebar-footer hidden-small">
+                    <a data-toggle="tooltip" data-placement="top" title="Settings">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="Lock">
+                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                    </a>
+                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="{% url 'account_logout' %}">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                    </a>
+                </div>
+                <!-- /menu footer buttons -->
+            </div>
         </div>
+        
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <div class="nav toggle">
+                    <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div>
+                <nav class="nav navbar-nav">
+                    <ul class=" navbar-right">
+                        <li class="nav-item dropdown open" style="padding-left: 15px;">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
+                                data-toggle="dropdown" aria-expanded="false">
+                                <img src="{{user.image.url}}" alt="">{{ user.last_name }} {{ user.first_name }}
+                            </a>
+                            <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'profil_visiteur_dash' %}"> Profile</a>
+                                <a class="dropdown-item" href="{% url 'account_change_password' %}"> Changer votre mot de passe</a>
+                                <a class="dropdown-item" href="javascript:;">Help</a>
+                                <a class="dropdown-item"  href="{% url 'account_logout' %}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                            </div>
+                        </li>
+        
+                        <li role="presentation" class="nav-item dropdown open">
+                            <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1"
+                                data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="badge bg-green">1</span>
+                            </a>
+                            <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                                <li class="nav-item">
+                                    <a class="dropdown-item">
+                                        <span class="image"><img src="/static/admin/images/img.jpg"
+                                                alt="Profile Image" /></span>
+                                        <span>
+                                            <span>John Smith</span>
+                                            <span class="time">3 mins ago</span>
+                                        </span>
+                                        <span class="message">
+                                            Film festivals used to be do-or-die moments for movie makers. They were where...
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+        {% block content %} 
+        
+        {% endblock content %}
 
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by
+            <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
     </div>
-    <!-- Jquery JS-->
-    <script src="/static/Dash/vendor/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS-->
-    <script src="/static/Dash/vendor/bootstrap-4.1/popper.min.js"></script>
-    <script src="/static/Dash/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
-    <script src="/static/Dash/vendor/slick/slick.min.js">
-    </script>
-    <script src="/static/Dash/vendor/wow/wow.min.js"></script>
-    <script src="/static/Dash/vendor/animsition/animsition.min.js"></script>
-    <script src="/static/Dash/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
-    <script src="/static/Dash/vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="/static/Dash/vendor/counter-up/jquery.counterup.min.js">
-    </script>
-    <script src="/static/Dash/vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="/static/Dash/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="/static/Dash/vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="/static/Dash/vendor/select2/select2.min.js">
-    </script>
-
-    <!-- Main JS-->
-    <!-- Vue js -->
-    <script src="/static/Dash/js/main.js"></script>
+    </div>
+   
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <script>
-            Vue.component('comment_user',{
-                delimiters:["${","}"],
-                template:`
-                
-                <div class="au-message__item unread">
-                    <div class="au-message__item-inner">
-                        <div class="au-message__item-text">
-                            <div class="avatar-wrap">
-                                <div class="avatar">
-                                    <img :src='`+"base_url_image "+ "item.node.user.node.image"+ `' alt="John Smith">
-                                </div>
-                            </div>
-                            <div class="text" >
-                                <h5 class="name" >`+" ${item.node.user.username}  "+`</h5>
-                                <p id="penComment" v-html="item.node.message"></p>
-                            </div>
-                        </div>
-                        <div class="au-message__item-time">
-                            <span>`+" ${item.node.dateAdd} "+`</span>
-                        </div>
-                    </div>
-                </div>
-                `,
-                props:['item']
-            })
-            
-            var app = new Vue({
-                el: '#app',
-                data: {
-                    dataAllCategory:[],
-                    datSingleCategory:[],
-                    categoryId:'',
-                    nom: '',
-                    sujet: '',
-                    email: '',
-                    message: '',
-                    suscribe:'',
-                    Patrick:"POTH ",
-                    articleActive:true,
-                    idUser:'{{id}}',
-                    actionFrom:'',
-                    myCom:'bonbhhh',
-                    commentText:'',
-                    lastArticle:[],
-                    listeComment:[],
-                    userArtices:[],
-                    userArticesByCat:[],
-                    loader:false,
-                    // UserName:document.getElementById('UserName').value,
-                    base_url:'https://localhost:8000',
-                    base_url_image:'https://localhost:8000/media/',
-                    NameUser:"{{user.username}}",
-                    singleArticle:[],
-                    categorieName:'',
-                    emptyArticles:false,
-                    cat: '',
-                    descriptions: '',
-                    contenue: '',
-                    title: '',
-                    file: '',
-                    returntrue: false,
-                    returnfalse: false,
-                    thereIsArticles:true,
-                    lastArticleLike:[],
-                    ArticleLikeByCat:[],
-                },
-                delimiters:["${","}"],
-                mounted(){
-                    this.UserName="{{user.username}}";
-                    this.idArticle="{{id}}";
-                    this.categoryId="{{idCat}}";
-                    this.getdata();
-    
-                },
-                beforeUpdate() {
-                    this.loader=true;
-                    this.getArticleByCatId();
-                    this.getLikeArticleByCatId();
-                    
-                },
-                methods: {
-                    getdata: function(){
-                        // this.base_url = 'localhost:8000'
-                        console.log('data getting')
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios({
-                            url:''+this.base_url + '/graphql',
-                            method: 'post',
-                            data: {
-                                query: `
-                                query{
-                                    allUser(username:"${this.UserName}"){
+    var app = new Vue({
+            el: '#app',
+            data: {
+                base_url: '',
+                dataAllCategory: [],
+                userinfos: [],
+                dataAllarticle: [],
+                datSingleCategory: [],
+                singleAtircle: [],
+                categoryId: '',
+                // CarouselAll: [],
+                // Popular: [],
+                idcat: '',
+                idart: '',
+                utilisateur: '',
+                nom: '',
+                sujet: '',
+                email: '',
+                message: '',
+                suscribe: '',
+                search: '',
+                base_url: '',
+                reponse: '',
+                commentform: true,
+                reponseform: false,
+                searchdiv: false,
+                searchmessage: '',
+                trouver: '',
+            },
+            delimiters: ["${", "}"],
+            mounted() {
+                this.utilisateur = "{{user.username}}";
+                this.idart = "{{idart}}";
+                this.getdata()
+                //this.reponsebutton()
+            },
+            methods: {
+                getdata: function () {
+                    this.base_url = 'https://127.0.0.1:8000'
+                    console.log('data getting')
+                    axios.defaults.xsrfCookieName = 'csrftoken'
+                    axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                    axios({
+                        url: this.base_url + '/graphql',
+                        method: 'post',
+                        data: {
+                            query: `
+                               query{
+                                    allUser(username:"${ this.utilisateur }"){
                                         edges{
                                         node{
-                                            id,username,lastName,firstName,image,email,
-                                                    
-                                            specialite{edges{
-                                            node{
-                                                specialiste,
-                                            },
-                                            },
-                                            },social{
-                                            edges{
-                                                node{
-                                                id,name,lien
-                                                }
-                                            }
-                                            },
+                                            firstName,
+                                            lastName,
+                                            username,
+                                            email,
                                             userLike{
                                             edges{
                                                 node{
-                                                id,article{
-                                                    id,titre,description,image,isArchive,status,dateAdd,dateUpd,
+                                                article{
+                                                    titre,
+                                                    vue,
                                                     categorie{
-                                                    id,nom
-                                                    },
-                                                    auteur{
-                                                    id,username,firstName,lastName,image,description,
-                                                    social{
+                                                    nom,
+                                                    }
+                                                    contenu,
+                                                    image,
+                                                    description,
+                                                    imageSingle,
+                                                    articleCommentaire {
+                                                    edges {
+                                                        node {
+                                                        user{
+                                                            username,
+                                                            firstName,
+                                                            lastName,
+                                                        }
+                                                                        message
+                                                        dateUpd
+                                                        dateAdd
+                                                        }
+                                                    }
+                                                    }
+                                                }
+                                                
+                                                }
+                                            }
+                                            }
+                                        }
+                                        }
+                                    }
+                                    allCategories{
+                                        edges{
+                                            node{
+                                                nom,
+                                                id,
+                                                articleCategorie{
+                                                totalCount,
+                                                edges{
+                                                    node{
+                                                    id,
+                                                    titre,
+                                                    vue,
+                                                    contenu,
+                                                    image,
+                                                    description,
+                                                    imageSingle,
+                                                    dateAdd
+                                                    Dislike{
+                                                        edgeCount,
                                                         edges{
                                                         node{
-                                                            id,lien
+                                                            user{
+                                                            username,
+                                                            lastName,
+                                                            firstName,
+                                                            }
                                                         }
                                                         }
-                                                    },
-                  
                                                     }
-                                                    tag{
-                                                    edges{
+                                                    articleLike{
+                                                        edgeCount,
+                                                        edges{
                                                         node{
-                                                        id,nom
+                                                            user{
+                                                            username, 
+                                                            lastName,
+                                                            firstName,
+                                                            }
                                                         }
-                                                    }
-                                                    },
-                                                    contenu
-                
-                                                }
-                                                }
-                                            }
-                                            },
-                                                articleAuteur{
-                                            edges{
-                                                node{
-                                                id,titre,description,image,contenu,isArchive,imageSingle,dateAdd,dateUpd,status,categorie{
-                                                id,nom
-                                                }
-                                                articleCommentaire{
-                                                    edges{
-                                                    node{
-                                                        id,message,sujet,status,dateAdd,dateUpd,
-                                                        user{
-                                                            username,firstName,lastName,image,email,
-                                                        specialite{edges{
-                                                                        node{
-                                                                        specialiste,
-                                                                        },
-                                                                    },
-                                                        },social{
-                                                                edges{
-                                                                    node{
-                                                                    id,name,lien
-                                                                    }
-                                                                }
-                                                                }
                                                         }
                                                     }
                                                     }
                                                 }
                                                 }
                                             }
-                                            }
-                                        },
-                                        }
-                                    },
-                                    article(id:"${this.idArticle}"){
-                                        id,categorie {
-                                        id,nom
-                                        },titre,description,image,contenu,isArchive,imageSingle,status,dateAdd,dateUpd,
-                                        tag{
-                                            edges{
-                                            node{
-                                            id,nom
-                                            }
-                                        } 
-                                        },articleCommentaire{
-                                        edges{
-                                            node{
-                                            id,sujet,dateAdd,dateUpd,user{
-                                                email,username,image,firstName
-                                            }
-                                            }
-                                        }
-                                        },articleLike{
-                                        edges{
-                                            node{
-                                            id,user{
-                                                id,username,firstName
-                                            }
-                                            }
-                                        }
-                                        }
-                                    },
-                                    allCategories{
-                                            edges{
-                                            node{
-                                                id,nom,status,dateAdd,dateUpd
-                                            }
-                                            }
-                                        },
-                                        category(id:"Q2F0ZWdvcmllTm9kZTox"){
-                                            id,nom,status,dateAdd,dateUpd
                                         }
                                     }
-                               `
-                            }
-                        })
+                                    }
+                                    
+                                `
+                        }
+                    })
                         .then(response => {
                             result = response.data.data
-                            console.log(response.data)
-                            console.log(result.allUser.edges[0].node.articleAuteur)
+                            console.log('sddsf')
+                            console.log(result)
+                            this.dataAllCategory = result.allCategories.edges
+                            this.userinfos = result.allUser.edges
+                            console.log(this.dataAllCategory)
+                            console.log(this.userinfos)
+                            this.categoryId = result.category
+                            // this.dataAllarticle = result.allArticles.edges
+                            // this.categoryId = result.category
+                            // this.singleAtircle = result.article
+                            // this.CarouselAll = this.dataAllarticle.slice(1, 4)
+                            //this.Popular = result.allArticles.edges.node
+                            //console.log(this.idcat)
+                            //console.log(this.idart)
+                            // console.log(this.categoryId)
 
-                            if (result.allUser.edges[0].node.articleAuteur.edges.length == 0){
-                                this.emptyArticles=true
-                                this.thereIsArticles=false
-                            }
-                            else{
-                                this.lastArticleLike=result.allUser.edges[0].node.articleAuteur.edges[0]
-                                this.lastArticle=result.allUser.edges[0].node.articleAuteur.edges[0]
-                                this.listeComment=this.lastArticle.node.articleCommentaire.edges
-                                this.singleArticle=result.article
-                                this.dataAllCategory=result.allCategories.edges
-                                this.userArticles=result.allUser.edges[0].node.articleAuteur
-                                this.userArticlesLike=result.allUser.edges[0].node.userLike
-                                console.log("##################### All article user {{ user.username }}")
-                                // console.log(this.listeComment)
-                                console.log("Single Article ")
-                                console.log(this.userArticles)
-                                this.emptyArticles=false
-                                this.thereIsArticles=true
-                            }
-                            
-                        })  
-                        .catch((err) => {
-                            console.log(err);
-                        })
-                    },
-                    sendComment:function(){
-                        this.actionFrom="addContent"
-                        this.idArticle=myV
-                        this.idUser=idUser
-    
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                            axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                            axios.post('https://localhost:8000/updateArticle', {
-                                action: '' + this.actionFrom,
-                                idArticle: '' + this.idArticle,
-                                idUser:''+this.idUser,
-                                comment:''+this.myCom,
-                                }).then(response => {
-                                    console.log(response) 
-                                    if(response.data.addCommentOk){
-                                        swal("Cemment add ", "", "success");
-                                    }
-                                    else{
-                                        this.error=true
-                                        this.isSuccess=false
-                                        this.messageRes=response.data.message
-                                    }
-                                    this.isregister=false
-                                    console.log("success variable"+this.isSuccess)
-                                    console.log("success variable"+this.error)
-                                })
-                                .catch((err) => {
-                                    console.log(err);
-                                    this.isregister=false
-                                })
-                        },
-                        getArticleByCatId:function(){
-                            
-                            console.log(this.userArticles.edges)
-                            console.log(this.categoryId)
-                            for (let i = 0; i < this.userArticles.edges.length; i++) {
-                                const element = this.userArticles.edges[i];
-                                if (element.node.categorie.id == this.categoryId) {
-                                    this.userArticesByCat.push(element)
-                                }
-                            }
-                            for (let j = 0; j < this.dataAllCategory.length ; j++) {
-                                console.log("Bonsoir ")
-                                
-                                const element = this.dataAllCategory[j];
-                                if (element.node.id == this.categoryId) {
-                                    this.categorieName=element.node.nom
-                                }
-                            }
-                            this.loader=false
-                    },
-                    handleFileUploaded: function() {
-                        this.file = this.$refs.file.files[0];
-                    },
-                    addarticle: function() {
-                        let formData = new FormData();
-                        formData.append('categorie', this.cat);
-                        formData.append('title', this.title);
-                        formData.append('description', this.descriptions);
-                        formData.append('image', this.file);
-                        formData.append('contenu', this.contenue);
-                        
-                        axios.defaults.xsrfCookieName = 'csrftoken'
-                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        axios.post('https://127.0.0.1:8000/darticle',
-                            formData,
-                            {
-                                headers: {
-                                    
-                                    'Content-Type': 'multipart/form-data',
-                                }
-                        }).then((response) => {
-                            console.log(response.data);
-                            console.log(response.data.succes); 
-                            this.result = response.data;
-                            console.log(this.result.succes);
-                            if (this.result.succes){
-                                this.returntrue=true
-                                this.returnfalse=false
-
-                            }else{
-                                this.returnfalse=true
-                                this.returntrue=false
-                            }
-                        
                         })
                         .catch((err) => {
                             console.log(err);
-                            this.returnfalse=false;
-                            this.returntrue = false;
                         })
-                    },
-                    },
-                    getLikeArticleByCatId:function(){
-                            for (let i = 0; i < this.userArticlesLike.edges.length; i++) {
-                                const element = this.userArticlesLike.edges[i];
-                                console.log('ok ok')
-                                console.log(this.userArticlesLike)
-                                if (element.node.article.categorie.id == this.categoryId) {
-
-                                    this.ArticleLikeByCat.push(element)
-                                }
-                            }
-                            for (let j = 0; j < this.dataAllCategory.length ; j++) {
-                                const element = this.dataAllCategory[j];
-                                if (element.node.id == this.idArticle) {
-                                    this.categorieName=element.node.nom
-                                }
-                            }
-                            this.loader=false
-                    }
                 },
-    
-    
-                )
-    
-        
-        </script>
-    
+                // sendmessage: function () {
+                //     axios.defaults.xsrfCookieName = 'csrftoken'
+                //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                //     let formData = new FormData();
+                //     formData.append('nom', '' + this.nom);
+                //     formData.append('sujet', '' + this.sujet);
+                //     formData.append('email', '' + this.email);
+                //     formData.append('message', '' + this.message);
+                //     axios.post('https://127.0.0.1:8000/contacts/message', formData,
+                //         {
+                //         }).then(response => {
+                //             console.log(response)
+                //             if (response.data.succes == true) {
+                //                 new Toast({
+                //                     message: 'Votre Message a été envoyé avec Success',
+                //                     type: 'success'
+                //                 });
+                //                 this.nom = ''
+                //                 this.message = ''
+                //                 this.email = ''
+                //                 this.sujet = ''
+                //             } else {
+                //                 swal("Tous les champs Sont requis", "", "error");
+                //             }
 
-</body>
+                //         })
+                //         .catch((err) => {
+                //             console.log(err);
+                //         })
+                // },
+                // suscription: function () {
+                //     axios.defaults.xsrfCookieName = 'csrftoken'
+                //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                //     let formData = new FormData();
+                //     formData.append('suscribe', '' + this.suscribe);
+                //     axios.post('https://127.0.0.1:8000/contacts/souscription', formData,
+                //         {
+                //         }).then(response => {
 
+                //             console.log(response)
+                //             if (response.data.succes == true) {
+                //                 swal("Merci d'avoir Souscrire au Service Newlestter", "", "success");
+                //                 this.email = ''
+
+                //             } else {
+                //                 swal("Entrer Votre adresse Mail pour Souscrire Au service Newlestter de nan blog", "", "error");
+                //             }
+
+                //         })
+                //         .catch((err) => {
+                //             console.log(err);
+                //         })
+                // },
+                // postcomment: function () {
+                //     this.base_url = 'https://127.0.0.1:8000'
+                //     let formData = new FormData();
+                //     axios.defaults.xsrfCookieName = 'csrftoken'
+                //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                //     formData.append('commentaire', '' + this.commentaire);
+                //     // console.log(this.commentaire);
+                //     // console.log (this.idart);
+                //     axios({
+                //         url: this.base_url + '/graphql',
+                //         method: 'post',
+                //         data: {
+                //             query: `
+                //                 mutation{
+                //                     relayCreateComment(input:{sujet:"testgraph",message:"${ this.commentaire}",article:"${this.idart}",status:true}){
+                //                       comment{
+                //                         message
+                //                       }
+                //                     }
+                //                   }
+                //             `
+                //         }
+                //     })
+                //         .then(response => {
+                //             console.log(response)
+                //             if (response.data.data.relayCreateComment != null) {
+                //                 new Toast({
+                //                     message: 'Commentaire envoyer avec success',
+                //                     type: 'success'
+                //                 });
+                //             } else {
+                //                 swal("Entrer Votre Commentaire ");
+                //             }
+                //         })
+                //         .catch((err) => {
+                //             console.log(err);
+                //         })
+                // },
+                // searchpost: function () {
+                //     this.base_url = 'https://127.0.0.1:8000'
+                //     console.log('data getting')
+                //     let formData = new FormData();
+                //     axios.defaults.xsrfCookieName = 'csrftoken'
+                //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                //     formData.append('search', '' + this.search);
+                //     axios({
+                //         url: this.base_url + '/graphql',
+                //         method: 'post',
+                //         data: {
+                //             query: `
+                //                 query{
+                //                     allArticles(status:true,titre_Icontains:"${ this.search}"){
+                //                                                           edges{
+                //                                                               node{
+                //                                                                   id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
+                //                                                                   tag{
+                //                                                                   edges{
+                //                                                                       node{
+                //                                                                       id,nom
+                //                                                                       }
+                //                                                                   }
+                //                                                                               },
+                //                                                                   categorie{
+                //                                                                   nom
+                //                                                                   },
+                //                                                                   articleCommentaire{
+                //                                                                   edges{
+                //                                                                       node{
+                //                                                                       user{
+                //                                                                           id,username,image,lastName,firstName
+                //                                                                       },
+                //                                                                         response{
+                //                                                                           edges{
+                //                                                                             node{
+                //                                                                               user{
+                //                                                                                 id,firstName,lastName,image
+                //                                                                               }
+                //                                                                             }
+                //                                                                           }
+                //                                                                         },
+                //                                                                       ,message,sujet,dateAdd,dateUpd
+                //                                                                       }
+                //                                                                   }
+                //                                                       },
+                //                                                                   auteur{
+                //                                                                   username,firstName,email,isStaff,isActive,image,description,lastName
+                //                                                                   social{
+                //                                                                       edges{
+                //                                                                       node{
+                //                                                                           id,name,lien
+                //                                                                       }
+                //                                                                       }
+                //                                                                   },
+                //                                                                   specialite{
+                //                                                                       edges{
+                //                                                                       node{
+                //                                                                           id,specialiste
+                //                                                                       }
+                //                                                                       }
+                //                                                                   }
+                //                                                       },
+                //                                                                     articleLike{
+                //                                                                       edgeCount
+                //                                                                     edges{
+                //                                                                       node{
+                //                                                                         user{
+                //                                                                           id,lastName,firstName,image
+                //                                                                         }
+                //                                                                       }
+                //                                                                     }
+                //                                                                   },
+                //                                                                 contenu,isArchive
+                //                                                               }   
+                //                                                               }
+                //                                                       }
+                //                   }
+                //             `
+
+                //         }
+                //     })
+                //         .then(response => {
+                //             result = response.data.data
+                //             this.dataAllarticle = result.allArticles.edges
+                //             this.trouver = this.dataAllarticle.length
+                //             this.searchmessage = (this.trouver + ' Resultat Trouver Pour la Recherche ' + this.search)
+                //             this.searchdiv = true
+                //         })
+                //         .catch((err) => {
+                //             console.log(err);
+                //         })
+                // },
+                // postDislike: function () {
+                //     this.base_url = 'https://127.0.0.1:8000'
+                //     console.log('data getting')
+                //     axios.defaults.xsrfCookieName = 'csrftoken'
+                //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                //     axios({
+                //         url: this.base_url + '/graphql',
+                //         method: 'post',
+                //         data: {
+                //             query: `
+                //                     mutation{
+                //                         relayCreateDislike(input:{article:"${ this.idart}",status:true}){
+                //                             disLike {
+                //                             status
+                //                         }
+                //                     }
+                //                 }
+                //                 `
+                //         }
+                //     })
+                //         .then(response => {
+                //             if (response.data.data.relayCreateComment != null) {
+                //                 new Toast({
+                //                     message: 'Article Dislike',
+                //                     type: 'success'
+                //                 });
+                //             } else {
+                //                 new Toast({
+                //                     message: 'Article Dislike',
+                //                     type: 'success'
+                //                 });
+                //             }
+                //         })
+                //         .catch((err) => {
+                //             console.log(err);
+                //         })
+                // },
+                // postreponse: function () {
+                //     this.base_url = 'https://127.0.0.1:8000'
+                //     console.log('data getting')
+                //     axios.defaults.xsrfCookieName = 'csrftoken'
+                //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                //     formData.append('reponse', '' + this.reponse);
+                //     axios({
+                //         url: this.base_url + '/graphql',
+                //         method: 'post',
+                //         data: {
+                //             query: `
+                //                     mutation{
+                //               relayCreateResponseComment(input:{commentaire:"",message:"${ this.idart}",status:true}){
+                //                 response{
+                //                   message
+                //                     }
+                //                   }
+                //                 }
+                //                 `
+                //         }
+                //     })
+                //         .then(response => {
+                //             console.log(response)
+                //             if (response.data.data.relayCreateComment != null) {
+                //                 new Toast({
+                //                     message: 'Commentaire envoyer avec success',
+                //                     type: 'success'
+                //                 });
+                //             } else {
+                //                 swal("Entrer Votre Commentaire ");
+                //             }
+                //         })
+                //         .catch((err) => {
+                //             console.log(err);
+                //         })
+                // },
+                // reponsebutton: function () {
+                //     this.commentform = false;
+                //     this.reponseform = true;
+                // },
+                // postlike: function () {
+                //     this.base_url = 'https://127.0.0.1:8000'
+                //     console.log('data getting')
+                //     axios.defaults.xsrfCookieName = 'csrftoken'
+                //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                //     axios({
+                //         url: this.base_url + '/graphql',
+                //         method: 'post',
+                //         data: {
+                //             query: `
+                //                     mutation{
+                //                     relayCreatLike(input:{article:"${ this.idart}",status:true}){
+                //                             like {
+                //                             status
+                //                         }
+                //                     }
+                //                 }
+                //                 `
+                //         }
+                //     })
+                //         .then(response => {
+                //             if (response.data.data.relayCreateComment != null) {
+                //                 new Toast({
+                //                     message: 'Article like',
+                //                     type: 'success'
+                //                 });
+                //             } else {
+                //                 new Toast({
+                //                     message: 'Article like',
+                //                     type: 'success'
+                //                 });
+                //             }
+                //         })
+                //         .catch((err) => {
+                //             console.log(err);
+                //         })
+                // },
+
+
+
+            },
+
+
+
+
+        })
+    
+    </script>
+    <!-- Custom Theme Scripts -->
+    <script src="/static/admin/build/js/custom.min.js"></script>
+    <!-- jQuery -->
+    <script src="/static/admin/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/static/admin/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="/static/admin/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/static/admin/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="/static/admin/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/static/admin/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="/static/admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="/static/admin/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="/static/admin/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/static/admin/vendors/Flot/jquery.flot.js"></script>
+    <script src="/static/admin/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/static/admin/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/static/admin/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/static/admin/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/static/admin/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/static/admin/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/static/admin/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/static/admin/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/static/admin/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/admin/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/admin/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/static/admin/vendors/moment/min/moment.min.js"></script>
+    <script src="/static/admin/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    
+    <!-- Custom Theme Scripts -->
+    <script src="/static/admin/build/js/custom.min.js"></script>
+  </body>
 </html>
-<!-- end document-->

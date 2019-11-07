@@ -1,3 +1,4 @@
+{% load user_tags %}
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 
@@ -153,7 +154,13 @@
                             <ul>
                                 <li><a href="">{{ user.username }}</a></li>
                                 <li><hr><hr></li>
-                                <li><a href="{% url 'dash' %}">Tableaux de bord</a></li>
+                                
+                                
+                                {% if request.user|has_group:"Membre" %}
+                                    <li><a href="{% url 'index_dash' %}">Tableaux de bord</a></li>
+                                {% elif request.user|has_group:"Visiteur" %}
+                                    <li><a href="{% url 'admin_visiteur_dash' %}">Tableaux de bord</a></li>
+                                {% endif %}
                                 <li><hr><hr></li>
                                 <li><a href="{% url 'account_logout' %}">Logout</a></li>
                             </ul>
