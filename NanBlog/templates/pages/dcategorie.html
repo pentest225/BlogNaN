@@ -1,0 +1,146 @@
+{% extends 'bases/dashBase.html' %}
+
+{% block content %}
+        <!-- page content -->
+        <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+            <div class="title_left">
+                <h3>Article Details </h3>
+            </div>
+            </div>
+            
+            <div class="clearfix"></div>
+
+            <div class="row">
+            <div class="col-md-8">
+                <div class="x_panel">
+                <div class="x_title">
+                    <h2>Titre</h2>
+                    
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                      
+                    <br />
+
+                    <!-- <div id="mainb" style="height:350px;"></div> -->
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                            <h2>Description <small>different design elements</small></h2>
+                              
+                            <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+          
+                            <div class="col-md-8 col-lg-8 col-sm-7">
+                                <!-- blockquote -->
+                               
+                               
+                               {{ selectarticle.content|safe }}
+                               
+                                   
+                               
+
+                            </div>
+                              
+          
+                             
+          
+                              
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div>
+                    </div>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <div class="x_panel">
+                <div class="x_title">
+                    <h2>Post</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Modifier </a>
+                            <a class="dropdown-item" href="#">Suprimer </a>
+                        </div>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="panel-body" >
+                    <h3 class="green"> IMAGE POST </h3>
+
+                    <div class="project_detail">
+
+                        <img src="{{ selectarticle.image.url }}" alt="Avatar" style="width: 100%">
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                <div class="x_panel">
+                <div class="x_title">
+                    <h2>Commentaire du post</h2>
+                    
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <!-- end of user messages -->
+                    <ul class="messages">
+                        
+                    {% for item in commentaire  %}
+                    <li>
+                        <img src="{{ item.photo.url }}" class="avatar" alt="Avatar">
+                        <div class="message_date">
+                        <h3 class="date text-info">24</h3>
+                        <p class="month">May</p>
+                        </div>
+                        <div class="message_wrapper">
+                        <h4 class="heading">{{ item.nom }}</h4>
+                        <blockquote class="message">{{ item.message }}</blockquote>
+                        <br />
+                        <!-- <p class="url">
+                            <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                            <a href="#"><i class="fa fa-paperclip"></i> Modifier </a>
+                        </p> -->
+                       </div>
+                    </li>
+                            
+                    {% endfor %}
+                            
+                    
+                    </ul>
+                    <!-- end of user messages -->
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+    {% endblock content %}

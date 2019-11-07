@@ -24,6 +24,7 @@ from . import views
 urlpatterns = [
     path('',views.index,name='index'),
     path('category/<str:idcat>',views.category,name='category'),
+    path('dashboard/categorie/<slug:catname>',views.dcategory,name='dcategory'),
     path('single_blog/<str:idart>',views.single_blog,name='single_blog'),
     path('archive',views.archive,name='archive'),
     # path('moreInfo/<str:id>',views.moreInfo,name='moreInfo'),

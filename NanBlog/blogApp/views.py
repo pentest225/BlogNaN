@@ -331,7 +331,11 @@ def admin_visiteur_dash(request):
     # }
     return render(request, 'pages/admin_visiteur_dash.html')
 
-
+def dcategory(request, catname):
+    data={
+        'catname':catname
+    }
+    return render(request,'pages/dcategorie.html',data)
 # def connect(request):
 #     if request.method == "POST":
 #         username=request.POST.get('username')
