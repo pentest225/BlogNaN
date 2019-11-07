@@ -37,6 +37,8 @@ urlpatterns = [
     path('form_article_dash/', views.form_article_dash, name='form_article_dash'),
     path('form_profil_dash/', views.form_profil_dash, name='form_profil_dash'),
     path('profil_visiteur_dash/', views.profil_visiteur_dash, name='profil_visiteur_dash'),
+    path('tables_visiteur_dash/', views.tables_visiteur_dash, name='tables_visiteur_dash'),
+
     # path('v_index',views.v_index,name='v_index'),
     # path('v_cat/<int:id>',views.v_cat,name='v_cat'),
     # path('v_single/<int:id>',views.v_single,name='v_single'),

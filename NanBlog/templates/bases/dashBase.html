@@ -35,8 +35,8 @@
   </head>
 
   <body class="nav-md">
-    <div id="app">
-    <div class="container body">
+    <div class="container body" >
+      <div id="myapp">
       <div class="main_container">
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2>{{user.username}}</h2>
+                        <h2 v-for="item in userinfos" > ${ item.node.username }</h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -62,7 +62,9 @@
                 <br />
         
                 <!-- sidebar menu -->
-                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                 
+
+                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
                         <h3>General</h3>
                         <ul class="nav side-menu">
@@ -78,12 +80,12 @@
                                     <li><a href="{% url 'profil_visiteur_dash' %}">Profile</a></li>
                                 </ul>
                             </li>
+                           
                             <li><a><i class="fa fa-edit"></i> Catégorie <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li v-for="item in dataAllCategory"><a :href=`${base_url}/`+`category/`+`${item.node.id}`>${ item.node.nom }</a> </li>
                                 </ul>
                             </li>
-        
                         </ul>
                     </div>
         
@@ -118,10 +120,10 @@
                 </div>
                 <nav class="nav navbar-nav">
                     <ul class=" navbar-right">
-                        <li class="nav-item dropdown open" style="padding-left: 15px;">
+                        <li class="nav-item dropdown open" style="padding-left: 15px;" v-for=" item in userinfos" >
                             <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                                 data-toggle="dropdown" aria-expanded="false">
-                                <img src="{{user.image.url}}" alt="">{{ user.last_name }} {{ user.first_name }}
+                                <img  :src=`${base_url}/`+`media/`+`${item.node.image}` alt=""> ${ item.node.lastName } ${ item.node.firstName }
                             </a>
                             <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{% url 'profil_visiteur_dash' %}"> Profile</a>
@@ -174,12 +176,13 @@
       </div>
     </div>
     </div>
-   
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- jQuery -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
     var app = new Vue({
-            el: '#app',
+            el: '#myapp',
             data: {
                 base_url: '',
                 dataAllCategory: [],
@@ -216,7 +219,7 @@
             },
             methods: {
                 getdata: function () {
-                    this.base_url = 'https://127.0.0.1:8000'
+                    this.base_url = 'https://localhost:8000'
                     console.log('data getting')
                     axios.defaults.xsrfCookieName = 'csrftoken'
                     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -233,7 +236,9 @@
                                             lastName,
                                             username,
                                             email,
+                                            image,
                                             userLike{
+                                            edgeCount
                                             edges{
                                                 node{
                                                 article{
@@ -265,6 +270,39 @@
                                                 }
                                             }
                                             }
+                                          userComment{
+                                            edgeCount,
+                                            edges{
+                                              node{
+                                                article{
+                                                    titre,
+                                                    vue,
+                                                    categorie{
+                                                    nom,
+                                                    }
+                                                    contenu,
+                                                    image,
+                                                    description,
+                                                    imageSingle,
+                                                    articleCommentaire {
+                                                    edges {
+                                                        node {
+                                                        user{
+                                                            username,
+                                                            firstName,
+                                                            lastName,
+                                                        }
+                                                                        message
+                                                        dateUpd
+                                                        dateAdd
+                                                        }
+                                                    }
+                                                    }
+                                                }
+                                                
+                                                }
+                                            }
+                                          }
                                         }
                                         }
                                     }
@@ -652,9 +690,6 @@
         })
     
     </script>
-    <!-- Custom Theme Scripts -->
-    <script src="/static/admin/build/js/custom.min.js"></script>
-    <!-- jQuery -->
     <script src="/static/admin/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="/static/admin/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -694,5 +729,6 @@
     
     <!-- Custom Theme Scripts -->
     <script src="/static/admin/build/js/custom.min.js"></script>
+   
   </body>
 </html>
