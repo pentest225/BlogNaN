@@ -695,84 +695,92 @@ crossorigin="anonymous"></script>
                     },
                     postcomment: function() {
                         this.commentaire=document.getElementById("id_contenu").value
+                        // this.commentaire=`+"${this.commentaire}"+`
                         console.log(this.commentaire)
                         this.base_url = 'https://localhost:8000'
                         let formData = new FormData();
+                        
+                        formData.append('idArt',this.idart)
+                        formData.append('coment',this.commentaire)
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                        formData.append('commentaire', '' + this.commentaire);
-                       // console.log(this.commentaire);
-                       // console.log (this.idart);
+                       console.log(formData);
+                       console.log (this.idart);
 
                        //mutation du commentaire 
                         axios({
-                            url: this.base_url + '/graphql',
-                            method: 'post',
-                            data: {
-                                query: `
-                                mutation{
-                                    relayCreateComment(input:{sujet:"Commentaire d'article",message:"${ this.commentaire }",article:"${ this.idart }",status:true}){
-                                      comment{
-                                        message
-                                      }
-                                    }
-                                  }
-                            `
+                            url: this.base_url + '/saveComment',
+                            method: 'post',data:{
+                                idArticle:''+this.idart,
+                                coment:''+this.commentaire,
                             }
+                            ,
+                            // data: {
+                            //     query: `
+                            //     mutation{
+                            //         relayCreateComment(input:{sujet:"Commentaire d'article",message:"${ this.commentaire }",article:"${ this.idart }",status:true}){
+                            //           comment{
+                            //             message
+                            //           }
+                            //         }
+                            //       }
+                            // `
+                            // }
                         })
                         .then(response => {
+                            console.log(response.data)
                             //ok mutations 
                             //ok on a send le commentaire 
-                            if (response.data.data.relayCreateComment == null) {
-                                swal("Connecter Pour laisser Un commentaire");
-                            }else{
-                                this.commentaire = ""
+                            // if (response.data.data.relayCreateComment == null) {
+                            //     swal("Connecter Pour laisser Un commentaire");
+                            // }else{
+                            //     this.commentaire = ""
                                 
-                                axios({
-                                    url:this.base_url+'/graphql',
-                                    method:'post',
-                                    data:{
-                                        query:`
-                                        query{
-                                            article(id:"${ this.idart }"){
-                                            articleCommentaire{
-                                            edges{
-                                                node{
-                                                id,
-                                                user{
-                                                    id,username,firstName,lastName,image
-                                                },
-                                                message,dateAdd,dateUpd
-                                                response{
-                                                    edges{
-                                                    node{
-                                                        id,
-                                                        user{
-                                                        id,username,firstName,lastName,image
-                                                        },
-                                                        message
-                                                    }
-                                                    }
-                                                }
-                                                }
-                                            }
-                                            }
-                                        }
-                                        }
+                            //     axios({
+                            //         url:this.base_url+'/graphql',
+                            //         method:'post',
+                            //         data:{
+                            //             query:`
+                            //             query{
+                            //                 article(id:"${ this.idart }"){
+                            //                 articleCommentaire{
+                            //                 edges{
+                            //                     node{
+                            //                     id,
+                            //                     user{
+                            //                         id,username,firstName,lastName,image
+                            //                     },
+                            //                     message,dateAdd,dateUpd
+                            //                     response{
+                            //                         edges{
+                            //                         node{
+                            //                             id,
+                            //                             user{
+                            //                             id,username,firstName,lastName,image
+                            //                             },
+                            //                             message
+                            //                         }
+                            //                         }
+                            //                     }
+                            //                     }
+                            //                 }
+                            //                 }
+                            //             }
+                            //             }
 
-                                        `
-                                    }
-                                }).then(response=>{
-                                    console.log("get des commentaire de l'aritcle ")
-                                    console.log(response.data)
-                                    this.singleAtircle.articleCommentaire.edges=response.data.data.article.articleCommentaire.edges
-                                    console.log(this.singleAtircle.articleCommentaire.edges)
-                                    toastr.success("Votre Commentaire a été Posté avec Success")
-                                }).catch((err)=>{
-                                    console.log(err)
-                                })
+                            //             `
+                            //         }
+                            //     }).then(response=>{
+                            //         console.log("get des commentaire de l'aritcle ")
+                            //         console.log(response.data)
+                            //         this.singleAtircle.articleCommentaire.edges=response.data.data.article.articleCommentaire.edges
+                            //         console.log(this.singleAtircle.articleCommentaire.edges)
+                            //         toastr.success("Votre Commentaire a été Posté avec Success")
+                            //     }).catch((err)=>{
+                            //         console.log(err)
+                            //     })
                                     
-                            }
+                            // }
                            
                         })  
                         .catch((err) => {

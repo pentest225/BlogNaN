@@ -99,7 +99,24 @@ def archive(request):
     
     return render(request,'pages/archive.html')
 
-
+def saveComment(request):
+    postdata = json.loads(request.body.decode('utf-8'))
+    if request.POST is not None:
+        idArticle=postdata['idArticle']
+        comment=postdata['coment']
+        print("##################################")
+        print(request.POST)
+        print(idArticle)
+        print(comment)
+    else:
+        print("#################################")
+        print("vide")
+    result={
+        "idArt":idArticle,
+        "comment":comment
+    }
+    return JsonResponse(result, safe=False)
+        
 
 ################################################
 #               Dashbord root                  #
