@@ -4,7 +4,7 @@ from django.contrib.flatpages.models import FlatPage
 from tinymce.widgets import TinyMCE
 
 class ArticleFrom(forms.ModelForm):
-    # contenu = forms.CharField(widget=TinyMCE())
+    contenu = forms.CharField(widget=TinyMCE())
     class Meta:
         model = Article
         fields='__all__'

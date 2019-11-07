@@ -36,8 +36,7 @@
                                     <img class="post-img img-fluid" :src=`${base_url}/`+`media/`+`${art.node.image}` alt="">
                                 </figure>
                                 <h3>
-                                    <a :href=``+`${base_url}`+`/single_blog/`+`${art.node.id}`+``  >It’s hurricane season but we are
-                                        visiting hilton head island</a>
+                                    <a :href=``+`${base_url}`+`/single_blog/`+`${art.node.id}`+``  >${ art.node.titre}</a>
                                 </h3>
                                 <p>${ art.node.description.substring(0,200) }</p>
                                 <a :href=``+`${base_url}`+`/single_blog/`+`${art.node.id}`+``  class="primary-btn text-uppercase mt-15">continue Reading</a>
@@ -57,7 +56,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <span class="lnr lnr-calendar-full"></span>
-                                                            13th Oct, 2018
+                                                            ${ art.node.dateAdd }
                                                         </a>
                                                     </li>
                                                     <li>
