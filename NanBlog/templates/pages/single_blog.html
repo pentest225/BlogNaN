@@ -61,8 +61,8 @@
                                     </div> -->
             
                                 <div>
-                                    <a href="#" v-on:click.prevent="postlike" ><i style="font-size:19px;" class="fa fa-thumbs-up "></i>${singleAtircle.articleLike.edgeCount}</a>
-                                    <a href="#" style=" margin-left: 16px;"  v-on:click.prevent="postDislike" ><i  style="font-size:19px" class="fa fa-thumbs-down "></i>${ singleAtircle.Dislike.edgeCount }</a>
+                                    <a href="#" v-on:click.prevent="postlike" ><i  v-bind:style="{ color: activeColorLike, fontSize: '19' + 'px' }" class="fa fa-thumbs-up "></i>${like}</a>
+                                    <a href="#" style=" margin-left: 16px;"  v-on:click.prevent="postDislike" ><i  v-bind:style="{ color: activeColorDisLike, fontSize: '19' + 'px' }" class="fa fa-thumbs-down "></i>${disLike}</a>
                                 </div>
                         </div>
                         
@@ -130,13 +130,12 @@
                                 </div>
                             </div>
                             <div class="reply-btn">
-                                <a href=""   v-if="singleAtircle.isArchive == false"  v-on:click.prevent="reponsebutton" class="btn-reply text-uppercase">repondre</a>
+                                
+                                <a href=""   v-if="singleAtircle.isArchive == false"   v-on:click.prevent="reponsebutton(comment.node.id)" class="btn-reply text-uppercase">repondre</a>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <br>
-                    <div  v-for="response  in comment.node.response.edges " class="comment-list left-padding">
+                    <div  v-for="response  in comment.node.response.edges " class="comment-list left-padding ml-50" >
                         <div class="single-comment justify-content-between d-flex">
                             <div class="user justify-content-between d-flex">
                                 <div class="thumb">
@@ -155,6 +154,7 @@
                             </div> -->
                         </div>
                     </div>
+                    <br>
 
                 </div>
                 </div>
@@ -166,27 +166,31 @@
                                     onfocus="this.placeholder = ''" disabled  onblur="this.placeholder = 'Commentaire'" required=""></textarea>
                             </div>
                         </form>
+                        
                 </div>
 
             <div v-else="" >
                 <div v-if="commentform" class="comment-form">
-                    <h4>Laisser Un Commentaire</h4>
-                    <form>
+                    <h4>Laisser Un Commentaire </h4>
+                        
+                            <textarea class="tinymce4-editor" v-model="commentaire"  id="id_contenu"  rows="5" ></textarea>
+                       
+
                         <div class="form-group">
-                            <textarea class="form-control mb-10" rows="5" name="message" placeholder="Commentaire"
-                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea>
+                            <!-- <textarea  v-model="commentaire" class="form-control mb-10" rows="5" name="message" placeholder="Commentaire" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Commentaire'" required=""></textarea> -->
                         </div>
-                        <a v-if="{{ user.is_authenticated}}" v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
+                        
+                        <a v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">Commenter</a>
                     </form>
                 </div>
             </div>
-                <div v-if="reponseform" class="comment-form">
+                <div v-if="reponseform" class="comment-form" >
                     <h4>Repondre à Un Commentaire</h4>
                     <form>
                         <div class="form-group">
-                            <textarea class="form-control mb-10"  v-model="commentaire"  rows="5" name="message" placeholder="Commentaire" required=""></textarea>
+                            <textarea class="form-control mb-10"  v-model="reponse"  rows="5" name="message" placeholder="Commentaire" required=""></textarea>
                         </div>
-                        <a href="#"  v-on:click.prevent="postcomment" class="primary-btn submit_btn text-uppercase">repondre</a>
+                        <a href="#"  v-on:click.prevent="postreponse" class="primary-btn submit_btn text-uppercase">repondre</a>
                     </form>
                 </div>
                 
@@ -274,5 +278,6 @@
         </div>
     </div>
 </section>
+
 <!-- Blog Area -->
 {% endblock content %}

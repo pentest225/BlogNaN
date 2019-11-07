@@ -37,6 +37,7 @@ urlpatterns = [
     # path('v_single/<int:id>',views.v_single,name='v_single'),
     path('deleteArticle/<int:id>',views.deleteArticle,name='deleteArticle'),
     path('darticle', views.addarticle, name='addarticle'),
+    path('saveComment', views.saveComment, name='saveComment'),
 
     re_path(r'^accounts/', include('allauth.urls')),
 

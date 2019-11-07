@@ -265,7 +265,13 @@ EMAIT_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = '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'
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIT_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = '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'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
