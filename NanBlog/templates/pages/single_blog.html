@@ -131,7 +131,7 @@
                             </div>
                             <div class="reply-btn">
                                 
-                                <a href=""   v-if="singleAtircle.isArchive == false"   v-on:click.prevent="reponsebutton(comment.node.id)" class="btn-reply text-uppercase">repondre</a>
+                                <!-- <a href=""   v-if="singleAtircle.isArchive == false"   v-on:click.prevent="reponsebutton(comment.node.id)" class="btn-reply text-uppercase">repondre</a> -->
                             </div>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                 <div v-if="commentform" class="comment-form">
                     <h4>Laisser Un Commentaire </h4>
                         
-                            <textarea class="tinymce4-editor" v-model="commentaire"  id="id_contenu"  rows="5" ></textarea>
+                            <textarea class="tinymce4-editor"  v-model="commentaire"  id="id_contenu"  rows="5" ></textarea>
                        
 
                         <div class="form-group">
