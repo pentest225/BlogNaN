@@ -13,5 +13,6 @@ urlpatterns = [
     path('inscription/', view.inscription, name='inscription'),
     path('verification/', view.signup_sendmail, name='sign_send_verif'),
     path('activate/<slug:uidb64>/<slug:token>)/', view.activate, name='activate'),
+    path('post', view.sendregister, name='sendregister'),
 ]
 urlpatterns += router.urls
