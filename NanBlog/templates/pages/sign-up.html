@@ -10,10 +10,10 @@
 			<div class="form-right">
 				<div class="tab">
 					<div class="tab-inner">
-						<button class="tablinks" onclick="openCity(event, 'sign-up')" id="defaultOpen">Compte Visiteur</button>
+						<button class="tablinks" v-model="visiteur" onclick="openCity(event, 'sign-up')" id="defaultOpen">Compte Visiteur</button>
 					</div>
 					<div class="tab-inner">
-						<button class="tablinks" onclick="openCity(event, 'sign-in')">Membre</button>
+						<button class="tablinks" v-model="membre" onclick="openCity(event, 'sign-in')">Membre</button>
 					</div>
 				</div>
 				<form class="form-detail" action="#" method="post">
@@ -21,9 +21,9 @@
                         <p>Détails sur le type de compte</p><br>
 						<div class="form-row">
 							<label class="form-row-inner">
-								<input type="text" name="full_name" id="full_name" class="input-text" required>
-								<span class="label">Username</span>
-		  						<span class="border"></span>
+							    <input type="text" name="full_name" id="full_name" class="input-text" required>
+							    <span class="label">Username</span>
+		  					    <span class="border"></span>
 							</label>
 						</div>
 						<div class="form-row">
@@ -57,28 +57,28 @@
                         <p>Détails sur le type de compte</p><br>
 						<div class="form-row">
 							<label class="form-row-inner">
-								<input type="text" name="full_name_1" id="full_name_1" class="input-text" required>
+								<input type="text" v-model="name" name="full_name_1" id="full_name_1" class="input-text" required>
 								<span class="label">Username</span>
 		  						<span class="border"></span>
 							</label>
 						</div>
 						<div class="form-row">
 							<label class="form-row-inner">
-								<input type="text" name="your_email_1" id="your_email_1" class="input-text" required>
+								<input type="text" v-model="mail" name="your_email_1" id="your_email_1" class="input-text" required>
 								<span class="label">E-Mail</span>
 		  						<span class="border"></span>
 							</label>
 						</div>
 						<div class="form-row">
 							<label class="form-row-inner">
-								<input type="password" name="password_1" id="password_1" class="input-text" required>
+								<input type="password" v-model="password" name="password_1" id="password_1" class="input-text" required>
 								<span class="label">Password</span>
 								<span class="border"></span>
 							</label>
 						</div>
 						<div class="form-row">
 							<label class="form-row-inner">
-								<input type="password" name="comfirm_password_1" id="comfirm_password_1" class="input-text" required>
+								<input type="password" v-model="repass" name="comfirm_password_1" id="comfirm_password_1" class="input-text" required>
 								<span class="label">Comfirm Password</span>
 								<span class="border"></span>
 							</label>

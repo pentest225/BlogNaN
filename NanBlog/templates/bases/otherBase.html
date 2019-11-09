@@ -396,6 +396,12 @@
                     message: '',
                     suscribe:'',
                     base_url:'',
+                    name: '',
+                    mail: '',
+                    password : '',
+                    repass : '',
+                    membre : '',
+                    visiteur : '',
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -716,7 +722,32 @@
                             })
                     },
                 },
-            
+                sendregister: function () {
+                    this.isregister = true
+                    axios.defaults.xsrfCookieName = 'csrftoken'
+                    axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                    axios.post('http://127.0.0.1:8000/user/post', {
+                        name: '' + this.name,
+                        email: '' + this.email,
+                        password: '' + this.password,
+                        repass: '' + this.repass,
+                        visiteur: '' + this.visiteur,
+                        membre: '' + this.membre,
+                        }).then(response => {
+                            console.log(response);
+                            this.isregister = false;
+                            this.result = response.data;
+                            console.log(this.result.succes);
+                            this.issuccess = this.result.succes
+                            this.fail = !this.result.succes
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            this.isregister = false;
+                        })
+                },
+                
+            },
             
                 })
     </script>

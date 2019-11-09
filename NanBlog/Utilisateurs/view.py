@@ -14,6 +14,8 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model, login, update_session_auth_hash
 from django.conf import settings
+from django.http import JsonResponse
+import json
 
 
 def inscription(request):
@@ -93,3 +95,37 @@ def activate(request, uidb64, token):
         # return redirect('home')
     else:
         return render(request, 'account/invalid_link.html')
+    
+def sendregister(request):
+    try:
+        postdata = json.loads(request.body.decode('utf-8'))
+        name = postdata['name']
+        email = postdata['email']    
+        password = postdata['password']
+        repass = postdata['repass']
+        visiteur = postdata['visiteur']
+        membre = postdata['membre']
+        
+        print(name,email,password,repass,visiteur,membre)
+        isSucces = False
+        cont = 1
+        
+        # if name is not None and password is not None and repass is not None and email is not None:
+        #     isSucces = True
+        #     h = MyUser(first_name=name,email=email,password=password,repass=repass,groups=visiteur)
+        #     h.save()
+        #     print(nom,user,contact,email,password,repass)
+        # else:
+        #     isSucces = False
+
+        # while cont < 100000000:
+        #     cont += 1
+    except:
+        print("error")
+
+    datas = {
+        'succes': True,
+        # 'nom': nom,
+        # 'cont': cont
+    }
+    return JsonResponse(datas, safe=False)
