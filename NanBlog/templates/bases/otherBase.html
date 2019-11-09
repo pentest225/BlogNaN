@@ -256,126 +256,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
 
-            var app = new Vue({
-                    el: '#main-content',
-                    data: {
-                        reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
-                        go: true,
-                        submitted: false,
-                        message: '',
-                        result: [],
-
-                        error: false,
-                        error_message: '',
-
-                        email: null,
-                        email_error: "",
-
-                        username: null,
-                        username_error: "",
-
-                        firstname: null,
-                        firstname_error: "",
-
-                        lastname: null,
-                        lastname_error: "",
-
-                        type_de_compte: null,
-                        type_de_compte_error: "",
-
-                        file: '',
-                        file_error : "",
-
-                        bio: null,
-                        bio_error: "",
-
-                        password1: null,
-                        password1_error: "",
-
-                        password2: null,
-                        password2_error: "",
-
-
-                        base_url: '',
-                    },
-                    delimiters: ["${", "}"],
-                    mounted() {
-                        this.email = ""
-                        this.base_url = window.location.href
-                        this.contrycode = usercalligcode
-                    },
-                    methods: {
-                        isEmailValid: function () {
-                            return (this.email == "") ? false : (this.reg.test(this.email)) ? true : false;
-                        },
-                        sendregister: function (event) {
-                            event.preventDefault();
-
-                            if (this.username == undefined) {
-                                this.username_error = "ce champs ne peut être vide"
-                                this.go = false
-                            }
-
-                            if (this.lastname == undefined) {
-                                this.lastname_error = "ce champs ne peut être vide"
-                                this.go = false
-                            }
-                            if (this.firstname == undefined) {
-                                this.firstname_error = "ce champs ne peut être vide"
-                                this.go = false
-                            }
-                            if (!this.isEmailValid()) {
-                                this.email_error = "l'email saisie n'est pas correcte"
-                                this.go = false
-                            }
-                            if (this.fone == undefined) {
-                                this.fone_error = "ce champs ne peut être vide"
-                                this.go = false
-                            }
-                            if (this.naissance == undefined) {
-                                this.naissance_error = "ce champs ne peut être vide"
-                                this.go = false
-                            }
-                            if (this.genre == undefined) {
-                                this.genre_error = "ce champs ne peut être vide"
-                                this.go = false
-                            }
-                            if (this.go) {
-                                axios.defaults.xsrfCookieName = 'csrftoken'
-                                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                                axios.post(this.site_url + 'register', {
-                                    email: '' + this.email,
-                                    message: '' + this.message,
-                                    name: '' + this.name,
-                                    firstname: '' + this.firstname,
-                                    fone: '' + this.fone,
-                                    naissance: '' + this.naissance,
-                                    genre: '' + this.genre,
-                                }).then(response => {
-                                    this.submitted = true
-                                    myresult = response.data;
-                                    if (myresult.status == false) {
-                                        this.error = true;
-                                        this.error_message = myresult.message;
-                                    } else {
-                                        if (myresult.nanplus) {
-                                            window.location.replace(this.site_url + 'confirmationplus')
-
-                                        } else {
-                                            window.location.replace(this.site_url + 'confirmation')
-
-                                        }
-                                    }
-                                })
-                                    .catch((err) => {
-                                        this.error = true;
-                                        this.error_message = "verifier votre connexion";
-                                    })
-
-                            }
-                        }
-                    }
-                })
+           
             var app = new Vue({
                 el: '#app',
                 data: {
@@ -396,12 +277,15 @@
                     message: '',
                     suscribe:'',
                     base_url:'',
-                    name: '',
+                    username: '',
+                    firstname: '',
+                    lastname: '',
                     mail: '',
                     password : '',
                     repass : '',
-                    membre : '',
-                    visiteur : '',
+                    group : '',
+                    image: '',
+                    bio : '',
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -411,7 +295,7 @@
                 },
                 methods: {
                     getdata: function() {
-                        this.base_url = 'https://127.0.0.1:8000'
+                        this.base_url = 'https://localhost:8000'
                         console.log('data getting')
                         axios.defaults.xsrfCookieName = 'csrftoken'
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -721,35 +605,49 @@
                                 console.log(err);
                             })
                     },
+
+                    submitForm: function () {
+                        let formData = new FormData();
+                        formData.append('file', this.file);
+                        formData.append('username', this.username);
+                        formData.append('lastname', this.lastname);
+                        formData.append('mail', this.mail);
+                        formData.append('firstname', this.firstname);
+                        formData.append('password', this.password);
+                        formData.append('passwordconf', this.repass);
+                        formData.append('bio', this.bio);
+                        formData.append('group', this.group);
+
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios.post('http://127.0.0.1:8000/postform',
+                            formData,
+                            {
+                                headers: {
+
+                                    'Content-Type': 'multipart/form-data',
+                                }
+                            }).then((response) => {
+                                console.log(response.data);
+                                this.isregister = false;
+                                this.returntrue = true;
+                                console.log(response.data.succes);
+                                this.result = response.data;
+                                console.log(this.result.succes);
+
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                                this.isregister = false;
+                                this.returnfalse = true;
+                            })
+                    },
+                    handleFileUploaded: function () {
+                        this.file = this.$refs.file.files[0];
+                    },
                 },
-                sendregister: function () {
-                    this.isregister = true
-                    axios.defaults.xsrfCookieName = 'csrftoken'
-                    axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                    axios.post('http://127.0.0.1:8000/user/post', {
-                        name: '' + this.name,
-                        email: '' + this.email,
-                        password: '' + this.password,
-                        repass: '' + this.repass,
-                        visiteur: '' + this.visiteur,
-                        membre: '' + this.membre,
-                        }).then(response => {
-                            console.log(response);
-                            this.isregister = false;
-                            this.result = response.data;
-                            console.log(this.result.succes);
-                            this.issuccess = this.result.succes
-                            this.fail = !this.result.succes
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            this.isregister = false;
-                        })
-                },
-                
-            },
             
-                })
+        })
     </script>
     {% block scripts %}
     
