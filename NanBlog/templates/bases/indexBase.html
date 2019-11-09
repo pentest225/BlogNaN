@@ -174,10 +174,8 @@
 <body onload=" loadingPage()">
 
     <div id="app">
-        <div class="lds-ripple chargementPage" ><div></div><div></div></div>
+        <div class="lds-ripple chargementPage" v-if="loader"><div></div><div></div></div>
  
-
-        
     <!-- Start header Area -->
     <header id="header">
         <div class="container box_1170 main-menu">
@@ -220,12 +218,16 @@
             </div>
         </div>
     </header>
+    <!-- <div v-else="loader" > -->
 
+   
     <!-- End header Area -->
 
     {% block content %}
 
     {% endblock %}
+
+    <!-- </div> -->
 
     <!-- start footer Area -->
     <footer class="footer-area section-gap">
@@ -354,7 +356,7 @@ crossorigin="anonymous"></script>
                     allLike:[],
                     likeTable:[],
                     popularArtile:'',
-                    loader:false,
+                    loader:true,
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -748,6 +750,7 @@ crossorigin="anonymous"></script>
                             //formatage de la date de l'article recent 
                             this.popularArtile.dateAdd= new Date(this.popularArtile.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
                             console.log(this.likeTable)
+                            this.loader=false
                             
             
                         })  
