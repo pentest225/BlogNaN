@@ -252,6 +252,126 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+
+            var app = new Vue({
+                    el: '#main-content',
+                    data: {
+                        reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
+                        go: true,
+                        submitted: false,
+                        message: '',
+                        result: [],
+
+                        error: false,
+                        error_message: '',
+
+                        email: null,
+                        email_error: "",
+
+                        username: null,
+                        username_error: "",
+
+                        firstname: null,
+                        firstname_error: "",
+
+                        lastname: null,
+                        lastname_error: "",
+
+                        type_de_compte: null,
+                        type_de_compte_error: "",
+
+                        file: '',
+                        file_error : "",
+
+                        bio: null,
+                        bio_error: "",
+
+                        password1: null,
+                        password1_error: "",
+
+                        password2: null,
+                        password2_error: "",
+
+
+                        base_url: '',
+                    },
+                    delimiters: ["${", "}"],
+                    mounted() {
+                        this.email = ""
+                        this.base_url = window.location.href
+                        this.contrycode = usercalligcode
+                    },
+                    methods: {
+                        isEmailValid: function () {
+                            return (this.email == "") ? false : (this.reg.test(this.email)) ? true : false;
+                        },
+                        sendregister: function (event) {
+                            event.preventDefault();
+
+                            if (this.name == undefined) {
+                                this.name_error = "ce champs ne peut être vide"
+                                this.go = false
+                            }
+                            if (!this.isEmailValid()) {
+                                this.email_error = "l'email saisie n'est pas correcte"
+                                this.go = false
+                            }
+                            if (this.name == undefined) {
+                                this.name_error = "ce champs ne peut être vide"
+                                this.go = false
+                            }
+                            if (this.firstname == undefined) {
+                                this.firstname_error = "ce champs ne peut être vide"
+                                this.go = false
+                            }
+                            if (this.fone == undefined) {
+                                this.fone_error = "ce champs ne peut être vide"
+                                this.go = false
+                            }
+                            if (this.naissance == undefined) {
+                                this.naissance_error = "ce champs ne peut être vide"
+                                this.go = false
+                            }
+                            if (this.genre == undefined) {
+                                this.genre_error = "ce champs ne peut être vide"
+                                this.go = false
+                            }
+                            if (this.go) {
+                                axios.defaults.xsrfCookieName = 'csrftoken'
+                                axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                                axios.post(this.site_url + 'register', {
+                                    email: '' + this.email,
+                                    message: '' + this.message,
+                                    name: '' + this.name,
+                                    firstname: '' + this.firstname,
+                                    fone: '' + this.fone,
+                                    naissance: '' + this.naissance,
+                                    genre: '' + this.genre,
+                                }).then(response => {
+                                    this.submitted = true
+                                    myresult = response.data;
+                                    if (myresult.status == false) {
+                                        this.error = true;
+                                        this.error_message = myresult.message;
+                                    } else {
+                                        if (myresult.nanplus) {
+                                            window.location.replace(this.site_url + 'confirmationplus')
+
+                                        } else {
+                                            window.location.replace(this.site_url + 'confirmation')
+
+                                        }
+                                    }
+                                })
+                                    .catch((err) => {
+                                        this.error = true;
+                                        this.error_message = "verifier votre connexion";
+                                    })
+
+                            }
+                        }
+                    }
+                })
             var app = new Vue({
                 el: '#app',
                 data: {

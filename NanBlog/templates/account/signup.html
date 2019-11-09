@@ -1,5 +1,7 @@
-{% extends 'bases/otherBase.html' %} {% load i18n %} {% load crispy_forms_tags
-%} {% load widget_tweaks %} {% block link %}
+{% extends 'bases/otherBase.html' %} {% load i18n %} 
+
+
+{% block link %}
 
 <!--===============================================================================================-->
 <link
@@ -167,14 +169,11 @@
       </div>
       <div class="form-row">
         <div class=" col-md-5  col-lg-5 wrap-input100 input100-select">
-          <span class="label-input100">Needed Services</span>
+          <span class="label-input100">Type de compte</span>
           <div>
             <select class="selection-2" name="service">
-              <option>Choose Services</option>
-              <option>Online Store</option>
-              <option>eCommerce Bussiness</option>
-              <option>UI/UX Design</option>
-              <option>Online Services</option>
+              <option>Membre</option>
+              <option>Visiteur</option>
             </select>
           </div>
           <span class="focus-input100"></span>
@@ -185,46 +184,29 @@
           <input class="input100" type="file" />
         </div>
       </div>
-
-      <div
-        class="wrap-input100 validate-input"
-        data-validate="Message is required"
-      >
+      
+        <div class="wrap-input100 validate-input" data-validate="Message is required">
+            <span class="label-input100">Dédtails sur les comptes</span>
+            <p> Compte Visiteur : </p>
+            <p> Compte Membre : </p>
+            <span class="focus-input100"></span>
+        </div>
+      <div  class="wrap-input100 validate-input" data-validate="Message is required">
         <span class="label-input100">Bio</span>
-        <textarea
-          class="input100"
-          name="message"
-          placeholder="Your message here..."
-        ></textarea>
+        <textarea  class="input100"  v-model="bio"    placeholder="Your message here..." ></textarea>
         <span class="focus-input100"></span>
       </div>
 
       <div class="form-row">
-        <div
-          class=" col-md-5  col-lg-5 wrap-input100 validate-input"
-          data-validate="Name is required"
-        >
+        <div   class=" col-md-5  col-lg-5 wrap-input100 validate-input"   data-validate="Name is required"  >
           <span class="label-input100">password</span>
-          <input
-            class="input100"
-            type="text"
-            name="name"
-            placeholder="Enter your name"
-          />
+          <input   class="input100"  type="text" name="name"    placeholder="Enter your name" />
           <span class="focus-input100"></span>
         </div>
         <div class=" col-md-1 col-lg-1"></div>
-        <div
-          class=" col-md-6  col-lg-6 wrap-input100 validate-input"
-          data-validate="Valid email is required: ex@abc.xyz"
-        >
+        <div    class=" col-md-6  col-lg-6 wrap-input100 validate-input"    data-validate="Valid email is required: ex@abc.xyz" >
           <span class="label-input100">confirm password</span>
-          <input
-            class="input100"
-            type="text"
-            name="email"
-            placeholder="Enter your email addess"
-          />
+          <input  class="input100"   type="text"    name="email"     placeholder="Enter your email addess" />
           <span class="focus-input100"></span>
         </div>
       </div>
