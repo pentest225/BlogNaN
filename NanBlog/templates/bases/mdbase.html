@@ -44,21 +44,18 @@
                                 Membre</span></a>
                     </div>
 
-                    {% for pro in profil %}
                     <div class="clearfix"></div>
-
+                    
                     <!-- menu profile quick info -->
-                    <div class="profile clearfix">
+                    <div class="profile clearfix" v-for="item in userinfos">
                         <div class="profile_pic">
-                            <img src="{{pro.image.url}}" alt="..." class="img-circle profile_img">
+                            <img :src=`${base_url}/`+`media/`+`${item.node.image}` alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>{{pro.user}}</h2>
+                            <h2> ${ item.node.username }</h2>
                         </div>
                     </div>
-                    <!-- /menu profile quick info -->
-                    {% endfor %}
                     <!-- /menu profile quick info -->
 
                     <br />
@@ -77,6 +74,11 @@
                                     <ul class="nav child_menu">
                                         <li><a href="{% url 'form_article_dash' %}">Ajouter un Article</a></li>
                                         <li><a href="{% url 'form_profil_dash' %}">Profile</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-edit"></i> Catégorie <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li v-for="item in dataAllCategory"><a :href=`${base_url}/`+`category/`+`${item.node.id}`>${ item.node.nom }</a> </li>
                                     </ul>
                                 </li>
 
@@ -114,51 +116,38 @@
                     </div>
                     <nav class="nav navbar-nav">
                         <ul class=" navbar-right">
-                            <li class="nav-item dropdown open" style="padding-left: 15px;">
-                                {% for pro in profil %}
-                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
-                                    id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{pro.image.url}}" alt="">{{pro.user}}
+                            <li class="nav-item dropdown open" style="padding-left: 15px;" v-for=" item in userinfos">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <img :src=`${base_url}/`+`media/`+`${item.node.image}` alt=""> ${ item.node.lastName } ${ item.node.firstName }
                                 </a>
-
-                                <div class="dropdown-menu dropdown-usermenu pull-right"
-                                    aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{% url 'form_profil_dash' %}"> Profile</a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <span class="badge bg-red pull-right">50%</span>
-                                        <span>Settings</span>
-                                    </a>
+                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{% url 'profil_visiteur_dash' %}"> Profile</a>
+                                    <a class="dropdown-item" href="{% url 'account_change_password' %}"> Changer votre mot de passe</a>
                                     <a class="dropdown-item" href="javascript:;">Help</a>
-                                    <a class="dropdown-item" href="{% url 'account_logout' %}"><i
-                                            class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    <a class="dropdown-item" href="{% url 'account_logout' %}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                                 </div>
                             </li>
-                            {% endfor %}
 
                             <li role="presentation" class="nav-item dropdown open">
-                                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1"
-                                    data-toggle="dropdown" aria-expanded="false">
+                                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown"
+                                    aria-expanded="false">
                                     <i class="fa fa-envelope-o"></i>
-                                    <span class="badge bg-green">{{comment.count}}</span>
+                                    <span class="badge bg-green">1</span>
                                 </a>
-                                <ul class="dropdown-menu list-unstyled msg_list" role="menu"
-                                    aria-labelledby="navbarDropdown1">
-                                    {% for com in comment %}
+                                <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
                                     <li class="nav-item">
-                                        <a class="dropdown-item" href="{% url 'project_detail_dash' com.pk %}">
-                                            <span class="image"><img src="{{com.photo.url}}"
-                                                    alt="Profile Image" /></span>
+                                        <a class="dropdown-item">
+                                            <span class="image"><img src="/static/admin/images/img.jpg" alt="Profile Image" /></span>
                                             <span>
-                                                <span>{{com.sujet}}</span>
-                                                <span class="time">{{com.article.user_id}}</span>
+                                                <span>John Smith</span>
+                                                <span class="time">3 mins ago</span>
                                             </span>
                                             <span class="message">
-                                                {{com.message}}
+                                                Film festivals used to be do-or-die moments for movie makers. They were where...
                                             </span>
                                         </a>
                                     </li>
-                                    {% endfor %}
-
                                 </ul>
                             </li>
                         </ul>
@@ -181,7 +170,518 @@
             </div>
         </div>
 
-        <!-- jQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#myapp',
+                data: {
+                    base_url: '',
+                    dataAllCategory: [],
+                    userinfos: [],
+                    dataAllarticle: [],
+                    datSingleCategory: [],
+                    singleAtircle: [],
+                    categoryId: '',
+                    // CarouselAll: [],
+                    // Popular: [],
+                    idcat: '',
+                    idart: '',
+                    utilisateur: '',
+                    nom: '',
+                    sujet: '',
+                    email: '',
+                    message: '',
+                    suscribe: '',
+                    search: '',
+                    base_url: '',
+                    reponse: '',
+                    commentform: true,
+                    reponseform: false,
+                    searchdiv: false,
+                    searchmessage: '',
+                    trouver: '',
+                },
+                delimiters: ["${", "}"],
+                mounted() {
+                    this.utilisateur = "{{user.username}}";
+                    this.idart = "{{idart}}";
+                    this.getdata()
+                    //this.reponsebutton()
+                },
+                methods: {
+                    getdata: function () {
+                        this.base_url = 'https://localhost:8000'
+                        console.log('data getting')
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios({
+                            url: this.base_url + '/graphql',
+                            method: 'post',
+                            data: {
+                                query: `
+                                       query{
+                                            allUser(username:"${ this.utilisateur}"){
+                                                edges{
+                                                node{
+                                                    firstName,
+                                                    lastName,
+                                                    username,
+                                                    email,
+                                                    image,
+                                                    userLike{
+                                                    edgeCount
+                                                    edges{
+                                                        node{
+                                                        article{
+                                                            titre,
+                                                            vue,
+                                                            categorie{
+                                                            nom,
+                                                            }
+                                                            contenu,
+                                                            image,
+                                                            description,
+                                                            imageSingle,
+                                                            articleCommentaire {
+                                                            edges {
+                                                                node {
+                                                                user{
+                                                                    username,
+                                                                    firstName,
+                                                                    lastName,
+                                                                }
+                                                                                message
+                                                                dateUpd
+                                                                dateAdd
+                                                                }
+                                                            }
+                                                            }
+                                                        }
+                                                        
+                                                        }
+                                                    }
+                                                    }
+                                                  userComment{
+                                                    edgeCount,
+                                                    edges{
+                                                      node{
+                                                        article{
+                                                            titre,
+                                                            vue,
+                                                            categorie{
+                                                            nom,
+                                                            }
+                                                            contenu,
+                                                            image,
+                                                            description,
+                                                            imageSingle,
+                                                            articleCommentaire {
+                                                            edges {
+                                                                node {
+                                                                user{
+                                                                    username,
+                                                                    firstName,
+                                                                    lastName,
+                                                                }
+                                                                                message
+                                                                dateUpd
+                                                                dateAdd
+                                                                }
+                                                            }
+                                                            }
+                                                        }
+                                                        
+                                                        }
+                                                    }
+                                                  }
+                                                }
+                                                }
+                                            }
+                                            allCategories{
+                                                edges{
+                                                    node{
+                                                        nom,
+                                                        id,
+                                                        articleCategorie{
+                                                        totalCount,
+                                                        edges{
+                                                            node{
+                                                            id,
+                                                            titre,
+                                                            vue,
+                                                            contenu,
+                                                            image,
+                                                            description,
+                                                            imageSingle,
+                                                            dateAdd
+                                                            Dislike{
+                                                                edgeCount,
+                                                                edges{
+                                                                node{
+                                                                    user{
+                                                                    username,
+                                                                    lastName,
+                                                                    firstName,
+                                                                    }
+                                                                }
+                                                                }
+                                                            }
+                                                            articleLike{
+                                                                edgeCount,
+                                                                edges{
+                                                                node{
+                                                                    user{
+                                                                    username, 
+                                                                    lastName,
+                                                                    firstName,
+                                                                    }
+                                                                }
+                                                                }
+                                                            }
+                                                            }
+                                                        }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            }
+                                            
+                                        `
+                            }
+                        })
+                            .then(response => {
+                                result = response.data.data
+                                console.log('sddsf')
+                                console.log(result)
+                                this.dataAllCategory = result.allCategories.edges
+                                this.userinfos = result.allUser.edges
+                                console.log(this.dataAllCategory)
+                                console.log(this.userinfos)
+                                this.categoryId = result.category
+                                // this.dataAllarticle = result.allArticles.edges
+                                // this.categoryId = result.category
+                                // this.singleAtircle = result.article
+                                // this.CarouselAll = this.dataAllarticle.slice(1, 4)
+                                //this.Popular = result.allArticles.edges.node
+                                //console.log(this.idcat)
+                                //console.log(this.idart)
+                                // console.log(this.categoryId)
+
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                    },
+                    // sendmessage: function () {
+                    //     axios.defaults.xsrfCookieName = 'csrftoken'
+                    //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                    //     let formData = new FormData();
+                    //     formData.append('nom', '' + this.nom);
+                    //     formData.append('sujet', '' + this.sujet);
+                    //     formData.append('email', '' + this.email);
+                    //     formData.append('message', '' + this.message);
+                    //     axios.post('https://127.0.0.1:8000/contacts/message', formData,
+                    //         {
+                    //         }).then(response => {
+                    //             console.log(response)
+                    //             if (response.data.succes == true) {
+                    //                 new Toast({
+                    //                     message: 'Votre Message a été envoyé avec Success',
+                    //                     type: 'success'
+                    //                 });
+                    //                 this.nom = ''
+                    //                 this.message = ''
+                    //                 this.email = ''
+                    //                 this.sujet = ''
+                    //             } else {
+                    //                 swal("Tous les champs Sont requis", "", "error");
+                    //             }
+
+                    //         })
+                    //         .catch((err) => {
+                    //             console.log(err);
+                    //         })
+                    // },
+                    // suscription: function () {
+                    //     axios.defaults.xsrfCookieName = 'csrftoken'
+                    //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                    //     let formData = new FormData();
+                    //     formData.append('suscribe', '' + this.suscribe);
+                    //     axios.post('https://127.0.0.1:8000/contacts/souscription', formData,
+                    //         {
+                    //         }).then(response => {
+
+                    //             console.log(response)
+                    //             if (response.data.succes == true) {
+                    //                 swal("Merci d'avoir Souscrire au Service Newlestter", "", "success");
+                    //                 this.email = ''
+
+                    //             } else {
+                    //                 swal("Entrer Votre adresse Mail pour Souscrire Au service Newlestter de nan blog", "", "error");
+                    //             }
+
+                    //         })
+                    //         .catch((err) => {
+                    //             console.log(err);
+                    //         })
+                    // },
+                    // postcomment: function () {
+                    //     this.base_url = 'https://127.0.0.1:8000'
+                    //     let formData = new FormData();
+                    //     axios.defaults.xsrfCookieName = 'csrftoken'
+                    //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                    //     formData.append('commentaire', '' + this.commentaire);
+                    //     // console.log(this.commentaire);
+                    //     // console.log (this.idart);
+                    //     axios({
+                    //         url: this.base_url + '/graphql',
+                    //         method: 'post',
+                    //         data: {
+                    //             query: `
+                    //                 mutation{
+                    //                     relayCreateComment(input:{sujet:"testgraph",message:"${ this.commentaire}",article:"${this.idart}",status:true}){
+                    //                       comment{
+                    //                         message
+                    //                       }
+                    //                     }
+                    //                   }
+                    //             `
+                    //         }
+                    //     })
+                    //         .then(response => {
+                    //             console.log(response)
+                    //             if (response.data.data.relayCreateComment != null) {
+                    //                 new Toast({
+                    //                     message: 'Commentaire envoyer avec success',
+                    //                     type: 'success'
+                    //                 });
+                    //             } else {
+                    //                 swal("Entrer Votre Commentaire ");
+                    //             }
+                    //         })
+                    //         .catch((err) => {
+                    //             console.log(err);
+                    //         })
+                    // },
+                    // searchpost: function () {
+                    //     this.base_url = 'https://127.0.0.1:8000'
+                    //     console.log('data getting')
+                    //     let formData = new FormData();
+                    //     axios.defaults.xsrfCookieName = 'csrftoken'
+                    //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                    //     formData.append('search', '' + this.search);
+                    //     axios({
+                    //         url: this.base_url + '/graphql',
+                    //         method: 'post',
+                    //         data: {
+                    //             query: `
+                    //                 query{
+                    //                     allArticles(status:true,titre_Icontains:"${ this.search}"){
+                    //                                                           edges{
+                    //                                                               node{
+                    //                                                                   id,titre,image,imageSingle,description,dateAdd,dateUpd,isArchive
+                    //                                                                   tag{
+                    //                                                                   edges{
+                    //                                                                       node{
+                    //                                                                       id,nom
+                    //                                                                       }
+                    //                                                                   }
+                    //                                                                               },
+                    //                                                                   categorie{
+                    //                                                                   nom
+                    //                                                                   },
+                    //                                                                   articleCommentaire{
+                    //                                                                   edges{
+                    //                                                                       node{
+                    //                                                                       user{
+                    //                                                                           id,username,image,lastName,firstName
+                    //                                                                       },
+                    //                                                                         response{
+                    //                                                                           edges{
+                    //                                                                             node{
+                    //                                                                               user{
+                    //                                                                                 id,firstName,lastName,image
+                    //                                                                               }
+                    //                                                                             }
+                    //                                                                           }
+                    //                                                                         },
+                    //                                                                       ,message,sujet,dateAdd,dateUpd
+                    //                                                                       }
+                    //                                                                   }
+                    //                                                       },
+                    //                                                                   auteur{
+                    //                                                                   username,firstName,email,isStaff,isActive,image,description,lastName
+                    //                                                                   social{
+                    //                                                                       edges{
+                    //                                                                       node{
+                    //                                                                           id,name,lien
+                    //                                                                       }
+                    //                                                                       }
+                    //                                                                   },
+                    //                                                                   specialite{
+                    //                                                                       edges{
+                    //                                                                       node{
+                    //                                                                           id,specialiste
+                    //                                                                       }
+                    //                                                                       }
+                    //                                                                   }
+                    //                                                       },
+                    //                                                                     articleLike{
+                    //                                                                       edgeCount
+                    //                                                                     edges{
+                    //                                                                       node{
+                    //                                                                         user{
+                    //                                                                           id,lastName,firstName,image
+                    //                                                                         }
+                    //                                                                       }
+                    //                                                                     }
+                    //                                                                   },
+                    //                                                                 contenu,isArchive
+                    //                                                               }   
+                    //                                                               }
+                    //                                                       }
+                    //                   }
+                    //             `
+
+                    //         }
+                    //     })
+                    //         .then(response => {
+                    //             result = response.data.data
+                    //             this.dataAllarticle = result.allArticles.edges
+                    //             this.trouver = this.dataAllarticle.length
+                    //             this.searchmessage = (this.trouver + ' Resultat Trouver Pour la Recherche ' + this.search)
+                    //             this.searchdiv = true
+                    //         })
+                    //         .catch((err) => {
+                    //             console.log(err);
+                    //         })
+                    // },
+                    // postDislike: function () {
+                    //     this.base_url = 'https://127.0.0.1:8000'
+                    //     console.log('data getting')
+                    //     axios.defaults.xsrfCookieName = 'csrftoken'
+                    //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                    //     axios({
+                    //         url: this.base_url + '/graphql',
+                    //         method: 'post',
+                    //         data: {
+                    //             query: `
+                    //                     mutation{
+                    //                         relayCreateDislike(input:{article:"${ this.idart}",status:true}){
+                    //                             disLike {
+                    //                             status
+                    //                         }
+                    //                     }
+                    //                 }
+                    //                 `
+                    //         }
+                    //     })
+                    //         .then(response => {
+                    //             if (response.data.data.relayCreateComment != null) {
+                    //                 new Toast({
+                    //                     message: 'Article Dislike',
+                    //                     type: 'success'
+                    //                 });
+                    //             } else {
+                    //                 new Toast({
+                    //                     message: 'Article Dislike',
+                    //                     type: 'success'
+                    //                 });
+                    //             }
+                    //         })
+                    //         .catch((err) => {
+                    //             console.log(err);
+                    //         })
+                    // },
+                    // postreponse: function () {
+                    //     this.base_url = 'https://127.0.0.1:8000'
+                    //     console.log('data getting')
+                    //     axios.defaults.xsrfCookieName = 'csrftoken'
+                    //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                    //     formData.append('reponse', '' + this.reponse);
+                    //     axios({
+                    //         url: this.base_url + '/graphql',
+                    //         method: 'post',
+                    //         data: {
+                    //             query: `
+                    //                     mutation{
+                    //               relayCreateResponseComment(input:{commentaire:"",message:"${ this.idart}",status:true}){
+                    //                 response{
+                    //                   message
+                    //                     }
+                    //                   }
+                    //                 }
+                    //                 `
+                    //         }
+                    //     })
+                    //         .then(response => {
+                    //             console.log(response)
+                    //             if (response.data.data.relayCreateComment != null) {
+                    //                 new Toast({
+                    //                     message: 'Commentaire envoyer avec success',
+                    //                     type: 'success'
+                    //                 });
+                    //             } else {
+                    //                 swal("Entrer Votre Commentaire ");
+                    //             }
+                    //         })
+                    //         .catch((err) => {
+                    //             console.log(err);
+                    //         })
+                    // },
+                    // reponsebutton: function () {
+                    //     this.commentform = false;
+                    //     this.reponseform = true;
+                    // },
+                    // postlike: function () {
+                    //     this.base_url = 'https://127.0.0.1:8000'
+                    //     console.log('data getting')
+                    //     axios.defaults.xsrfCookieName = 'csrftoken'
+                    //     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                    //     axios({
+                    //         url: this.base_url + '/graphql',
+                    //         method: 'post',
+                    //         data: {
+                    //             query: `
+                    //                     mutation{
+                    //                     relayCreatLike(input:{article:"${ this.idart}",status:true}){
+                    //                             like {
+                    //                             status
+                    //                         }
+                    //                     }
+                    //                 }
+                    //                 `
+                    //         }
+                    //     })
+                    //         .then(response => {
+                    //             if (response.data.data.relayCreateComment != null) {
+                    //                 new Toast({
+                    //                     message: 'Article like',
+                    //                     type: 'success'
+                    //                 });
+                    //             } else {
+                    //                 new Toast({
+                    //                     message: 'Article like',
+                    //                     type: 'success'
+                    //                 });
+                    //             }
+                    //         })
+                    //         .catch((err) => {
+                    //             console.log(err);
+                    //         })
+                    // },
+
+
+
+                },
+
+
+
+
+            })
+
+        </script>
         <script src="/static/admin/vendors/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap -->
         <script src="/static/admin/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -218,243 +718,9 @@
         <!-- bootstrap-daterangepicker -->
         <script src="/static/admin/vendors/moment/min/moment.min.js"></script>
         <script src="/static/admin/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
+        
         <!-- Custom Theme Scripts -->
         <script src="/static/admin/build/js/custom.min.js"></script>
-
-        <script type="text/javascript">
-            // based on prepared DOM, initialize echarts instance
-            var gause = echarts.init(document.getElementById('golang'));
-            // specify chart configuration item and data
-            optiongolang = {
-                xAxis: {
-                    type: 'Article',
-                    data: [
-                        {% for item in aticles %}
-                    "{{ item.titre|truncatewords:'1'}}",
-
-                    {% endfor %}
-                ]
-            },
-            yAxis: {
-                type: 'Nombre commentaire'
-            },
-            series: [{
-                data: [
-                    {% for item in aticles %}
-                    "{{ item.ArticleCommentaire.count }}",
-
-            {% endfor %}
-
-            ],
-                type: 'bar'
-            }]
-        };
-
-            var option = {
-                title: {
-                    text: 'ECharts entry example'
-                },
-                tooltip: {},
-                legend: {
-                    data: ['Sales']
-                },
-                xAxis: {
-                    data: ["shirt", "cardign", "chiffon shirt", "pants", "heels", "socks"]
-                },
-                yAxis: {},
-                series: [{
-                    name: 'Sales',
-                    type: 'line',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            };
-            //option 
-            var optionlang = {
-                title: {
-                    text: 'Population',
-                    subtext: "Cote d'Ivoire",
-                    x: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left',
-                    data: [
-                        {% for items in articles %}
-                    '{{items.titre}}',
-                {% endfor %}
-                ]
-            },
-            series: [
-                {
-                    name: 'Population',
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    data: [
-                        {% for items in articles %}
-                        { value: '{{items.ArticleCommentaire.count}}', name: '{{items.titre}}' },
-                {% endfor %}
-            ],
-                itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                        shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-                }
-            ]
-        };
-            optiongause = {
-                title: {
-                    text: 'Composition des etudiants de NaN',
-                    subtext: "Piscine",
-                    x: 'center'
-                },
-                tooltip: {
-                    formatter: "{a} <br/>{b} : {c}%"
-                },
-                toolbox: {
-                    feature: {
-                        restore: {},
-                        saveAsImage: {}
-                    }
-                },
-                series: [
-                    {
-                        name: 'Variation',
-                        type: 'gauge',
-                        detail: { formatter: '{value}%' },
-                        data: [{ value: 50, name: 'Candidats en ligne' }]
-                    }
-                ]
-            };
-            setInterval(function () {
-                optiongause.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-                gause.setOption(optiongause, true);
-            }, 2000);
-            // use configuration item and data specified to show chart
-            myChart.setOption(optiongolang);
-            myLang.setOption(optionlang);
-            gause.setOption(optiongause);
-        </script>
-
-
-
-
-        <script>
-            var myPielang = echarts.init(document.getElementById('mainlang'));
-            var optionlang = {
-                title: {
-                    text: 'les top des Categories',
-                    subtext: 'CI',
-                    x: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left',
-                    data: [
-                        {% for cat in catego %}
-                    '{{cat.nom}}',
-                    {% endfor %}
-                    
-                    
-                ]
-            },
-            series: [
-                {
-                    name: 'Categorie',
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    data: [
-                        {% for item in catego %}
-                        { value: '{{item.article_cat.count}}', name: '{{item.nom}}' },
-                {% endfor %}
-
-
-            ],
-                itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                        shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-                }
-            ]
-        };
-            myPielang.setOption(optionlang);
-        </script>
-
-        <script>
-            var myPie = echarts.init(document.getElementById('main'));
-
-            var optionl = {
-                title: {
-                    text: 'les Articles les plus commentés et vues',
-                    subtext: 'CI',
-                    x: 'center'
-                },
-                color: ['#3398DB'],
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: [
-                            {% for arti in articles %}
-                '{{arti.titre}}',
-                    {% endfor %}
-            
-            ],
-            axisTick: {
-                alignWithLabel: true
-            }
-        }
-    ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
-                series : [
-                    {
-                        name: 'Commentaire',
-                        type: 'bar',
-                        barWidth: '60%',
-                        data: [
-                            {% for arti in articles %}
-                {{ arti.ArticleCommentaire.count }},
-                    {% endfor %}
-                ]
-        }
-    ]
-};
-
-
-            myPie.setOption(optionl);
-
-        </script>
 </body>
 
 </html>

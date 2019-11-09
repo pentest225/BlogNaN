@@ -156,7 +156,10 @@
                                     <li><a href="{% url 'index_dash' %}">Tableaux de bord</a></li>
                                 {% elif request.user|has_group:"Visiteur" %}
                                     <li><a href="{% url 'admin_visiteur_dash' %}">Tableaux de bord</a></li>
+                                {% elif user.is_admin  %}
+                                    <li><a href="{% url 'admin_url' %}">Tableaux de bord</a></li>
                                 {% endif %}
+                                
                                 <li><hr><hr></li>
                                 <li><a href="{% url 'account_logout' %}">Logout</a></li>
                             </ul>
@@ -308,20 +311,21 @@
                         sendregister: function (event) {
                             event.preventDefault();
 
-                            if (this.name == undefined) {
-                                this.name_error = "ce champs ne peut être vide"
+                            if (this.username == undefined) {
+                                this.username_error = "ce champs ne peut être vide"
                                 this.go = false
                             }
-                            if (!this.isEmailValid()) {
-                                this.email_error = "l'email saisie n'est pas correcte"
-                                this.go = false
-                            }
-                            if (this.name == undefined) {
-                                this.name_error = "ce champs ne peut être vide"
+
+                            if (this.lastname == undefined) {
+                                this.lastname_error = "ce champs ne peut être vide"
                                 this.go = false
                             }
                             if (this.firstname == undefined) {
                                 this.firstname_error = "ce champs ne peut être vide"
+                                this.go = false
+                            }
+                            if (!this.isEmailValid()) {
+                                this.email_error = "l'email saisie n'est pas correcte"
                                 this.go = false
                             }
                             if (this.fone == undefined) {
