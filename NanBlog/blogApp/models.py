@@ -13,8 +13,8 @@ class Categorie(models.Model):
     class Meta:
         """Meta definition for Categorie."""
 
-        verbose_name = 'Categorie'
-        verbose_name_plural = 'Categories'
+        verbose_name = "Les Categories d'articles"
+        verbose_name_plural = "Les Categorie d'articles"
 
     def __str__(self):
         """Unicode representation of Categorie."""
@@ -30,8 +30,8 @@ class Tag(models.Model):
     class Meta:
         """Meta definition for Tag."""
 
-        verbose_name = 'Tag'
-        verbose_name_plural = 'Tags'
+        verbose_name = 'Les Tags Du blog'
+        verbose_name_plural = 'Les Tags Du Blog'
 
     def __str__(self):
         """Unicode representation of Tag."""
@@ -58,8 +58,8 @@ class Article(models.Model):
     class Meta:
         """Meta definition for Article."""
 
-        verbose_name = 'Article'
-        verbose_name_plural = 'Articles'
+        verbose_name = 'Les Articles du Blogs'
+        verbose_name_plural = 'Les Articles du Blogs'
 
     def __str__(self):
         """Unicode representation of Article."""
@@ -73,6 +73,11 @@ class Commentaire(models.Model):
     status = models.BooleanField(default=False)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        """Meta definition for Categorie."""
+
+        verbose_name = "Les Commentaires d'articles"
+        verbose_name_plural = "Les Commentaires d'articles"
 
 
 class ResponseCommentaire(models.Model):
@@ -82,6 +87,11 @@ class ResponseCommentaire(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        """Meta definition for Categorie."""
+
+        verbose_name = " Les Reponses de Commentaire"
+        verbose_name_plural = " Les Reponses de Commentaire"
 
 class Like(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='article_like')
@@ -89,6 +99,11 @@ class Like(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        """Meta definition for Categorie."""
+
+        verbose_name = " Les Likes d'Article"
+        verbose_name_plural = " Les Likes d'Article"
     
 class DisLike(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='Dislike')
@@ -96,9 +111,19 @@ class DisLike(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        """Meta definition for Categorie."""
+
+        verbose_name = " Les DisLikes d'Article"
+        verbose_name_plural = " Les  DisLikes d'Article "
     
 class DemandeAdesion(models.Model):
     user_id=models.ForeignKey(MyUser,on_delete=models.CASCADE,related_name='user_demande')
     status = models.BooleanField(default=False)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        """Meta definition for Categorie."""
+
+        verbose_name = "Demande de Membre"
+        verbose_name_plural = "Demande de Membre"

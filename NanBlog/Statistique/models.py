@@ -17,5 +17,5 @@ class Client(models.Model):
         return self.adresse_ip
 
     class Meta:
-        verbose_name = 'Client'
-        verbose_name_plural = 'Clients'
+        verbose_name = 'Statistique de Visite'
+        verbose_name_plural = 'Statistique de Visite'

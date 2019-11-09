@@ -23,14 +23,12 @@ class ClientAdmin(admin.ModelAdmin):
     )
     list_filter = (
         'date_visite',
-        'ip',
-        'continent',
-        'pays',
-        'ville',
-        'reseau',
-        'page',
-        'date_visite',
     )
+    date_hierarchy = 'date_visite'
+    actions = ('active','desactive')
+    list_display_links = ['pays']
+    list_per_page = 10
+    ordering = ['pays']
 
 
 def _register(model, admin_class):
