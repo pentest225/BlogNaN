@@ -12,7 +12,7 @@
                 <a href="{% url 'tables_dash' %}">
                     <div class="tile-stats">
                     <div class="icon"><i class="fa fa-bar-chart-o"></i></div>
-                    <div class="count">{{article.count}}</div>
+                    <div v-for = "items in userinfos" class="count">${items.node.article.count}</div>
                     <h3>Posts total</h3>
                     <p>Lorem ipsum psdea itgum rixt.</p>
                     </div>
@@ -22,7 +22,7 @@
                 <a href="{% url 'post_attend_dash' %}">
                 <div class="tile-stats">
                     <div class="icon"><i class="fa fa-sort-amount-desc red"></i></div>
-                    <div class="count">{{articlee.count}}</div>
+                    <div  v-for = "items in userinfos" class="count">${items.node.article.count}</div>
                     <h3>Posts en attentes</h3>
                     <p>Lorem ipsum psdea itgum rixt.</p>
                 </div>
@@ -32,7 +32,7 @@
                 <a href="{% url 'post_valid_dash' %}">
                     <div class="tile-stats">
                     <div class="icon"><i class="fa fa-check-square-o green"></i></div>
-                    <div class="count">{{articles.count}}</div>
+                    <div  v-for = "items in userinfos" class="count">${items.node.article.count}</div>
                     <h3>Posts Validé</h3>
                     <p>Lorem ipsum psdea itgum rixt.</p>
                     </div>
