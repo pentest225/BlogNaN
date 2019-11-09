@@ -117,11 +117,67 @@
             }
             }
 
+           
+        </style>
+        <!-- loader css -->
+        <style>
+            .lds-ripple {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+            }
+            .lds-ripple div {
+            position: absolute;
+            border: 4px solid #9670f6;
+            opacity: 1;
+            border-radius: 50%;
+            animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+            }
+            .lds-ripple div:nth-child(2) {
+            animation-delay: -0.5s;
+            }
+            @keyframes lds-ripple {
+            0% {
+                top: 28px;
+                left: 28px;
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                top: -1px;
+                left: -1px;
+                width: 58px;
+                height: 58px;
+                opacity: 0;
+            }
+            }
+ 
+        </style>
+        <style>
+            .chargementPage{
+                margin: 0 auto;
+                padding: 0 auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+
+
+            }
+            #myloaderDiv{
+                display: none;
+            }
         </style>
 </head>
 
-<body>
+<body onload=" loadingPage()">
+
     <div id="app">
+        <div class="lds-ripple chargementPage" ><div></div><div></div></div>
+ 
+
+        
     <!-- Start header Area -->
     <header id="header">
         <div class="container box_1170 main-menu">
@@ -164,12 +220,12 @@
             </div>
         </div>
     </header>
+
     <!-- End header Area -->
 
     {% block content %}
 
     {% endblock %}
-
 
     <!-- start footer Area -->
     <footer class="footer-area section-gap">
@@ -225,6 +281,7 @@
             </div>
         </div>
     </footer>
+
     <!-- End footer Area -->
 </div>
 <script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
@@ -294,7 +351,10 @@ crossorigin="anonymous"></script>
                     activeColorDisLike:'',
                     contenue: '',
                     idComment:'',
-
+                    allLike:[],
+                    likeTable:[],
+                    popularArtile:'',
+                    loader:false,
                 },
                 delimiters:["${","}"],
                 mounted(){
@@ -558,21 +618,37 @@ crossorigin="anonymous"></script>
                                             }
                                     },contenu,isArchive
                                     }
+                                    allLike{
+                                                edges{
+                                                node{
+                                                            article{
+                                                    id,titre,,imageSingle,dateAdd,auteur{
+                                                        id,username,firstName
+                                                    }
+                                                    }	,
+                                                    user{
+                                                    id,username
+                                                    }
+                                                }
+                                                }
+                                            }
                                         }
+                                        ,
                                     
                                 `
                             }
                         })
                         .then(response => {
                             result = response.data.data
-                            // console.log(response.data)
                             this.paginator = result.allArticles
+                            this.allLike=result.allLike
                             this.dataAllCategory = result.allCategories.edges
                             this.categoryId=result.category
                             this.dataAllarticle = result.allArticles.edges
                             this.categoryId=result.category
                             this.singleAtircle  = result.article
                             this.CarouselAll = this.dataAllarticle.slice(1, 4)
+                            console.log(this.allLike)
                             //console.log(this.dataAllarticle)
                             //this.Popular = result.allArticles.edges.node
                             //console.log(this.idcat)
@@ -637,6 +713,41 @@ crossorigin="anonymous"></script>
                                 }
                             }
                             //console.log(this.paginator)
+
+                            // fonction de recuperations de l'article populaire //
+                            for (let i = 0; i < this.allLike.edges.length; i++) {
+                                const element = this.allLike.edges[i];
+                                let cpt=0
+                                let myId=element.node.article
+                                for (let v = 0; v < this.allLike.edges.length; v++) {
+                                    const myLike = this.allLike.edges[v];
+                                    if (myId.id === myLike.node.article.id){
+                                        cpt+=1
+                                    }
+                                    
+                                }
+                                this.likeTable.push({"idArticle":myId,"nombreLike":cpt})
+                                ctp=0
+                            }
+                            //ne pas oublier de gere l'exeptions ou il n'y a aucune article liker 
+                            let max=this.likeTable[0]
+                            for (let index = 0; index < this.likeTable.length -1; index++) {
+                                const element = this.likeTable[index];
+                                let next=this.likeTable[index + 1]
+                               
+                                if(max.nombreLike < next.nombreLike){
+                                    max=next
+                                }
+                                
+                               
+                            }
+                            console.log("my max")
+                            console.log(max)
+                            this.popularArtile=max.idArticle
+                            console.log(this.popularArtile)
+                            //formatage de la date de l'article recent 
+                            this.popularArtile.dateAdd= new Date(this.popularArtile.dateAdd).toLocaleString('en-GB', { timeZone: 'UTC' })
+                            console.log(this.likeTable)
                             
             
                         })  
@@ -1148,7 +1259,9 @@ crossorigin="anonymous"></script>
                         }
                     },
 
-                    
+                    afficheLoader:function(){
+                        this.loader=true
+                    }
                 
                 },
 
@@ -1158,6 +1271,12 @@ crossorigin="anonymous"></script>
                 })
             
     </script>
+<script>
+    function loadingPage(){
+        document.querySelector("#myloaderDiv").style.display="block";
+        document.querySelector(".chargementPage").style.display="none";
+    }
+</script>
 
     <script type="text/javascript"  src="/static/tinymce/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript"  src="/static/tinymce/js/prism.js"></script>
