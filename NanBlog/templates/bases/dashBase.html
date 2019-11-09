@@ -48,13 +48,13 @@
                 <div class="clearfix"></div>
         
                 <!-- menu profile quick info -->
-                <div class="profile clearfix">
+                <div class="profile clearfix" v-for="item in userinfos">
                     <div class="profile_pic">
-                        <img src="{{user.image.url}}" alt="..." class="img-circle profile_img">
+                        <img :src=`${base_url}/`+`media/`+`${item.node.image}` alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2 v-for="item in userinfos" > ${ item.node.username }</h2>
+                        <h2  > ${ item.node.username }</h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->

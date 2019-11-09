@@ -34,6 +34,12 @@
     <link rel="stylesheet" href="/static/css/toas.css">
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="stylesheet" href="/static/css/util.css">
+
+    
+    {% block link %}
+        
+    {% endblock link %}
+        
     <style>
             .lds-dual-ring {
             display: inline-block;
@@ -114,7 +120,7 @@
 <body>
     <div id="app">
     <!-- Start header Area -->
-    <header id="header">
+    <header id="header" class="header-scrolled">
         <div class="container box_1170 main-menu">
             <div class="row align-items-center justify-content-between d-flex">
                 <div id="logo">
@@ -239,6 +245,9 @@
     <script src="/static/js/waypoints.min.js"></script>
     <script src="/static/js/mail-script.js"></script>
     <script src="/static/js/main.js"></script>
+    
+    
+        
     <!-- Vue js -->
     <script src="/static/js/toas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -619,6 +628,9 @@
             
                 })
     </script>
+    {% block scripts %}
+    
+    {% endblock scripts %}
 </body>
 
 </html>

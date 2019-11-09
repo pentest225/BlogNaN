@@ -1,154 +1,124 @@
-{% extends 'bases/dashBase.html' %}
+{% extends 'bases/dashBase.html' %} {% block content %}
+<!-- page content -->
+<div class="right_col" role="main">
+  <!-- page content -->
+  <div class="">
+    <div class="row top_tiles" v-for=" info in userinfos">
+      <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
+        <a href="{% url 'tables_visiteur_dash' %}">
+          <div class="tile-stats">
+            <div class="icon"><i class="fa fa-bar-chart-o"></i></div>
 
-{% block content %}
-        <!-- page content -->
-        <div class="right_col" role="main">
+            <div class="count">${ info.node.userComment.edgeCount }</div>
+            <h3>Mes commentaires</h3>
+            <p>La liste de tous mes commentaires.</p>
+          </div>
+        </a>
+      </div>
+      <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
+        <a href="{% url 'tables_visiteur_dash' %}">
+          <div class="tile-stats">
+            <div class="icon"><i class="fa fa-sort-amount-desc red"></i></div>
+            <div class="count">${ info.node.userLike.edgeCount }</div>
+            <h3>Mes Likes</h3>
+            <p>Lorem ipsum psdea itgum rixt.</p>
+          </div>
+        </a>
+      </div>
+      <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
+        <a href="{% url 'post_partage_dash' %}">
+          <div class="tile-stats">
+            <div class="icon"><i class="fa fa-check-square-o green"></i></div>
+            <div class="count">101</div>
+            <h3>Ar</h3>
+            <p>La liste des posts que j'ai vu.</p>
+          </div>
+        </a>
+      </div>
+    </div>
 
-        <!-- page content -->
-        <div class="">
-            <div class="row top_tiles">
-            <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
-                <a href="{% url 'tables_visiteur_dash' %}">
-                    <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-bar-chart-o"></i></div>
-                    
-                    <div class="count">{{ commentaire.count }}</div>
-                    <h3>Mes commentaires</h3>
-                    <p>La liste de tous mes commentaires.</p>
-                    </div>
-                </a>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Transaction Summary <small>Weekly progress</small></h2>
+            <div class="filter">
+              <div
+                id="reportrange"
+                class="pull-right"
+                style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc"
+              >
+                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                <span>December 30, 2014 - January 28, 2015</span>
+                <b class="caret"></b>
+              </div>
             </div>
-            <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
-                <a href="{% url 'tables_visiteur_dash' %}">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-sort-amount-desc red"></i></div>
-                    <div class="count">78</div>
-                    <h3>Mes Likes</h3>
-                    <p>Lorem ipsum psdea itgum rixt.</p>
-                </div>
-                </a>
-            </div>
-            <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
-                <a href="{% url 'post_partage_dash' %}">
-                    <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-check-square-o green"></i></div>
-                    <div class="count">101</div>
-                    <h3>Posts partagé</h3>
-                    <p>La liste des posts que j'ai vu.</p>
-                    </div>
-                </a>
-            </div>
-            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="col-md-9 col-sm-12 "></div>
 
-            <div class="row">
-            <div class="col-md-12">
-                <div class="x_panel">
-                <div class="x_title">
-                    <h2>Transaction Summary <small>Weekly progress</small></h2>
-                    <div class="filter">
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                        <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                    </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+            <div class="col-md-3 col-sm-12 ">
+              <div class="x_panel fixed_height_390">
                 <div class="x_content">
-                    <div class="col-md-9 col-sm-12 ">
-                    <!-- <div class="demo-container" style="height:280px">
-                        <div id="chart_plot_02" class="demo-placeholder"></div>
-                    </div>
-                    <div class="tiles">
-                        <div class="col-md-4 tile">
-                        <span>Total Sessions</span>
-                        <h2>231,809</h2>
-                        <span class="sparkline11 graph" style="height: 160px;">
-                            <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                        </span>
-                        </div>
-                        <div class="col-md-4 tile">
-                        <span>Total Revenue</span>
-                        <h2>$231,809</h2>
-                        <span class="sparkline22 graph" style="height: 160px;">
-                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                        </span>
-                        </div>
-                        <div class="col-md-4 tile">
-                        <span>Total Sessions</span>
-                        <h2>231,809</h2>
-                        <span class="sparkline11 graph" style="height: 160px;">
-                                <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-                        </span>
-                        </div>
-                    </div> -->
-                    
+                  <div class="flex">
+                    <ul class="list-inline widget_profile_box">
+                      <li>
+                        <a>
+                          <i class="fa fa-facebook"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <img
+                          src="/static/admin/images/user.png"
+                          alt="..."
+                          class="img-circle profile_img"
+                        />
+                      </li>
+                      <li>
+                        <a>
+                          <i class="fa fa-twitter"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
 
-                    </div>
+                  <h3 class="name">Musimbi</h3>
 
-                    <div class="col-md-3 col-sm-12 ">
-                        <div class="x_panel fixed_height_390">
-                            <div class="x_content">
-  
-                            <div class="flex">
-                                <ul class="list-inline widget_profile_box">
-                                <li>
-                                    <a>
-                                    <i class="fa fa-facebook"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <img src="/static/admin/images/user.png" alt="..." class="img-circle profile_img">
-                                </li>
-                                <li>
-                                    <a>
-                                    <i class="fa fa-twitter"></i>
-                                    </a>
-                                </li>
-                                </ul>
-                            </div>
-  
-                            <h3 class="name">Musimbi</h3>
-  
-                            <div class="flex">
-                                <ul class="list-inline count2">
-                                <li>
-                                    <h3>{{ article.count }}</h3>
-                                    <span>Articles</span>
-                                </li>
-                                <li>
-                                    <h3>1234</h3>
-                                    <span>Likes</span>
-                                </li>
-                                <li>
-                                    <h3>{{ commentaire.count }}</h3>
-                                    <span>Comments</span>
-                                </li>
-                                </ul>
-                            </div>
-                            <p>
-                                If you've decided to go in development mode and tweak all of this a bit, there are few things you should do.
-                            </p>
-                            </div>
-                        </div>
-                    </div>
-
+                  <div class="flex">
+                    <ul class="list-inline count2">
+                      <li>
+                        <h3>{{ article.count }}</h3>
+                        <span>Articles</span>
+                      </li>
+                      <li>
+                        <h3>1234</h3>
+                        <span>Likes</span>
+                      </li>
+                      <li>
+                        <h3>{{ commentaire.count }}</h3>
+                        <span>Comments</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <p>
+                    If you've decided to go in development mode and tweak all of
+                    this a bit, there are few things you should do.
+                  </p>
                 </div>
-                </div>
+              </div>
             </div>
-            </div>
-
+          </div>
         </div>
-        <!-- /page content -->
+      </div>
+    </div>
+  </div>
+  <!-- /page content -->
 
-        <div class="row">
+  <div class="row"></div>
 
-            
+  <!-- /page content -->
 
-           
-        </div>
-
-
-        <!-- /page content -->
-
-        <!-- footer content -->
-    {% endblock content %}
+  <!-- footer content -->
+  {% endblock content %}
+</div>
