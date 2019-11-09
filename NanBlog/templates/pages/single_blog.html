@@ -131,7 +131,7 @@
                             </div>
                             <div class="reply-btn">
                                 
-                                <a href=""   v-if="singleAtircle.isArchive == false"   v-on:click.prevent="reponsebutton(comment.node.id)" class="btn-reply text-uppercase">repondre</a>
+                                <!-- <a href=""   v-if="singleAtircle.isArchive == false"   v-on:click.prevent="reponsebutton(comment.node.id)" class="btn-reply text-uppercase">repondre</a> -->
                             </div>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                 <div v-if="commentform" class="comment-form">
                     <h4>Laisser Un Commentaire </h4>
                         
-                            <textarea class="tinymce4-editor" v-model="commentaire"  id="id_contenu"  rows="5" ></textarea>
+                            <textarea class="tinymce4-editor"  v-model="commentaire"  id="id_contenu"  rows="5" ></textarea>
                        
 
                         <div class="form-group">
@@ -227,18 +227,17 @@
                         <h4 class="title">Article Populaire</h4>
                         <div class="blog-list ">
     
-                            <div class="single-popular-post d-flex flex-row">
+                            <div class="single-popular-post  ">
                                 <div class="popular-thumb">
-                                    <img class="img-fluid" src="/static/img/blog/r1.jpg" alt="">
+                                    <img class="img-fluid" :src=`${base_url}/`+`media/`+`${popularArtile.imageSingle}` alt="">
                                 </div>
-                                <div class="popular-details">
-                                    <a href="blog-details.html">
-                                        <h4>Space Final Frontier</h4>
+                                <div class="popular-details mt-10">
+                                    <a :href=``+`${base_url}`+`/single_blog/`+`${popularArtile.id}`+``>
+                                        <h4>${popularArtile.titre}</h4>
                                     </a>
-                                    <p class="text-uppercase">02 hours ago</p>
+                                    <p class="text-uppercase">${popularArtile.dateAdd}</p>
                                 </div>
                             </div>
-    
                     
                         </div>
                     </div>

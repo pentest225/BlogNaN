@@ -101,20 +101,42 @@ def archive(request):
 
 def saveComment(request):
     postdata = json.loads(request.body.decode('utf-8'))
-    if request.POST is not None:
-        idArticle=postdata['idArticle']
-        comment=postdata['coment']
-        print("##################################")
-        print(request.POST)
-        print(idArticle)
-        print(comment)
+    idArticle=postdata['idArticle']
+    comment=postdata['coment']
+    description=postdata['descriptions']
+    titre=postdata['titre']
+    print("##################################")
+    # print(request.POST)
+    print(idArticle)
+    print(comment)
+    print(titre)
+    print()
+    print(len(comment))
+    
+    if request.user.is_authenticated:
+        if len(comment.strip())==0 :
+            result={
+                "insertionsOk":False,
+                "message":"Veillez saisir un commentaire valide ;-)"
+            }
+        else:
+            myArticle=Article.objects.filter(titre=titre,description=description)[:1].get()
+            newComment=Commentaire(article=myArticle,user=request.user,message=comment,sujet="default suject",status=True)
+            newComment.save()
+            result={
+                "insertionsOk":True,
+                "message":"votre commentaire a ete poster avec succes ;-)"
+            }
+            print("####################Article###########################")
+            print(myArticle)
     else:
-        print("#################################")
-        print("vide")
-    result={
-        "idArt":idArticle,
-        "comment":comment
-    }
+        result={
+            "insertionsOk":False,
+            "message":"veillez vous connecter pour poster votre commentaire "
+        }
+        
+
+    
     return JsonResponse(result, safe=False)
         
 
