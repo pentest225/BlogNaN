@@ -120,7 +120,7 @@
 <body>
     <div id="app">
     <!-- Start header Area -->
-    <header id="header" class="header-scrolled">
+    <header id="header" class="">
         <div class="container box_1170 main-menu">
             <div class="row align-items-center justify-content-between d-flex">
                 <div id="logo">
@@ -231,8 +231,7 @@
     <!-- End footer Area -->
 </div>
     <script src="/static/js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
     <script src="/static/js/vendor/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
     <script src="/static/js/easing.min.js"></script>
@@ -252,37 +251,6 @@
     <script src="/static/js/toas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript">
-		function openCity(evt, cityName) {
-		    var i, tabcontent, tablinks;
-		    tabcontent = document.getElementsByClassName("tabcontent");
-		    for (i = 0; i < tabcontent.length; i++) {
-		        tabcontent[i].style.display = "none";
-		    }
-		    tablinks = document.getElementsByClassName("tablinks");
-		    for (i = 0; i < tablinks.length; i++) {
-		        tablinks[i].className = tablinks[i].className.replace(" active", "");
-		    }
-		    document.getElementById(cityName).style.display = "block";
-		    evt.currentTarget.className += " active";
-		}
-
-		// Get the element with id="defaultOpen" and click on it
-		document.getElementById("defaultOpen").click();
-    </script>
-    <script type="text/javascript">
-        (function() {
-          var message = 'Do you really want to remove the selected e-mail address?';
-          var actions = document.getElementsByName('action_remove');
-          if (actions.length) {
-            actions[0].addEventListener("click", function(e) {
-              if (! confirm(message)) {
-                e.preventDefault();
-              }
-            });
-          }
-        })();
-    </script>
     <script>
             var app = new Vue({
                 el: '#app',

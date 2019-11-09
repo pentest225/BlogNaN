@@ -166,7 +166,7 @@ iframe {
 }
 
 .wrap-contact100 {
-  width: 500px;
+  width: 800px;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
@@ -180,6 +180,8 @@ iframe {
 .contact100-form {
   width: 100%;
 }
+
+
 
 .contact100-form-title {
   display: block;
