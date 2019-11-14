@@ -10,6 +10,13 @@ class Specialite(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        """Meta definition for utilisateur."""
+        verbose_name = 'Specialité '
+        verbose_name_plural = 'Specialité'
+    def __str__(self):
+        """Unicode representation of utilisateur."""
+        return '{}'.format(self.specialiste) # TODO
     
 class MyUser(AbstractUser):
     image = models.ImageField(upload_to='utilisateur/',default='/utilisateur/user2.png')

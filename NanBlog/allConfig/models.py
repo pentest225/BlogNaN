@@ -13,6 +13,9 @@ class AllInfo(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = "Configuration General du site"
+        verbose_name_plural = "Configuration General du site"
 
 class workingHours(models.Model):
     day=models.CharField(max_length=255)
@@ -34,6 +37,9 @@ class HeaderFront(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = "Configuration du header "
+        verbose_name_plural = "Configuration du header"
 
 class FooterFront(models.Model):
     titre = models.CharField(max_length=100)
@@ -44,6 +50,10 @@ class FooterFront(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = "Configuration du Footer"
+        verbose_name_plural = "Configuration du Footer"
+    
 
 class Social(models.Model):
     choice=[('FB','facebook'),('TW','twitter'),('INS','instagram'),('GOO','google')]
@@ -66,8 +76,8 @@ class Social(models.Model):
             font ='fa fa-google-plus'
         return font
     class Meta:
-        verbose_name = "Social"
-        verbose_name_plural = "Socials"
+        verbose_name = "Configuration des lien sociaux"
+        verbose_name_plural = "Configuration des liens sociaux"
 
     def __str__(self):
         return '{}'.format(self.name)
@@ -79,15 +89,24 @@ class LocationMap(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = "Configuration de la carte"
+        verbose_name_plural = "Configuration de la carte"
 
 class Copyright(models.Model):
     titre = HTMLField('content')
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = "Configuation du Copyright"
+        verbose_name_plural = "Configuation du  Copyright"
 
 class Instagram(models.Model):
     image = models.ImageField(upload_to='instagram/')
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = "Image du Footer"
+        verbose_name_plural = "Image du Footer"

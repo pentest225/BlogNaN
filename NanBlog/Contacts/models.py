@@ -6,6 +6,14 @@ class Newsletter(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = "Les Souscription au site"
+        verbose_name_plural = "Les Souscription au site"
+    def __str__(self):
+        return '{}'.format(self.email)
+
+
+
 
 class Contact(models.Model):
     nom = models.CharField(max_length=100)
@@ -15,3 +23,9 @@ class Contact(models.Model):
     status = models.BooleanField(default=True)
     date_add = models.DateTimeField(auto_now_add=True)
     date_upd = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+            verbose_name = "Message Visiteur"
+            verbose_name_plural = "Message Visiteur"
+    def __str__(self):
+        return '{}'.format(self.nom)

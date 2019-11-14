@@ -1,4 +1,7 @@
-{% extends 'bases/otherBase.html' %} {% load i18n %} 
+{% extends 'bases/otherBase.html' %} 
+
+{% load crispy_forms_tags %}
+{% load i18n %} 
 
 
 {% block link %}
@@ -11,7 +14,9 @@
 />
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="/static/login/css/main.css" />
-{% endblock link %} {% block content %}
+{% endblock link %} 
+
+{% block content %}
 
 <section class="banner-area relative">
   <div class="overlay overlay-bg"></div>
@@ -30,7 +35,7 @@
     </div>
   </div>
 </section>
-<!-- <div class="container-contact100">
+ <!-- <div class="container-contact100">
     <div class="wrap-contact100">
         <form class="contact100-form validate-form" id="signup_form" method="post"  enctype="multipart/form-data">
                 <span class="contact100-form-title">
@@ -101,7 +106,7 @@
             </ul>
         </div>
     </div>
-</div> -->
+</div>  -->
 
 <div class="container-contact100">
   <div class="wrap-contact100">
@@ -110,60 +115,28 @@
         S'inscrire
       </span>
       <div class="form-row">
-        <div
-          class=" col-md-5  col-lg-5 wrap-input100 validate-input"
-          data-validate="Name is required"
-        >
+        <div  class=" col-md-5  col-lg-5 wrap-input100 validate-input"  data-validate="Name is required">
           <span class="label-input100">Your Name</span>
-          <input
-            class="input100"
-            type="text"
-            name="name"
-            placeholder="Enter your name"
-          />
+          <input   class="input100"   type="text"   name="name"   placeholder="Enter your name" />
           <span class="focus-input100"></span>
         </div>
         <div class=" col-md-1 col-lg-1"></div>
-        <div
-          class=" col-md-6  col-lg-6 wrap-input100 validate-input"
-          data-validate="Valid email is required: ex@abc.xyz"
-        >
+        <div class=" col-md-6  col-lg-6 wrap-input100 validate-input"   data-validate="Valid email is required: ex@abc.xyz" >
           <span class="label-input100">Email</span>
-          <input
-            class="input100"
-            type="text"
-            name="email"
-            placeholder="Enter your email addess"
-          />
+          <input class="input100" type="text"  name="email"   placeholder="Enter your email addess"  />
           <span class="focus-input100"></span>
         </div>
       </div>
       <div class="form-row">
-        <div
-          class=" col-md-5  col-lg-5 wrap-input100 validate-input"
-          data-validate="Name is required"
-        >
+        <div   class=" col-md-5  col-lg-5 wrap-input100 validate-input"   data-validate="Name is required" >
           <span class="label-input100">Nom</span>
-          <input
-            class="input100"
-            type="text"
-            name="name"
-            placeholder="Enter your name"
-          />
+          <input class="input100"  type="text"  name="name"  placeholder="Enter your name" />
           <span class="focus-input100"></span>
         </div>
         <div class=" col-md-1 col-lg-1"></div>
-        <div
-          class=" col-md-6  col-lg-6 wrap-input100 validate-input"
-          data-validate="Valid email is required: ex@abc.xyz"
-        >
+        <div class=" col-md-6  col-lg-6 wrap-input100 validate-input"  data-validate="Valid email is required: ex@abc.xyz" >
           <span class="label-input100">Prénoms</span>
-          <input
-            class="input100"
-            type="text"
-            name="email"
-            placeholder="Enter your email addess"
-          />
+          <input class="input100"  type="text"  name="email"   placeholder="Enter your email addess" />
           <span class="focus-input100"></span>
         </div>
       </div>
@@ -223,6 +196,22 @@
         </div>
       </div>
     </form>
+    <br><br>
+    <div class="social text-center">
+        <ul>
+            <li style="color: black">Ou Inscrivez-vous avec:</li><br><br>
+            <li><a title="Facebook" href="/accounts/facebook/login/?process=login" class="facebook"><span
+                        class="fa fa-facebook"></span></a></li>
+            <li><a title="Github" href="/accounts/github/login/?process=login" class="github"><span
+                        class="fa fa-github"></span></a></li>
+            <li><a title="Google" href="/accounts/google/login/?process=login" class="google"><span
+                        class="fa fa-google"></span></a></li>
+            <li><a title="Discord" href="/accounts/discord/login/?process=login" class="discord"><span
+                        class="fa fa-cc-discover"></span></a></li>
+            <li><a title="LinkedIn" href="/accounts/linkedin_oauth2/login/?process=login" class="linkedin"><span
+                        class="fa fa-linkedin"></span></a></li>
+        </ul>
+    </div>
   </div>
 </div>
 <div id="dropDownSelect1"></div>

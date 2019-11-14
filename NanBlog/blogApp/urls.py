@@ -29,6 +29,7 @@ urlpatterns = [
     path('tables_dash/', views.tables_dash, name='tables_dash'),
     path('<int:pk>/project_detail_dash/', views.project_detail_dash, name='project_detail_dash'),
     path('admin_visiteur_dash/', views.admin_visiteur_dash, name='admin_visiteur_dash'),
+    
     path('<int:id>/detail_visiteur_dash', views.detail_visiteur_dash, name='detail_visiteur_dash'),
     path('page_dash/', views.page_dash, name='page_dash'),
     path('post_attend_dash/', views.post_attend_dash, name='post_attend_dash'),

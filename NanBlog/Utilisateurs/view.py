@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from . import forms
 from django.contrib.auth.models import Group
 from . import models
+import requests
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
@@ -42,8 +43,16 @@ def inscription(request):
                 'token':account_activation_token.make_token(user),
             })
             to_email = form.cleaned_data.get('email')
-            mail = EmailMessage(mail_subject, message, settings.EMAIL_HOST_USER, [to_email])
-            mail.send()
+            # mail = EmailMessage(mail_subject, message, settings.EMAIL_HOST_USER, [to_email])
+            url= 'http://mysiteapi.tk/html'
+    
+            data = {
+                    'subject': mail_subject,
+                    'message': message,
+                    'to': to_email ,
+                    'key': ")H@MbQeThWmZq4t7w!z%C*F-JaNdRgUj" ,
+                }
+            req = requests.post(url, data=data)
             return redirect('sign_send_verif')
     else:
         form= forms.RegistrationForm()
