@@ -7,38 +7,39 @@
 
         <!-- page content -->
         <div class="">
-            <div class="row top_tiles">
-            <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
-                <a href="{% url 'tables_dash' %}">
+                <div class="row top_tiles" v-for=" info in userinfos">
+                <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
+                    <a href="{% url 'tables_visiteur_dash' %}">
                     <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-bar-chart-o"></i></div>
-                    <div class="count">{{article.count}}</div>
-                    <h3>Posts total</h3>
-                    <p>Lorem ipsum psdea itgum rixt.</p>
+                        <div class="icon"><i class="fa fa-bar-chart-o"></i></div>
+    
+                        <div class="count">${ info.node.userComment.edgeCount }</div>
+                        <h3>Mes commentaires</h3>
+                        <p>La liste de tous mes commentaires.</p>
                     </div>
-                </a>
-            </div>
-            <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
-                <a href="{% url 'post_attend_dash' %}">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-sort-amount-desc red"></i></div>
-                    <div class="count">{{articlee.count}}</div>
-                    <h3>Posts en attentes</h3>
-                    <p>Lorem ipsum psdea itgum rixt.</p>
+                    </a>
                 </div>
-                </a>
-            </div>
-            <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
-                <a href="{% url 'post_valid_dash' %}">
+                <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
+                    <a href="{% url 'tables_visiteur_dash' %}">
                     <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-check-square-o green"></i></div>
-                    <div class="count">{{articles.count}}</div>
-                    <h3>Posts Validé</h3>
-                    <p>Lorem ipsum psdea itgum rixt.</p>
+                        <div class="icon"><i class="fa fa-sort-amount-desc red"></i></div>
+                        <div class="count">${ info.node.userLike.edgeCount }</div>
+                        <h3>Mes Likes</h3>
+                        <p>Lorem ipsum psdea itgum rixt.</p>
                     </div>
-                </a>
-            </div>
-            </div>
+                    </a>
+                </div>
+                <div class="animated flipInY col-lg-4 col-md-4 col-sm-6 ">
+                    <a href="{% url 'post_partage_dash' %}">
+                    <div class="tile-stats">
+                        <div class="icon"><i class="fa fa-check-square-o green"></i></div>
+                        <div class="count">${ info.node.userLike.edgeCount }</div>
+                        <h3>Article</h3>
+                        <p>La liste des posts que j'ai vu.</p>
+                    </div>
+                    </a>
+                </div>
+                </div>
 
             <div class="row">
             <div class="col-md-12">

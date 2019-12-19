@@ -37,7 +37,7 @@ class MyUserAdmin(admin.ModelAdmin):
             'fields':['username','first_name','last_name','image','specialite','social']
         }),
         ('Groupe et Visibilité',{
-            'fields':['status','groups']
+            'fields':['status','groups','is_active']
         }),
     ]
     
