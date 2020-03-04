@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="mx-auto d-block col-md-3">
                         <div class="row">
-                            <lable class=" mt-2  title-2">Select The categoryse </h5> 
+                            <h5 class=" mt-2  title-2">Select The categoryse </h5> 
                                 <select v-model="cat" required id="id_categorie">
                                         <option value="" selected>---------</option>
                                       
@@ -37,15 +37,15 @@
                                 </select>
                         </div>
                         <div class="row">
-                            <lable class=" mt-2  title-2">Titre </h5> <input type="text" v-model="title" maxlength="100" required id="id_titre">
+                            <h5 class=" mt-2  title-2">Titre </h5> <input type="text" v-model="title" maxlength="100" required id="id_titre">
                         </div>
                         <div class="row">
-                            <lable class=" mt-2  title-2">Description </h5> 
+                            <h5 class=" mt-2  title-2">Description </h5> 
                                 <textarea v-model="descriptions" cols="40" rows="10" required id="id_description">
                                 </textarea>
                         </div>
                         <div class="row">
-                            <lable class=" mt-2  title-2">Single Image </h5> 
+                            <h5 class=" mt-2  title-2">Single Image </h5> 
                                 <input type="file" v-on:change="handleFileUploaded()" id="file" ref="file" accept="image/*" required id="id_image">
                         </div>
                     </div>
@@ -69,6 +69,6 @@
     </div>
   </div>
 
-
+</div>
 {% endblock content %}
 
