@@ -14,7 +14,7 @@ django-utils2==2.5.4
 idna==2.8
 jsmin==2.2.2
 oauthlib==3.1.0
-Pillow==6.2.1
+Pillow==8.1.1
 pyenchant==2.0.0
 PyJWT==1.7.1
 python-utils==2.3.0
